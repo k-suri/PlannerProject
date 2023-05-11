@@ -7,4 +7,3 @@ An event planning application that conveniently allows a user manage planning an
 Khushi Suri 
 Muskaan Suri
 Mohammed Lateef Mohammed Ismail
-
