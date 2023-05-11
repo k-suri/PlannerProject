@@ -4,5 +4,6 @@ An event planning application that conveniently allows a user manage planning an
 
 # Group I
 
-Khushi Suri
+Khushi Suri 
+Muskaan Suri
 
