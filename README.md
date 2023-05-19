@@ -26,4 +26,5 @@ An event planning application that conveniently allows a user manage planning an
 - Implementing dark theme for the app<br>
 - User gets notified when event is approaching<br>
 - Countdown until the event day is displayed to the user<br>
-- Users can select the date and time of the event through a calendar
+- Users can select the date and time of the event through a calendar<br>
+- Splash screen
