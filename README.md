@@ -4,26 +4,26 @@ An event planning application that conveniently allows a user manage planning an
 
 # Group I
 
--Khushi Suri 
--Muskaan Suri
--Mohammed Lateef Mohammed Ismail
--Raghul Ragavan Pandiarajan
+- Khushi Suri<br>
+- Muskaan Suri<br>
+- Mohammed Lateef Mohammed Ismail<br>
+- Raghul Ragavan Pandiarajan
 
 ## Features 
 
--Users can explore nearby cafes and restaurants on the map and choose a venue.
--Users can explore the venue on Google Maps.
--Users can create an invitation using provided templates for different occasions.
--Users can preview the invitation in light and Dark Modes.
--Users can edit the details on the invitation.
--Users can download the invitation as a png file.
--Users can explore popular menu items and add them to their menu.
--Users can also add custom menu items.
--Users can add tasks to a todo list to list the tasks required to be done.
--Users can remove tasks from a to-do list.
--Users can edit tasks from a to-do list.
--Users can change the status of tasks in a todo list.
--Users can explore popular party playlists on Spotify.
--Users can select a playlist most suitable for their event and add it to their planner.
--Users can display a final planner with all the above-mentioned parts including selected venue, invitation, food menu, and to-do list , selected playlist and download it as a pdf.
--Users can also preview the planner in dark mode.
+- Users can locate nearby venues with Google Maps integration<br>
+- Users can add custom location using Google Maps integration<br>
+- Users can create an invitation using provided templates which will include details such as venue time text etc. for different occasions<br>
+- Users can edit the details on the invitation<br>
+- Users can download the invitation as a png file with text information and attractive design<br>
+- Users can group their guests into categories and plan the seating arrangement<br>
+- Users can also add custom menu items<br>
+- Users can add tasks to a todo list to list the tasks required to be done.
+- Users can remove tasks from a to-do list<br>
+- Users can edit tasks from a to-do list<br>
+- Users can add playlists to the event from a selection of popular playlists on Spotify<br>
+- Users can display a final planner with all the above-mentioned parts including selected venue, invitation, food menu, and to-do list , selected playlist and download it as a pdf<br>
+- Implementing dark theme for the app<br>
+- User gets notified when event is approaching<br>
+- Countdown until the event day is displayed to the user<br>
+- Users can select the date and time of the event through a calendar
