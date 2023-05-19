@@ -17,7 +17,6 @@ An event planning application that conveniently allows a user manage planning an
 - Users can edit the details on the invitation<br>
 - Users can download the invitation as a png file with text information and attractive design<br>
 - Users can group their guests into categories and plan the seating arrangement<br>
-- Users can also add custom menu items<br>
 - Users can add tasks to a todo list to list the tasks required to be done.
 - Users can remove tasks from a to-do list<br>
 - Users can edit tasks from a to-do list<br>
@@ -27,4 +26,4 @@ An event planning application that conveniently allows a user manage planning an
 - User gets notified when event is approaching<br>
 - Countdown until the event day is displayed to the user<br>
 - Users can select the date and time of the event through a calendar<br>
-- Splash screen
+- Splash screen at the entry of the app
