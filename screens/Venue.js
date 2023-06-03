@@ -1,7 +1,8 @@
 import { View } from "react-native"
+import Map from "../components/Map/Map"
 
 const Venue = () => {
-    return <View></View>
+    return <Map></Map>
 }
 
 export default Venue

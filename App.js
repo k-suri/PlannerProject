@@ -11,6 +11,7 @@ import AppLoading from "expo-app-loading";
 import { useFonts } from "expo-font";
 import { Image } from "react-native";
 import { colors } from "./utils/Colors";
+import { PlannerProvider } from "./contexts/PlannerContext";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -26,6 +27,7 @@ export default function App() {
   return (
     <>
       <StatusBar style="auto" />
+      <PlannerProvider>
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={({ navigation }) => ({
@@ -56,6 +58,7 @@ export default function App() {
           ></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
+      </PlannerProvider>
     </>
   );
 }
