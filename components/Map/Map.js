@@ -1,9 +1,10 @@
 import * as Location from "expo-location";
 import { useContext, useEffect, useState } from "react";
-import { PlannerContext} from "../../contexts/PlannerContext";
+import { PlannerContext } from "../../contexts/PlannerContext";
 import { getVenues } from "../../utils/Yelp";
-import { StyleSheet ,Text} from "react-native";
-import MapView , { Callout, Marker } from "react-native-maps";
+import { StyleSheet, Text, Image, Button, Linking } from "react-native";
+import MapView, { Callout, Marker } from "react-native-maps";
+import { colors } from "../../utils/Colors";
 const Map = () => {
   const plannerContext = useContext(PlannerContext);
   const [cafes, setCafes] = useState([]);
@@ -75,26 +76,43 @@ const Map = () => {
       <Marker
         pinColor="#9c89b8"
         key={location.id}
-        title={location.name}
         coordinate={location.coordinates}
-      ></Marker>
+        style={{ width: 200 }}
+      >
+        <Callout style={styles.callout}>
+          <Text style={styles.name}>{location.name}</Text>
+          <Text style={styles.phone}>{location.phone}</Text>
+          <Button
+            title="Select"
+            onPress={plannerContext.addVenue(location)}
+            style={styles.select}
+          ></Button>
+        </Callout>
+      </Marker>
     ));
   };
 
   const renderRestaurants = () => {
     return restaurants.map((location) => (
       <Marker
-        pinColor="#foa6ca"
+        pinColor="pink"
         key={location.id}
-        title={location.name}
         coordinate={location.coordinates}
-      ></Marker>
+      >
+        <Callout style={styles.callout}>
+          <Text style={styles.name}>{location.name}</Text>
+          <Text style={styles.phone}>{location.phone}</Text>
+          <Button
+            title="Select"
+            onPress={plannerContext.addVenue(location)}
+            style={styles.select}
+          ></Button>
+        </Callout>
+      </Marker>
     ));
   };
 
-  
-  return  (
-    plannerContext.currentLocation?
+  return plannerContext.currentLocation ? (
     <MapView
       style={styles.map}
       initialRegion={{
@@ -106,7 +124,7 @@ const Map = () => {
       {cafes.length > 0 && renderCafes()}
       {restaurants.length > 0 && renderRestaurants()}
     </MapView>
-    :
+  ) : (
     <Text>Loading...</Text>
   );
 };
@@ -118,4 +136,29 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
+  callout: {
+    width: 200,
+    paddingHorizontal: 10,
+  },
+  select: {
+    width: 50,
+    color: "white",
+    backgroundColor: colors.action200,
+  },
+  name: {
+    fontSize: 20,
+    fontFamily: "Pacifico",
+    color: colors.action,
+  },
+  phone: {
+    fontSize: 15,
+    fontWeight: "600",
+    color: colors.primary,
+    fontFamily: "Sacramento-Regular",
+  },
+  review:{
+    fontFamily: "Sacramento-Regular",
+    marginBottom: 5,
+    fontSize:25
+  }
 });
