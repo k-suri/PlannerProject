@@ -12,6 +12,7 @@ import { useFonts } from "expo-font";
 import { Image } from "react-native";
 import { colors } from "./utils/Colors";
 import { PlannerProvider } from "./contexts/PlannerContext";
+import Invite from "./components/Invite";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -58,6 +59,10 @@ export default function App() {
           <Stack.Screen
             name="Playlist Screen"
             component={Playlist}
+          ></Stack.Screen> 
+          <Stack.Screen
+            name="Invite 1"
+            component={Invite}
           ></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, StyleSheet, TextInput, Text , Image } from "react-native";
+import { View, StyleSheet, TextInput, Text, Image } from "react-native";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 
 import { colors } from "../utils/Colors";
@@ -44,7 +44,7 @@ const Invite = () => {
         <View style={styles.bgBar}></View>
         <View style={styles.bgBar}></View>
         <View style={styles.bgBar}></View>
-        <View style={styles.bgBar}></View> 
+        <View style={styles.bgBar}></View>
         <View style={styles.bgBar}></View>
         <View style={styles.bgBar}></View>
         <View style={styles.bgBar}></View>
@@ -69,33 +69,33 @@ const Invite = () => {
         <Text style={styles.text3}>birthday bash</Text>
       </View>
       <Image
-      style={styles.bow}
-         source={require('../assets/icons/bow-tie.png')}
-      /> 
+        style={styles.bow}
+        source={require("../assets/icons/bow-tie.png")}
+      />
       <Image
-      style={styles.bow2}
-         source={require('../assets/icons/bow-tie.png')}
+        style={styles.bow2}
+        source={require("../assets/icons/bow-tie.png")}
       />
 
       <View style={styles.layerC}>
         <TextInput
-        style={styles.text3 }
+          style={styles.text3}
           class="date"
           onChangeText={onChangeDate}
           value={data.date}
         ></TextInput>
         <TextInput
-        style={styles.text }
+          style={styles.text}
           class="time"
           onChangeText={onChangeTime}
           value={data.time}
         ></TextInput>
         <TextInput
           class="venue"
-          style={styles.text }
+          style={styles.text}
           onChangeText={onChangeVenue}
           value={data.venue}
-        ></TextInput> 
+        ></TextInput>
         <Text style={styles.text3}> R.s.v.p to xxx.xxx.xxx</Text>
       </View>
     </View>
@@ -106,73 +106,63 @@ export default Invite;
 
 const styles = StyleSheet.create({
   container: {
-    height: "80%",
-    backgroundColor: "#fff",
-    flexDirection:"column",
+    height: "90%",
+    backgroundColor: "#FEFFE4",
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    position:"relative",
-    overflow:"hidden",
+    position: "relative",
+    overflow: "hidden",
+    margin: 15,
   },
   Inputs: {
     width: "70%",
-    height: 32,
+    height: 50,
     padding: 7,
-    fontStyle: "italic",
-    
+
+    color: "#FDFED9",
   },
- bow:{ 
-   
-    position:"absolute",
-    height:60,
-    width:60,
-    left:63,
-    top:262,
-    zIndex:1
-
- },
- bow2:{ 
-   
-    position:"absolute",
-    height:60,
-    width:60,
-    right:63,
-    top:262,
-    zIndex:1
-
- },
+  bow: {
+    position: "absolute",
+    height: 60,
+    width: 60,
+    left: 49,
+    top: 300,
+    zIndex: 1,
+  },
+  bow2: {
+    position: "absolute",
+    height: 60,
+    width: 60,
+    right: 49,
+    top: 300,
+    zIndex: 1,
+  },
   text: {
     fontFamily: "montez",
     fontSize: 24,
     textAlign: "center",
-    padding:7,
-    color:"#FFFDD0"
-
-  }, 
-  text2:{
-
+    padding: 7,
+    color: "#FFFDD0",
+  },
+  text2: {
     fontFamily: "Pacifico",
     fontSize: 28,
     textAlign: "center",
-    padding:5
+    padding: 5,
+  },
 
-  }, 
-
-  text3:{
-
+  text3: {
     fontFamily: "amatic",
     fontSize: 24,
     textAlign: "center",
-    padding:5,
-    color:"#55AECD",
-    
-    
-
+    padding: 5,
+    color: "#55AECD",
   },
 
   layerA: {
-    height: 60,
-    width: 150,
+    height: 80,
+    width: 160,
     backgroundColor: "#ffb6c1",
     borderRdius: 5,
     border: 2,
@@ -184,10 +174,12 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 3.2,
     borderBottomColor: colors.action,
     borderBottomWidth: 4,
+    display: "flex",
+    alignItems: "center",
   },
   layerB: {
-    height: 90,
-    width: 200,
+    height: 110,
+    width: 210,
     backgroundColor: "#ffb6c1",
     borderRdius: 5,
     border: 2,
@@ -199,25 +191,27 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 3.2,
     borderBottomColor: colors.action,
     borderBottomWidth: 4,
-    position:"relative"
-    
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
+    position: "relative",
   },
 
   triangle: {
     width: 50,
-    height: 180,
+    height: 190,
     borderLeftWidth: 25,
     borderLeftColor: "transparent",
     borderRightWidth: 25,
     borderRightColor: "transparent",
     borderBottomWidth: 60,
     borderBottomColor: "#FFD580",
-    
   },
 
   layerC: {
-    height: 155,
-    width: 250,
+    height: 170,
+    width: 260,
     backgroundColor: "#ffb6c1",
     borderRdius: 5,
     border: 2,
@@ -229,23 +223,26 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 3.2,
     borderBottomColor: colors.action,
     borderBottomWidth: 4,
-    marginBottom:50,
-    
+    marginBottom: 50,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
   },
 
-  pattern:{
-    position:"absolute",
-    height:"250%",
-    width:"270%",
-    display:"flex",
-    flexDirection:"row",
-    alignItems:"center",
-    justifyContent:"space-evenly"
+  pattern: {
+    position: "absolute",
+    height: "250%",
+    width: "270%",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-evenly",
   },
-  bgBar:{
-    width:10,
-    height:"100%",
-    backgroundColor:colors.action,
-    transform:"rotateZ(-45deg)"
-  }
+  bgBar: {
+    width: 10,
+    height: "100%",
+    backgroundColor: colors.action,
+    transform: "rotateZ(-45deg)",
+  },
 });
