@@ -7,9 +7,11 @@ import Invitations from "./screens/Invitations";
 import TodoList from "./screens/TodoList";
 import GuestList from "./screens/GuestList";
 import Playlist from "./screens/Playlist";
+import PlaylistDetails from "./screens/PlaylistDetails";
 import AppLoading from "expo-app-loading";
 import { useFonts } from "expo-font";
-import { Image } from "react-native";
+import {PlannerProvider} from "./contexts/PlannerContext"
+
 import { colors } from "./utils/Colors";
 
 export default function App() {
@@ -26,6 +28,7 @@ export default function App() {
   return (
     <>
       <StatusBar style="auto" />
+      <PlannerProvider>
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={({ navigation }) => ({
@@ -54,8 +57,13 @@ export default function App() {
             name="Playlist Screen"
             component={Playlist}
           ></Stack.Screen>
+          <Stack.Screen
+            name="Playlist Details"
+            component={PlaylistDetails}
+          ></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
+      </PlannerProvider>
     </>
   );
 }
