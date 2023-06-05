@@ -17,9 +17,9 @@ export default function App() {
   const saveTodoList = async () => {
     try {
       await AsyncStorage.setItem('todos', JSON.stringify(todos));
-      console.log('Todo list saved successfully.');
+      console.log('Todo List saved successfully.');
     } catch (error) {
-      console.log('Error saving todo list:', error);
+      console.log('Error Saving todo list:', error);
     }
   };
 
@@ -31,20 +31,21 @@ export default function App() {
           setTodos(JSON.parse(savedTodos));
         }
       } catch (error) {
-        console.log('Error loading todo list:', error);
+        console.log('Error Loading todo list:', error);
       }
     };
 
     loadTodoList();
 
     return () => {
-      saveTodoList(); // Save the todo list before the component unmounts
+      saveTodoList(); // Save the todo list
     };
   }, []);
 
   useEffect(() => {
     saveTodoList(); // Save the todo list whenever it changes
   }, [todos]);
+
 
   return (
     <View style={styles.container}>
@@ -57,6 +58,7 @@ export default function App() {
           value={todoItem}
           placeholder="Enter a todo item"
         />
+
         <TouchableOpacity style={styles.addButton} onPress={handleAddTodo}>
           <Text style={styles.addButtonText}>Add</Text>
         </TouchableOpacity>
@@ -82,20 +84,22 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#fff',
   },
+  
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
     color:'#9c89b8',
-   r
   },
+
   inputContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 10,
   },
+
   input: {
     flex: 1,
     height: 40,
@@ -105,27 +109,32 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 5,
   },
+
   addButton: {
     backgroundColor: '#746091',
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 5,
   },
+
   addButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
   },
+
   list: {
     flex: 1,
     marginTop: 10,
   },
+
   todoItem: {
     backgroundColor: '#f0f0f0',
     padding: 10,
     borderRadius: 5,
     marginBottom: 10,
   },
+
   todoText: {
     fontSize: 16,
   },
