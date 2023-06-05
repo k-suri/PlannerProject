@@ -4,20 +4,20 @@ import { colors } from "../utils/Colors";
 import { useContext, useEffect, useState } from "react";
 import ConfirmVenueModal from "../components/Map/ConfirmVenueModal";
 import { PlannerContext } from "../contexts/PlannerContext";
+import { useNavigation } from "@react-navigation/native";
 
 const Venue = () => {
   const [showModal, setShowModal] = useState(false);
   const [tempLocation, setTempLocation] = useState(null);
   const plannerContext = useContext(PlannerContext);
+  const navigation = useNavigation()
 
-  useEffect(()=>{
-    plannerContext.addVenue(null)
-  },[])
 
   const confirmHandler = () => {
     plannerContext.addVenue(tempLocation);
     setShowModal(false);
     setTempLocation(null);
+    navigation.navigate("Home Screen")
   };
 
   const cancelHandler = () => {

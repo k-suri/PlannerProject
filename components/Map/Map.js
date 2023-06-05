@@ -23,12 +23,6 @@ const Map = ({setShowModal,setTempLocation}) => {
   }
 
   useEffect(() => {
-    if(plannerContext.venue){
-        navigation.navigate("Home Screen");
-    }
-  }, [plannerContext.venue]);
-
-  useEffect(() => {
     const getLocation = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
