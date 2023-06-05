@@ -13,6 +13,7 @@ const PlannerProvider = ({ children }) => {
   const [venue, setVenue] = useState(null);
   const addVenue = (venue) => {
     setVenue(venue);
+
   };
   const setCurrentLocation = (locationVal) => {
     setLocation(locationVal);

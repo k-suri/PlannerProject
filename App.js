@@ -27,6 +27,9 @@ export default function App() {
     "OpenSans-SemiBold":require("./assets/fonts/OpenSans-SemiBold.ttf"),
     "OpenSans-Bold":require("./assets/fonts/OpenSans-Bold.ttf"),
     "OpenSans-ExtraBold":require("./assets/fonts/OpenSans-ExtraBold.ttf"),
+    "amatic":require("./assets/fonts/AmaticSC-Bold.ttf"),
+    "montez":require("./assets/fonts/Montez-Regular.ttf"),
+    "Parisienne":require("./assets/fonts/Parisienne-Regular.ttf")
   });
 
   if (!fontsLoaded) {
