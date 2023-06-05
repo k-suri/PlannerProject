@@ -1,18 +1,33 @@
 import * as Location from "expo-location";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { PlannerContext } from "../../contexts/PlannerContext";
 import { getVenues } from "../../utils/Yelp";
-import { StyleSheet, Text, Image, Button, Linking } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { colors } from "../../utils/Colors";
-const Map = () => {
+import { useNavigation } from "@react-navigation/native";
+const Map = ({setShowModal,setTempLocation}) => {
   const plannerContext = useContext(PlannerContext);
   const [cafes, setCafes] = useState([]);
   const [restaurants, setRestaurants] = useState([]);
+  const navigation = useNavigation()
+
   const deltas = {
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   };
+
+  const selectHandler = (location) =>{
+    setTempLocation(location)
+    setShowModal(true)
+  }
+
+  useEffect(() => {
+    console.log(plannerContext.venue);
+    if(plannerContext.venue){
+        navigation.navigate("Home Screen");
+    }
+  }, [plannerContext.venue]);
 
   useEffect(() => {
     const getLocation = async () => {
@@ -46,7 +61,6 @@ const Map = () => {
             coordinates: element.coordinates,
             id: element.id,
             imageUrl: element.image_url,
-            yelpUrl: element.yelp_url,
             phone: element.phone,
           };
           tempCafes.push(obj);
@@ -60,7 +74,6 @@ const Map = () => {
             coordinates: element.coordinates,
             id: element.id,
             imageUrl: element.image_url,
-            yelpUrl: element.yelp_url,
             phone: element.phone,
           };
           tempRestaurants.push(obj);
@@ -79,14 +92,14 @@ const Map = () => {
         coordinate={location.coordinates}
         style={{ width: 200 }}
       >
-        <Callout style={styles.callout}>
+        <Callout
+          style={styles.callout}
+          onPress={()=>selectHandler(location)}
+          onCalloutPress={()=>selectHandler(location)}
+        >
           <Text style={styles.name}>{location.name}</Text>
           <Text style={styles.phone}>{location.phone}</Text>
-          <Button
-            title="Select"
-            onPress={plannerContext.addVenue(location)}
-            style={styles.select}
-          ></Button>
+          <Text style={styles.select}>Select</Text>
         </Callout>
       </Marker>
     ));
@@ -99,14 +112,14 @@ const Map = () => {
         key={location.id}
         coordinate={location.coordinates}
       >
-        <Callout style={styles.callout}>
+        <Callout
+          style={styles.callout}
+          onPress={()=>selectHandler(location)}
+          onCalloutPress={()=>selectHandler(location)}
+        >
           <Text style={styles.name}>{location.name}</Text>
           <Text style={styles.phone}>{location.phone}</Text>
-          <Button
-            title="Select"
-            onPress={plannerContext.addVenue(location)}
-            style={styles.select}
-          ></Button>
+          <Text style={styles.select}>Select</Text>
         </Callout>
       </Marker>
     ));
@@ -135,15 +148,22 @@ const styles = StyleSheet.create({
   map: {
     height: "100%",
     width: "100%",
+    position: "relative",
   },
   callout: {
     width: 200,
     paddingHorizontal: 10,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   select: {
-    width: 50,
-    color: "white",
-    backgroundColor: colors.action200,
+    color: "crimson",
+    textAlign: "center",
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    fontFamily: "Roboto-Medium",
+    fontSize: 18,
   },
   name: {
     fontSize: 20,
@@ -153,12 +173,12 @@ const styles = StyleSheet.create({
   phone: {
     fontSize: 15,
     fontWeight: "600",
-    color: colors.primary,
+    color: colors.gray,
     fontFamily: "Sacramento-Regular",
   },
-  review:{
+  review: {
     fontFamily: "Sacramento-Regular",
     marginBottom: 5,
-    fontSize:25
-  }
+    fontSize: 25,
+  },
 });
