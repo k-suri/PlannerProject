@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const YELP_API_KEY =
-  "JyiUTc5rMEd8qifEUOoV6_MQQkgIwrL505Z6hOMpoQpGHveVaVde5XQJbeV11hMwu2k-YsdG7hlacSMl5nTvfgRaJ6GjtF9ITyMVi_cw2iRJrQSCSV9q4PJ4veN3ZHYx";
+  "uJI4RsbEJEXBkOnWlSiyBauNhtSANTBr1MNp9H7urUy4rkeWAJh6vbOsVC9TrEeRn6C9TH0yeXHI9oM84Zz_BSctygfvL5I6DACCQ6kJvs1qCyXRvVeE_65KX01-ZHYx";
 
 const api = axios.create({
   baseURL: "https://api.yelp.com/v3",
