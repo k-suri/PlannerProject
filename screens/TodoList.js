@@ -38,12 +38,12 @@ export default function App() {
     loadTodoList();
 
     return () => {
-      saveTodoList(); // Save the todo list
+      saveTodoList();
     };
   }, []);
 
   useEffect(() => {
-    saveTodoList(); // Save the todo list whenever it changes
+    saveTodoList(); 
   }, [todos]);
 
 
