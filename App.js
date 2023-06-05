@@ -13,7 +13,6 @@ import { useFonts } from "expo-font";
 import {PlannerProvider} from "./contexts/PlannerContext"
 
 import { colors } from "./utils/Colors";
-import { PlannerProvider } from "./contexts/PlannerContext";
 
 export default function App() {
   const Stack = createNativeStackNavigator();

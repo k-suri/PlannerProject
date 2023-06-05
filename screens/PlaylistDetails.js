@@ -4,12 +4,12 @@ import axios from 'axios';
 import getSpotifyAccessToken from '../utils/SpotifyAccessToken';
 import { colors } from '../utils/Colors';
 import { useNavigation, useRoute } from '@react-navigation/core';
-//import { PlannerContext } from '../contexts/PlannerContext';
+import { PlannerContext } from '../contexts/PlannerContext';
 import uuid from 'react-uuid';
 
 const PlaylistDetails = () => {
 
-   // const { addPlaylist } = useContext(PlannerContext);
+    const plannerContext = useContext(PlannerContext);
     const route = useRoute()
     const navigation = useNavigation()
     const { playlist } = route.params;
@@ -21,6 +21,10 @@ const PlaylistDetails = () => {
       fetchTracks();
     }, []);
   
+    useEffect(()=>{
+     console.log(plannerContext.playlist,"testttttt");
+    })
+
     const fetchTracks = async () => {
       try {
         const spotifyToken = await getSpotifyAccessToken();
@@ -54,9 +58,9 @@ const PlaylistDetails = () => {
             id: playlist.id,
             name: playlist.name,
           };
-          console.log(eventPlaylist)
-    
-          //addPlaylist(eventPlaylist);
+          
+          console.log(eventPlaylist);
+          plannerContext.addPlaylist(eventPlaylist);
     
         //   ToastAndroid.showWithGravity(
         //     'Playlist added!',
@@ -65,7 +69,6 @@ const PlaylistDetails = () => {
         //   );
     
         //   onChangeText('');
-        const { playlist } = contextValue;
         //console.log(playlist[0].id)
 
         navigation.navigate('Home Screen');
