@@ -23,7 +23,6 @@ const Map = ({setShowModal,setTempLocation}) => {
   }
 
   useEffect(() => {
-    console.log(plannerContext.venue);
     if(plannerContext.venue){
         navigation.navigate("Home Screen");
     }
