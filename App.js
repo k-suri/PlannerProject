@@ -15,9 +15,12 @@ import { colors } from "./utils/Colors";
 export default function App() {
   const Stack = createNativeStackNavigator();
   let [fontsLoaded] = useFonts({
-    Pacifico: require("./assets/fonts/Pacifico-Regular.ttf"),
+    "Pacifico": require("./assets/fonts/Pacifico-Regular.ttf"),
     "Sacramento-Regular": require("./assets/fonts/Sacramento-Regular.ttf"),
     "Sofia-Regular": require("./assets/fonts/Sofia-Regular.ttf"),
+    "amatic":require("./assets/fonts/AmaticSC-Bold.ttf"),
+    "montez":require("./assets/fonts/Montez-Regular.ttf"),
+    "Parisienne":require("./assets/fonts/Parisienne-Regular.ttf")
   });
 
   if (!fontsLoaded) {
