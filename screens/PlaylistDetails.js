@@ -15,21 +15,15 @@ const PlaylistDetails = () => {
     const { playlist } = route.params;
     const [tracks, setTracks] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
-    //const contextValue = useContext(PlannerContext);
   
     useEffect(() => {
       fetchTracks();
     }, []);
-  
-    useEffect(()=>{
-     console.log(plannerContext.playlist,"testttttt");
-    })
-
+    
     const fetchTracks = async () => {
       try {
         const spotifyToken = await getSpotifyAccessToken();
         const information = await getPlaylistTracks(playlist.id, spotifyToken);
-        //console.log(information.items)
         if (information.items[0].track.name === null) {
             setErrorMessage('No Tracks found!');
             console.log(errorMessage)
@@ -61,16 +55,6 @@ const PlaylistDetails = () => {
           
           console.log(eventPlaylist);
           plannerContext.addPlaylist(eventPlaylist);
-    
-        //   ToastAndroid.showWithGravity(
-        //     'Playlist added!',
-        //     ToastAndroid.SHORT,
-        //     ToastAndroid.CENTER
-        //   );
-    
-        //   onChangeText('');
-        //console.log(playlist[0].id)
-
         navigation.navigate('Home Screen');
       };
     
