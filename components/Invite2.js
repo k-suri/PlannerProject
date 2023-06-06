@@ -72,11 +72,6 @@ const invite2 = () => {
           </TextInput>
         </View>
       </View>
-
-      {/* <View style={styles.letter}>
-        <View style={styles.triangle}></View>
-        <View style={styles.rec}></View>
-      </View> */}
     </View>
   );
 };
