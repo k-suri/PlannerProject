@@ -1,9 +1,10 @@
 export const colors = {
-    primary:"#foe6ef",
+    primary:"#F0E6EF",
     secondary:"#efc3e6",
     secondary200:"#foa6ca",
     action:"#9c89b8",
-    action200:"#746091"
+    action200:"#746091",
+    gray:"#5A5A5A"
 }
 
 /*

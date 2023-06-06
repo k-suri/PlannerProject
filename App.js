@@ -11,13 +11,25 @@ import AppLoading from "expo-app-loading";
 import { useFonts } from "expo-font";
 import { Image } from "react-native";
 import { colors } from "./utils/Colors";
+import { PlannerProvider } from "./contexts/PlannerContext";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
   let [fontsLoaded] = useFonts({
-    Pacifico: require("./assets/fonts/Pacifico-Regular.ttf"),
+    "Pacifico": require("./assets/fonts/Pacifico-Regular.ttf"),
     "Sacramento-Regular": require("./assets/fonts/Sacramento-Regular.ttf"),
     "Sofia-Regular": require("./assets/fonts/Sofia-Regular.ttf"),
+    "Roboto-Light": require("./assets/fonts/Roboto-Light.ttf"),
+    "Roboto-Medium":require("./assets/fonts/Roboto-Medium.ttf"),
+    "Roboto-Regular":require("./assets/fonts/Roboto-Regular.ttf"),
+    "Roboto-Bold":require("./assets/fonts/Roboto-Bold.ttf"),
+    "OpenSans-Light":require("./assets/fonts/OpenSans-Light.ttf"),
+    "OpenSans-SemiBold":require("./assets/fonts/OpenSans-SemiBold.ttf"),
+    "OpenSans-Bold":require("./assets/fonts/OpenSans-Bold.ttf"),
+    "OpenSans-ExtraBold":require("./assets/fonts/OpenSans-ExtraBold.ttf"),
+    "amatic":require("./assets/fonts/AmaticSC-Bold.ttf"),
+    "montez":require("./assets/fonts/Montez-Regular.ttf"),
+    "Parisienne":require("./assets/fonts/Parisienne-Regular.ttf")
   });
 
   if (!fontsLoaded) {
@@ -26,6 +38,7 @@ export default function App() {
   return (
     <>
       <StatusBar style="auto" />
+      <PlannerProvider>
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={({ navigation }) => ({
@@ -56,6 +69,7 @@ export default function App() {
           ></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
+      </PlannerProvider>
     </>
   );
 }

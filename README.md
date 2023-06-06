@@ -1,6 +1,6 @@
 # EventBuddy
 
-An event planning application that conveniently allows a user manage planning an event successfully by providing support for selecting a venue , creating and downloading an invitation, selecting the menu or creating a todo list, providing functionality to choose a perfect spotify playlist for your event.
+An event planning application that conveniently allows a user manage planning an event successfully by providing support for selecting a venue , creating and downloading an invitation, managing the guest list or creating a todo list, providing functionality to choose a perfect spotify playlist for your event.
 
 # Group I
 
@@ -21,7 +21,7 @@ An event planning application that conveniently allows a user manage planning an
 - Users can remove tasks from a to-do list<br>
 - Users can edit tasks from a to-do list<br>
 - Users can add playlists to the event from a selection of popular playlists on Spotify<br>
-- Users can display a final planner with all the above-mentioned parts including selected venue, invitation, food menu, and to-do list , selected playlist and download it as a pdf<br>
+- Users can display a final planner with all the above-mentioned parts including selected venue, invitation, guest list, and to-do list , selected playlist and download it as a pdf<br>
 - Implementing dark theme for the app<br>
 - User gets notified when event is approaching<br>
 - Countdown until the event day is displayed to the user<br>
