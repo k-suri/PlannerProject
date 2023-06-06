@@ -1,6 +1,6 @@
 import { View, StyleSheet, TextInput, Text, Image } from "react-native";
 import { useState } from "react";
-const invite2 = () => {
+const Invite2 = () => {
   const [data, setData] = useState({
     couple: "ryan and ashley",
     date: "SATURDAY , may 6th 2018, 8:30",
@@ -76,7 +76,7 @@ const invite2 = () => {
   );
 };
 
-export default invite2;
+export default Invite2;
 
 const styles = StyleSheet.create({
   main: {
