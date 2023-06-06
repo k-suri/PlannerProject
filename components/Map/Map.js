@@ -10,7 +10,7 @@ const Map = ({setShowModal,setTempLocation}) => {
   const plannerContext = useContext(PlannerContext);
   const [cafes, setCafes] = useState([]);
   const [restaurants, setRestaurants] = useState([]);
-  const navigation = useNavigation()
+  const [status] = Location.useForegroundPermissions();
 
   const deltas = {
     latitudeDelta: 0.0922,
@@ -34,7 +34,7 @@ const Map = ({setShowModal,setTempLocation}) => {
       plannerContext.setCurrentLocation(location);
     };
     getLocation();
-  }, []);
+  }, [status]);
 
   useEffect(() => {
     if (plannerContext.currentLocation) {
