@@ -13,6 +13,7 @@ import { Image } from "react-native";
 import { colors } from "./utils/Colors";
 import { PlannerProvider } from "./contexts/PlannerContext";
 import Invite from "./components/Invite";
+import invite2 from "./components/Invite2";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -63,6 +64,10 @@ export default function App() {
           <Stack.Screen
             name="Invite 1"
             component={Invite}
+          ></Stack.Screen>
+           <Stack.Screen
+            name="Invite 2"
+            component={invite2}
           ></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>

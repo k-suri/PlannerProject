@@ -1,9 +1,13 @@
 import { View, StyleSheet, Text, Image, Button } from "react-native";
 import Invite from "../components/Invite";
-import { useNavigation } from '@react-navigation/native';
+import Invite2 from "../components/Invite2";
+import { useNavigation } from "@react-navigation/native";
 const Invitations = () => {
-    const navigation = useNavigation();
-  return (
+  const navigation = useNavigation();
+  return (  
+
+
+
     <View>
       <Text style={styles.text2}>Templates</Text>
       <View style={styles.main}>
@@ -14,19 +18,29 @@ const Invitations = () => {
               source={require("../assets/icons/cake.png")}
             ></Image>
           </View>
-          <Button title="Edit" color="#841584"
-          onPress={() => {
-            navigation.navigate("Invite 1");
-          }}
-          ></Button>
+          <View style={styles.btn}>
+            <Image source={require("../assets/icons/edit.svg")} 
+            style={styles.icon}></Image>
+            <Button
+              title="customize"
+              color="#841584"
+              onPress={() => {
+                navigation.navigate("Invite 1");
+              }}
+            ></Button>
+          </View>
         </View>
         <View style={styles.sec}>
-        <View style={styles.box}>
-            
-        </View>
-        <Button title="Edit" color="#841584" 
-        
-        ></Button>
+          <View style={styles.box}>
+          <Image
+              style={styles.img}
+              source={require("../assets/icons/anniversary.png")}
+            ></Image>
+          </View>
+          <Button title="customize" color="#841584"
+           onPress={() => {
+            navigation.navigate("Invite 2");
+          }}></Button>
         </View>
       </View>
     </View>
@@ -39,18 +53,18 @@ const styles = StyleSheet.create({
   main: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-evenly", 
-    alignItems:'center'
+    justifyContent: "space-evenly",
+    alignItems: "center",
   },
 
   box: {
-    height: 170,
+    height: 190,
     width: 150,
     border: 5,
-    backgroundColor: "#FEFFE4",
+    backgroundColor: "#FCFBFB",
     borderRadius: 7,
     marginTop: 50,
-    padding: 10,
+    padding: 11,
   },
 
   text2: {
@@ -64,6 +78,10 @@ const styles = StyleSheet.create({
   img: {
     width: "100%",
     height: "100%",
+  }, 
+  icon:{ 
+     height :15,
+     width:15
   },
   sec: {
     display: "flex",
@@ -71,5 +89,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-evenly",
     height: 300,
+  },
+  btn: {
+    display: "flex",
   },
 });
