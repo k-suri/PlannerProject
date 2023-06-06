@@ -1,22 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { PlannerContext } from '../contexts/PlannerContext';
 
 
 export default function App() {
   const [todoItem, setTodoItem] = useState('');
-  const [todos, setTodos] = useState([]);
-
+  //const [todos, setTodos] = useState([]);
+  const plannerContext = useContext(PlannerContext)
   const handleAddTodo = () => {
     if (todoItem !== '') {
-      setTodos([...todos, { id: Date.now(), text: todoItem }]);
+      const tempTodos = [...plannerContext.todos, { id: Date.now(), text: todoItem }]
+      plannerContext.addTodos(tempTodos)
       setTodoItem('');
     }
   };
 
   const saveTodoList = async () => {
     try {
-      await AsyncStorage.setItem('todos', JSON.stringify(todos));
+      await AsyncStorage.setItem('todos', JSON.stringify(plannerContext.todos));
       console.log('Todo List saved successfully.');
     } catch (error) {
       console.log('Error Saving todo list:', error);
@@ -28,7 +30,7 @@ export default function App() {
       try {
         const savedTodos = await AsyncStorage.getItem('todos');
         if (savedTodos !== null) {
-          setTodos(JSON.parse(savedTodos));
+          plannerContext.addTodos(JSON.parse(savedTodos));
         }
       } catch (error) {
         console.log('Error Loading todo list:', error);
@@ -44,7 +46,7 @@ export default function App() {
 
   useEffect(() => {
     saveTodoList(); 
-  }, [todos]);
+  }, [plannerContext.todos]);
 
 
   return (
@@ -66,7 +68,7 @@ export default function App() {
 
       <FlatList
         style={styles.list}
-        data={todos}
+        data={plannerContext.todos}
         renderItem={({ item }) => (
           <View style={styles.todoItem}>
             <Text style={styles.todoText}>{item.text}</Text>
