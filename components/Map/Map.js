@@ -6,6 +6,8 @@ import { StyleSheet, Text } from "react-native";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { colors } from "../../utils/Colors";
 import { useNavigation } from "@react-navigation/native";
+import Loader from "../Loader";
+
 const Map = ({setShowModal,setTempLocation}) => {
   const plannerContext = useContext(PlannerContext);
   const [cafes, setCafes] = useState([]);
@@ -131,7 +133,7 @@ const Map = ({setShowModal,setTempLocation}) => {
       {restaurants.length > 0 && renderRestaurants()}
     </MapView>
   ) : (
-    <Text>Loading...</Text>
+    <Loader/>
   );
 };
 
