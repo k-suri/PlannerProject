@@ -14,6 +14,9 @@ import { colors } from "./utils/Colors";
 import { PlannerProvider } from "./contexts/PlannerContext";
 import Invite from "./components/Invite";
 import Invite2 from "./components/Invite2";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {Ionicons} from "@expo/vector-icons"
+import Planner from "./screens/Planner";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -34,6 +37,37 @@ export default function App() {
     "Parisienne":require("./assets/fonts/Parisienne-Regular.ttf")
   });
 
+  const bottomTabs = createBottomTabNavigator()
+
+  const Tabs = () => {
+    return (
+      <bottomTabs.Navigator>
+        <bottomTabs.Screen
+          name="Home Screen" 
+          component={Home}
+          options={{
+            tabBarLabel: "Home",
+            tabBarIcon: () => (
+              <Ionicons name="home" color={colors.action} size={22}></Ionicons>
+            ),
+            tabBarActiveTintColor:colors.secondary200
+          }}
+        ></bottomTabs.Screen>
+        <bottomTabs.Screen
+          name="Planner Screen"
+          component={Planner}
+          options={{
+            tabBarLabel: "Digital Planner",
+            tabBarIcon: () => (
+              <Ionicons name="library" color={colors.action} size={22}></Ionicons>
+            ),
+            tabBarActiveTintColor:colors.secondary200
+          }}
+        >
+        </bottomTabs.Screen>
+      </bottomTabs.Navigator>
+    );
+  };
   if (!fontsLoaded) {
     return <AppLoading />;
   }
@@ -51,7 +85,7 @@ export default function App() {
             }
           })}
         >
-          <Stack.Screen name="Home Screen" component={Home}></Stack.Screen>
+          <Stack.Screen name="Home Planner Tab" component={Tabs}  options={{ headerShown: false }}></Stack.Screen>
           <Stack.Screen name="Venue Screen" component={Venue}></Stack.Screen>
           <Stack.Screen
             name="Invitation Screen"
