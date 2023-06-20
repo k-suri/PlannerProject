@@ -6,7 +6,9 @@ export const PlannerContext = createContext({
   venue: null,
   addVenue: () => {},
   todos:[],
-  addTodos:() => {}
+  addTodos:() => {},
+  removeTodo: () => {},
+
 });
 
 const PlannerProvider = ({ children }) => {
@@ -24,13 +26,19 @@ const PlannerProvider = ({ children }) => {
   const addTodos = (todos)=>{
     setTodos(todos)
   }
+  const removeTodo = (id) => {
+    const updatedTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(updatedTodos);
+  };
+
   const value = {
     currentLocation: location,
     setCurrentLocation: setCurrentLocation,
     venue: venue,
     addVenue: addVenue,
     todos:todos,
-    addTodos:addTodos
+    addTodos:addTodos,
+    removeTodo: removeTodo,
   };
   return (
     <PlannerContext.Provider value={value}>{children}</PlannerContext.Provider>

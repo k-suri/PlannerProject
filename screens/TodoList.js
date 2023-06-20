@@ -2,18 +2,24 @@ import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PlannerContext } from '../contexts/PlannerContext';
+import { Swipeable } from 'react-native-gesture-handler';
 
 
 export default function App() {
   const [todoItem, setTodoItem] = useState('');
-  //const [todos, setTodos] = useState([]);
-  const plannerContext = useContext(PlannerContext)
+  const plannerContext = useContext(PlannerContext);
+
   const handleAddTodo = () => {
     if (todoItem !== '') {
-      const tempTodos = [...plannerContext.todos, { id: Date.now(), text: todoItem }]
-      plannerContext.addTodos(tempTodos)
+      const tempTodos = [...plannerContext.todos, { id: Date.now(), text: todoItem }];
+      plannerContext.addTodos(tempTodos);
       setTodoItem('');
     }
+  };
+
+  const handleRemoveTodo = (id) => {
+    const updatedTodos = plannerContext.todos.filter((todo) => todo.id !== id);
+    plannerContext.addTodos(updatedTodos);
   };
 
   const saveTodoList = async () => {
@@ -45,9 +51,8 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    saveTodoList(); 
+    saveTodoList();
   }, [plannerContext.todos]);
-
 
   return (
     <View style={styles.container}>
@@ -56,7 +61,7 @@ export default function App() {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          onChangeText={text => setTodoItem(text)}
+          onChangeText={(text) => setTodoItem(text)}
           value={todoItem}
           placeholder="Enter a todo item"
         />
@@ -67,15 +72,27 @@ export default function App() {
       </View>
 
       <FlatList
-        style={styles.list}
-        data={plannerContext.todos}
-        renderItem={({ item }) => (
-          <View style={styles.todoItem}>
-            <Text style={styles.todoText}>{item.text}</Text>
-          </View>
-        )}
-        keyExtractor={item => item.id.toString()}
-      />
+  style={styles.list}
+  data={plannerContext.todos}
+  renderItem={({ item }) => (
+    <Swipeable
+      renderRightActions={() => (
+        <TouchableOpacity
+          style={styles.removeButton}
+          onPress={() => handleRemoveTodo(item.id)}
+        >
+          <Text style={styles.removeButtonText}>Remove</Text>
+        </TouchableOpacity>
+      )}
+    >
+      <View style={styles.todoItem}>
+        <Text style={styles.todoText}>{item.text}</Text>
+      </View>
+    </Swipeable>
+  )}
+  keyExtractor={(item) => item.id.toString()}
+/>
+
     </View>
   );
 }
@@ -86,13 +103,13 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#fff',
   },
-  
+
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
-    color:'#9c89b8',
+    color: '#9c89b8',
   },
 
   inputContainer: {
@@ -135,9 +152,30 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginBottom: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 
   todoText: {
+    flex: 1,
     fontSize: 16,
   },
+
+  removeButton: {
+    backgroundColor: '#9c89b8',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '20%', 
+    paddingVertical: 10,
+    borderRadius: 5,
+  },
+  
+  
+  removeButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  }
+  
 });

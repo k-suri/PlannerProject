@@ -12,6 +12,8 @@ import { useFonts } from "expo-font";
 import { Image } from "react-native";
 import { colors } from "./utils/Colors";
 import { PlannerProvider } from "./contexts/PlannerContext";
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -37,6 +39,7 @@ export default function App() {
   }
   return (
     <>
+       <GestureHandlerRootView style={{ flex: 1 }}>
       <StatusBar style="auto" />
       <PlannerProvider>
       <NavigationContainer>
@@ -70,6 +73,7 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
       </PlannerProvider>
+      </GestureHandlerRootView>
     </>
   );
 }
