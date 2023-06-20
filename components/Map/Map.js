@@ -6,11 +6,13 @@ import { StyleSheet, Text } from "react-native";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { colors } from "../../utils/Colors";
 import { useNavigation } from "@react-navigation/native";
+import Loader from "../Loader";
+
 const Map = ({setShowModal,setTempLocation}) => {
   const plannerContext = useContext(PlannerContext);
   const [cafes, setCafes] = useState([]);
   const [restaurants, setRestaurants] = useState([]);
-  const navigation = useNavigation()
+  const [status] = Location.useForegroundPermissions();
 
   const deltas = {
     latitudeDelta: 0.0922,
@@ -34,7 +36,7 @@ const Map = ({setShowModal,setTempLocation}) => {
       plannerContext.setCurrentLocation(location);
     };
     getLocation();
-  }, []);
+  }, [status]);
 
   useEffect(() => {
     if (plannerContext.currentLocation) {
@@ -131,7 +133,7 @@ const Map = ({setShowModal,setTempLocation}) => {
       {restaurants.length > 0 && renderRestaurants()}
     </MapView>
   ) : (
-    <Text>Loading...</Text>
+    <Loader/>
   );
 };
 

@@ -17,7 +17,7 @@ const Venue = () => {
     plannerContext.addVenue(tempLocation);
     setShowModal(false);
     setTempLocation(null);
-    navigation.navigate("Home Screen")
+    navigation.navigate("Planner Screen")
   };
 
   const cancelHandler = () => {
