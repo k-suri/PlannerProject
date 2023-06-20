@@ -4,22 +4,26 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PlannerContext } from '../contexts/PlannerContext';
 import { Swipeable } from 'react-native-gesture-handler';
 
-
 export default function App() {
   const [todoItem, setTodoItem] = useState('');
+  const [isInputValid, setIsInputValid] = useState(true); // Track input validation
   const plannerContext = useContext(PlannerContext);
 
   const handleAddTodo = () => {
     if (todoItem !== '') {
+      setIsInputValid(true); 
       const tempTodos = [...plannerContext.todos, { id: Date.now(), text: todoItem }];
       plannerContext.addTodos(tempTodos);
       setTodoItem('');
+    } else {
+      setIsInputValid(false); 
     }
   };
 
   const handleRemoveTodo = (id) => {
     const updatedTodos = plannerContext.todos.filter((todo) => todo.id !== id);
     plannerContext.addTodos(updatedTodos);
+    console.log('Todo item removed successfully.');
   };
 
   const saveTodoList = async () => {
@@ -71,28 +75,36 @@ export default function App() {
         </TouchableOpacity>
       </View>
 
-      <FlatList
-  style={styles.list}
-  data={plannerContext.todos}
-  renderItem={({ item }) => (
-    <Swipeable
-      renderRightActions={() => (
-        <TouchableOpacity
-          style={styles.removeButton}
-          onPress={() => handleRemoveTodo(item.id)}
-        >
-          <Text style={styles.removeButtonText}>Remove</Text>
-        </TouchableOpacity>
+      {!isInputValid && (
+        <Text style={styles.validationText}>Please enter a todo</Text>
       )}
-    >
-      <View style={styles.todoItem}>
-        <Text style={styles.todoText}>{item.text}</Text>
-      </View>
-    </Swipeable>
-  )}
-  keyExtractor={(item) => item.id.toString()}
-/>
 
+      {plannerContext.todos.length === 0 ? (
+        <Text style={styles.emptyText}>Empty list</Text>
+      ) : (
+        <FlatList
+          style={styles.list}
+          data={plannerContext.todos}
+          renderItem={({ item }) => (
+            <Swipeable
+              renderRightActions={() => (
+                <TouchableOpacity
+                  style={styles.removeButton}
+                  onPress={() => handleRemoveTodo(item.id)}
+                >
+                  <Text style={styles.removeButtonText}>Remove</Text>
+                </TouchableOpacity>
+              )}
+            >
+              <View style={styles.todoItem}>
+                <Text style={styles.todoText}>{item.text}</Text>
+              </View>
+            </Swipeable>
+          )}
+          keyExtractor={(item) => item.id.toString()}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
+        />
+      )}
     </View>
   );
 }
@@ -103,7 +115,6 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#fff',
   },
-
   title: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -111,14 +122,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#9c89b8',
   },
-
   inputContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 10,
   },
-
   input: {
     flex: 1,
     height: 40,
@@ -128,25 +137,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 5,
   },
-
   addButton: {
     backgroundColor: '#746091',
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 5,
   },
-
   addButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
   },
-
   list: {
     flex: 1,
     marginTop: 10,
   },
-
   todoItem: {
     backgroundColor: '#f0f0f0',
     padding: 10,
@@ -156,26 +161,36 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-
   todoText: {
     flex: 1,
     fontSize: 16,
   },
-
   removeButton: {
     backgroundColor: '#9c89b8',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '20%', 
+    width: '20%',
     paddingVertical: 10,
     borderRadius: 5,
   },
-  
-  
   removeButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
-  }
-  
+  },
+  emptyText: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: 10,
+    color: '#ccc',
+  },
+  validationText: {
+    fontSize: 16,
+    color: 'red',
+    textAlign: 'center',
+    marginTop: 10,
+  },
+  separator: {
+    height: 10, 
+  },
 });
