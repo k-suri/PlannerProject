@@ -7,7 +7,7 @@ const Home = () => {
     {
       title: "Venue",
       img: require("../assets/icons/venue.png"),
-      screen: "Venue Screen",
+      screen: "Venue Home",
     },
     {
       title: "Invitations",
