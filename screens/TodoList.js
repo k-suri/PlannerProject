@@ -6,7 +6,7 @@ import { Swipeable } from 'react-native-gesture-handler';
 
 export default function App() {
   const [todoItem, setTodoItem] = useState('');
-  const [isInputValid, setIsInputValid] = useState(true); // Track input validation
+  const [isInputValid, setIsInputValid] = useState(true); 
   const plannerContext = useContext(PlannerContext);
 
   const handleAddTodo = () => {
