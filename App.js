@@ -19,6 +19,7 @@ import Planner from "./screens/Planner";
 import VenueCurrent from "./components/VenueCurrent";
 import VenueCustom from "./components/VenueCustom";
 import Venue from "./screens/Venue";
+import { LogBox } from 'react-native';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -41,6 +42,7 @@ export default function App() {
 
   const bottomTabs = createBottomTabNavigator();
 
+  LogBox.ignoreLogs(['Warning: ...']); 
   const Tabs = () => {
     return (
       <bottomTabs.Navigator>

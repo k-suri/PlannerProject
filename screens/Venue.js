@@ -1,19 +1,18 @@
 import { View, StyleSheet, Text, Image, Pressable } from "react-native";
-import { colors } from "../utils/Colors";
 import { useNavigation } from "@react-navigation/native";
 
 const Venue = () => {
   const navigation = useNavigation();
   return (
     <View style={styles.wrapper}>
-        <Pressable style={styles.menuItem} onPress={()=> navigation.navigate("Venue Current")}>
+        <Pressable style={styles.menuItem} onPress={()=> navigation.navigate("Venue Current",{getCurrentLocation:true})}>
           <Image
             source={require("../assets/icons/pins.png")}
             style={styles.image}
           ></Image>
           <Text style={styles.text}>Explore nearby locations</Text>
         </Pressable>
-        <Pressable style={styles.menuItem}>
+        <Pressable style={styles.menuItem} onPress={()=> navigation.navigate("Venue Custom",{getCurrentLocation:false})}>
           <Image
             source={require("../assets/icons/pins.png")}
             style={styles.image}
