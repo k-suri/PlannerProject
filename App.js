@@ -126,6 +126,10 @@ export default function App() {
               name="Playlist Screen"
               component={Playlist}
             ></Stack.Screen>
+            <Stack.Screen
+              name="Playlist Details"
+              component={PlaylistDetails}
+            ></Stack.Screen>
             <Stack.Screen name="Invite 1" component={Invite}></Stack.Screen>
             <Stack.Screen name="Invite 2" component={Invite2}></Stack.Screen>
           </Stack.Navigator>

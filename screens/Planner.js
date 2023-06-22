@@ -28,6 +28,17 @@ const Planner = () => {
           {plannerContext.todos.length > 0 && (
             <PlannerSection title={"Todo List"}></PlannerSection>
           )}
+          {plannerContext.playlist && (
+            <PlannerSection title={"PlayList"}>
+              <View style={styles.venueDetails}>
+                <Text style={styles.name}>{plannerContext.playlist.name}</Text>
+                <Text style={styles.phone}>{plannerContext.playlist.id}</Text>
+                <Pressable onPress={()=>{
+                   navigation.navigate("Playlist Screen")
+                }}><Text style={styles.btn}>Choose Another Playlist</Text></Pressable>
+              </View>
+            </PlannerSection>
+          )}
         </>
       ) : (
         <Text style={styles.text}>
