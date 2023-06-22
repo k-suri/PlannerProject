@@ -53,7 +53,6 @@ const PlaylistDetails = () => {
             name: playlist.name,
           };
           
-          console.log(eventPlaylist);
           plannerContext.addPlaylist(eventPlaylist);
           navigation.navigate("Planner Screen")
       };
