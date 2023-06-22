@@ -4,10 +4,7 @@ import Invite2 from "../components/Invite2";
 import { useNavigation } from "@react-navigation/native";
 const Invitations = () => {
   const navigation = useNavigation();
-  return (  
-
-
-
+  return (
     <View>
       <Text style={styles.text2}>Templates</Text>
       <View style={styles.main}>
@@ -19,8 +16,10 @@ const Invitations = () => {
             ></Image>
           </View>
           <View style={styles.btn}>
-            <Image source={require("../assets/icons/edit.svg")} 
-            style={styles.icon}></Image>
+            <Image
+              source={require("../assets/icons/edit.svg")}
+              style={styles.icon}
+            ></Image>
             <Button
               title="customize"
               color="#841584"
@@ -32,15 +31,18 @@ const Invitations = () => {
         </View>
         <View style={styles.sec}>
           <View style={styles.box}>
-          <Image
+            <Image
               style={styles.img}
               source={require("../assets/icons/anniversary.png")}
             ></Image>
           </View>
-          <Button title="customize" color="#841584"
-           onPress={() => {
-            navigation.navigate("Invite 2");
-          }}></Button>
+          <Button
+            title="customize"
+            color="#841584"
+            onPress={() => {
+              navigation.navigate("Invite 2");
+            }}
+          ></Button>
         </View>
       </View>
     </View>
@@ -78,10 +80,10 @@ const styles = StyleSheet.create({
   img: {
     width: "100%",
     height: "100%",
-  }, 
-  icon:{ 
-     height :15,
-     width:15
+  },
+  icon: {
+    height: 15,
+    width: 15,
   },
   sec: {
     display: "flex",
