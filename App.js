@@ -6,9 +6,10 @@ import Invitations from "./screens/Invitations";
 import TodoList from "./screens/TodoList";
 import GuestList from "./screens/GuestList";
 import Playlist from "./screens/Playlist";
+import PlaylistDetails from "./screens/PlaylistDetails";
 import AppLoading from "expo-app-loading";
 import { useFonts } from "expo-font";
-import { Image } from "react-native";
+
 import { colors } from "./utils/Colors";
 import { PlannerProvider } from "./contexts/PlannerContext";
 import Invite from "./components/Invite";
@@ -124,6 +125,10 @@ export default function App() {
             <Stack.Screen
               name="Playlist Screen"
               component={Playlist}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="Playlist Details"
+              component={PlaylistDetails}
             ></Stack.Screen>
             <Stack.Screen name="Invite 1" component={Invite}></Stack.Screen>
             <Stack.Screen name="Invite 2" component={Invite2}></Stack.Screen>
