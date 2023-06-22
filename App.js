@@ -17,6 +17,7 @@ import Invite2 from "./components/Invite2";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {Ionicons} from "@expo/vector-icons"
 import Planner from "./screens/Planner";
+import Seating from "./screens/Seating"
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -98,6 +99,10 @@ export default function App() {
           <Stack.Screen
             name="Guest List Screen"
             component={GuestList}
+          ></Stack.Screen>
+          <Stack.Screen
+            name="Seating Screen"
+            component={Seating}
           ></Stack.Screen>
           <Stack.Screen
             name="Playlist Screen"
