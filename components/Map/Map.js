@@ -35,7 +35,7 @@ const Map = ({setShowModal,setTempLocation}) => {
       let location = await Location.getCurrentPositionAsync({});
       plannerContext.setCurrentLocation(location);
     };
-    console.log(route.params.value);
+    
     if(route.params.getCurrentLocation===true){
     plannerContext.setCurrentLocation(null)
       getLocation();
