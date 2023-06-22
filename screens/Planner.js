@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
     fontFamily: "Sacramento-Regular",
   },
   btn:{
+    marginTop:20,
     backgroundColor:colors.action200,
     color:"white",
     fontSize:18,
