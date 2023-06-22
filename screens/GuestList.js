@@ -1,7 +1,7 @@
 import { View } from "react-native"
 
 const GuestList = () => {
-    return <View></View>
+  return <View> 
+  </View>
 }
-
-export default GuestList
+export default GuestList;

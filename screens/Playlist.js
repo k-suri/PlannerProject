@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: '#fff',
     borderRadius: 25,
-    width: 350,
+    width: 320,
     height: 50,
     padding: 10,
     fontSize: 16,
@@ -126,7 +126,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
     borderRadius: 10,
-    margin: 10,
+    margin: 5,
+    flexWrap: 'no-wrap',
+    overflow: 'hidden'
   },
   playlistItemImage: {
     width: 80,
@@ -135,13 +137,14 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   playlistItemTextContainer: {
-    display: 'flex',
+    //display: 'flex',
+    //width:'90%',
   },
   playlistItemName: {
     fontSize: 16,
     fontWeight: 'bold',
     color: '#000',
-    marginRight: 20,
+    paddingRight: 30,
   },
   playlistItemOwner: {
     fontSize: 14,
