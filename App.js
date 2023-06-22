@@ -109,6 +109,10 @@ export default function App() {
             component={GuestList}
           ></Stack.Screen>
           <Stack.Screen
+            name="Seating Screen"
+            component={Seating}
+          ></Stack.Screen>
+          <Stack.Screen
             name="Playlist Screen"
             component={Playlist}
           ></Stack.Screen> 
