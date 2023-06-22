@@ -8,10 +8,22 @@ const Planner = () => {
   const plannerContext = useContext(PlannerContext);
   return (
     <View>
-      {plannerContext.venue || plannerContext.todos.length > 0 ? (
+      {plannerContext.venue ||
+      plannerContext.todos.length > 0 ||
+      plannerContext.playlist ? (
         <>
-         { plannerContext.venue &&  <PlannerSection title={"Venue"}></PlannerSection>}
-         {plannerContext.todos.length > 0 && <PlannerSection title={"Todo List"}></PlannerSection>}
+          {plannerContext.venue && (
+            <PlannerSection title={"Venue"}></PlannerSection>
+          )}
+          {plannerContext.todos.length > 0 && (
+            <PlannerSection title={"Todo List"}></PlannerSection>
+          )}
+          {plannerContext.playlist && (
+            <PlannerSection title={"Playlist"}>
+              <Text>Playlist Name: {plannerContext.playlist.name}</Text>
+              <Text>Spotify ID: {plannerContext.playlist.id}</Text>
+            </PlannerSection>
+          )}
         </>
       ) : (
         <Text style={styles.text}>

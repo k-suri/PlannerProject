@@ -129,13 +129,14 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   playlistItemImage: {
-    width: 80,
+    width: '20%',
     height: 80,
     borderRadius: 5,
     marginRight: 10,
   },
   playlistItemTextContainer: {
     display: 'flex',
+    width: '80%'
   },
   playlistItemName: {
     fontSize: 16,

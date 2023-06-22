@@ -55,7 +55,7 @@ const PlaylistDetails = () => {
           
           console.log(eventPlaylist);
           plannerContext.addPlaylist(eventPlaylist);
-        navigation.navigate('Home Screen');
+        navigation.navigate('Home Planner Tab');
       };
     
   
