@@ -63,19 +63,19 @@ const PlaylistDetails = () => {
   
     const getPlaylistTracks = async (playlistId, accessToken) => {
       console.log(playlist.id, accessToken)
-      const informationUrl = `https://api.spotify.com/v1/playlists/${playlistId}/tracks?access_token=${accessToken}&limit=50`;
+      const informationUrl = `https://api.spotify.com/v1/playlists/${playlistId}/tracks?access_token=${accessToken}`;
       const response = await axios.get(informationUrl);
       return response.data;
     };
   
     const renderTrackItem = ({ item }) => (
-    <View style={styles.trackItemContainer}>
+        <View style={styles.trackItemContainer}>
         <Image source={item.image}  style={styles.itemImage}></Image>
       <View >
         <Text style={styles.trackItemName}>{item.name}</Text>
         <Text style={styles.trackItemArtist}>{item.artist}</Text>
       </View>
-      </View> 
+      </View>
     );
   
     return (
