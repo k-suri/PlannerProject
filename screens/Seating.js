@@ -8,7 +8,6 @@ const Seating = ({ route }) => {
 
   const handleTablePress = (tableIndex) => {
     if (selectedTable === tableIndex) {
-      // If the selected table is already clicked, reset the animation
       setSelectedTable(null);
       Animated.timing(zoomAnim, {
         toValue: 1,
