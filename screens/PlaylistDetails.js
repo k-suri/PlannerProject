@@ -24,7 +24,7 @@ const PlaylistDetails = () => {
       try {
         const spotifyToken = await getSpotifyAccessToken();
         const information = await getPlaylistTracks(playlist.id, spotifyToken);
-        if (information.items[0].track.name === null) {
+        if (information.items?.[0]?.track?.name === null) {
             setErrorMessage('No Tracks found!');
             console.log(errorMessage)
         }
@@ -63,7 +63,7 @@ const PlaylistDetails = () => {
   
     const getPlaylistTracks = async (playlistId, accessToken) => {
       console.log(playlist.id, accessToken)
-      const informationUrl = `https://api.spotify.com/v1/playlists/${playlistId}/tracks?access_token=${accessToken}`;
+      const informationUrl = `https://api.spotify.com/v1/playlists/${playlistId}/tracks?access_token=${accessToken}&limit=50`;
       const response = await axios.get(informationUrl);
       return response.data;
     };
