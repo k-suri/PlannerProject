@@ -1,26 +1,41 @@
-import { View, StyleSheet, Text, Image, Button } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  Button,
+  TouchableOpacity,
+} from "react-native";
 import Invite from "../components/Invite";
 import Invite2 from "../components/Invite2";
 import { useNavigation } from "@react-navigation/native";
 const Invitations = () => {
   const navigation = useNavigation();
-  return (  
 
-
-
+  return (
     <View>
       <Text style={styles.text2}>Templates</Text>
       <View style={styles.main}>
         <View style={styles.sec}>
-          <View style={styles.box}>
+          <View
+            style={styles.box}
+            onMouseEnter={() => {
+              {
+                styles.boxHover;
+              }
+            }}
+          >
             <Image
               style={styles.img}
               source={require("../assets/icons/cake.png")}
             ></Image>
           </View>
+
           <View style={styles.btn}>
-            <Image source={require("../assets/icons/edit.svg")} 
-            style={styles.icon}></Image>
+            <Image
+              source={require("../assets/icons/edit.svg")}
+              style={styles.icon}
+            ></Image>
             <Button
               title="customize"
               color="#841584"
@@ -32,15 +47,48 @@ const Invitations = () => {
         </View>
         <View style={styles.sec}>
           <View style={styles.box}>
-          <Image
+            <Image
               style={styles.img}
               source={require("../assets/icons/anniversary.png")}
             ></Image>
           </View>
-          <Button title="customize" color="#841584"
-           onPress={() => {
-            navigation.navigate("Invite 2");
-          }}></Button>
+          <Button
+            title="customize"
+            color="#841584"
+            onPress={() => {
+              navigation.navigate("Invite 2");
+            }}
+          ></Button>
+        </View>
+        <View style={styles.sec}>
+          <View style={styles.box}>
+            <Image
+              style={styles.img}
+              source={require("../assets/icons/Wedding.png")}
+            ></Image>
+          </View>
+          <Button
+            title="customize"
+            color="#841584"
+            onPress={() => {
+              navigation.navigate("Invite 3");
+            }}
+          ></Button>
+        </View>
+        <View style={styles.sec}>
+          <View style={styles.box}>
+            <Image
+              style={styles.img}
+              source={require("../assets/icons/houseWarming.png")}
+            ></Image>
+          </View>
+          <Button
+            title="customize"
+            color="#841584"
+            onPress={() => {
+              navigation.navigate("Invite 4");
+            }}
+          ></Button>
         </View>
       </View>
     </View>
@@ -55,6 +103,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
+    flexWrap:"wrap"
   },
 
   box: {
@@ -67,6 +116,8 @@ const styles = StyleSheet.create({
     padding: 11,
   },
 
+
+
   text2: {
     fontFamily: "Pacifico",
     fontSize: 28,
@@ -78,10 +129,10 @@ const styles = StyleSheet.create({
   img: {
     width: "100%",
     height: "100%",
-  }, 
-  icon:{ 
-     height :15,
-     width:15
+  },
+  icon: {
+    height: 15,
+    width: 15,
   },
   sec: {
     display: "flex",

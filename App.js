@@ -14,6 +14,8 @@ import { colors } from "./utils/Colors";
 import { PlannerProvider } from "./contexts/PlannerContext";
 import Invite from "./components/Invite";
 import Invite2 from "./components/Invite2";
+import Invite3 from "./components/Invite3"; 
+import Invite4 from "./components/Invite4";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -76,7 +78,18 @@ export default function App() {
            <Stack.Screen
             name="Invite 2"
             component={Invite2}
+            
           ></Stack.Screen>
+           <Stack.Screen
+            name="Invite 3"
+            component={Invite3}
+          ></Stack.Screen>
+           <Stack.Screen
+            name="Invite 4"
+            component={Invite4}
+            
+          ></Stack.Screen>
+          
         </Stack.Navigator>
       </NavigationContainer>
       </PlannerProvider>
