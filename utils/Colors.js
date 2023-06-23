@@ -7,10 +7,3 @@ export const colors = {
     gray:"#5A5A5A",
     grayLight:"#F5F5F5"
 }
-
-/*
-script fonts
-fontFamily: 'Pacifico', cursive;
-fontFamily: 'Sacramento', cursive;
-fontFamily: 'Sofia', cursive;
-*/

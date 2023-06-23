@@ -14,6 +14,10 @@ import TodoList from "./screens/TodoList";
 import GuestList from "./screens/GuestList";
 import Playlist from "./screens/Playlist";
 import PlaylistDetails from "./screens/PlaylistDetails";
+import AppLoading from "expo-app-loading";
+import { useFonts } from "expo-font";
+import { colors } from "./utils/Colors";
+import { PlannerProvider } from "./contexts/PlannerContext";
 import Invite from "./components/Invite";
 import Invite2 from "./components/Invite2";
 import Planner from "./screens/Planner";
@@ -87,7 +91,7 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <StatusBar style="auto" />
       <PlannerProvider>
-        <NavigationContainer>
+      <NavigationContainer>
           <Stack.Navigator
             screenOptions={({ navigation }) => ({
               title: "EventBuddy",
@@ -102,7 +106,18 @@ export default function App() {
               component={Tabs}
               options={{ headerShown: false }}
             ></Stack.Screen>
-            <Stack.Screen name="Venue Screen" component={Venue}></Stack.Screen>
+            <Stack.Screen
+              name="Venue Home"
+              component={Venue}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="Venue Current"
+              component={VenueCurrent}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="Venue Custom"
+              component={VenueCustom}
+            ></Stack.Screen>
             <Stack.Screen
               name="Invitation Screen"
               component={Invitations}
@@ -116,21 +131,11 @@ export default function App() {
               component={GuestList}
             ></Stack.Screen>
             <Stack.Screen
-              name="Seating Screen"
-              component={Seating}
-            ></Stack.Screen>
-            <Stack.Screen
               name="Playlist Screen"
               component={Playlist}
             ></Stack.Screen>
-            <Stack.Screen
-              name="Invite 1"
-              component={Invite}
-            ></Stack.Screen>
-            <Stack.Screen
-              name="Invite 2"
-              component={Invite2}
-            ></Stack.Screen>
+            <Stack.Screen name="Invite 1" component={Invite}></Stack.Screen>
+            <Stack.Screen name="Invite 2" component={Invite2}></Stack.Screen>
           </Stack.Navigator>
         </NavigationContainer>
       </PlannerProvider>
