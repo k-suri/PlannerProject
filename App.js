@@ -1,32 +1,32 @@
 import { StatusBar } from "expo-status-bar";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Home from "./screens/Home";
 import { NavigationContainer } from "@react-navigation/native";
+import AppLoading from "expo-app-loading";
+import { useFonts } from "expo-font";
+import { colors } from "./utils/Colors";
+import { PlannerProvider } from "./contexts/PlannerContext";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Ionicons } from "@expo/vector-icons";
+import Home from "./screens/Home";
 import Invitations from "./screens/Invitations";
 import TodoList from "./screens/TodoList";
 import GuestList from "./screens/GuestList";
 import Playlist from "./screens/Playlist";
 import PlaylistDetails from "./screens/PlaylistDetails";
-import AppLoading from "expo-app-loading";
-import { useFonts } from "expo-font";
-
-import { colors } from "./utils/Colors";
-import { PlannerProvider } from "./contexts/PlannerContext";
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-
 import Invite from "./components/Invite";
 import Invite2 from "./components/Invite2";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
 import Planner from "./screens/Planner";
 import VenueCurrent from "./components/VenueCurrent";
 import VenueCustom from "./components/VenueCustom";
 import Venue from "./screens/Venue";
-import { LogBox } from 'react-native';
-import Seating from "./screens/Seating"
+import { LogBox } from "react-native";
+import Seating from "./screens/Seating";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
+  const bottomTabs = createBottomTabNavigator();
+
   let [fontsLoaded] = useFonts({
     Pacifico: require("./assets/fonts/Pacifico-Regular.ttf"),
     "Sacramento-Regular": require("./assets/fonts/Sacramento-Regular.ttf"),
@@ -44,9 +44,12 @@ export default function App() {
     Parisienne: require("./assets/fonts/Parisienne-Regular.ttf"),
   });
 
-  const bottomTabs = createBottomTabNavigator();
+  LogBox.ignoreLogs(["Warning: ..."]);
 
-  LogBox.ignoreLogs(['Warning: ...']); 
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
+
   const Tabs = () => {
     return (
       <bottomTabs.Navigator>
@@ -80,64 +83,57 @@ export default function App() {
     );
   };
 
-  // if (!fontsLoaded) {
-  //   SplashScreen.preventAutoHideAsync()
-  //     .catch(console.warn)
-  //     .finally(() => {
-  //       SplashScreen.hideAsync();
-  //     });
-
-  //   return null;
-  // }
-
   return (
-    <>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <StatusBar style="auto" />
       <PlannerProvider>
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={({ navigation }) => ({
-            title: "EventBuddy",
-            headerTitleStyle:{
-              color:colors.action200,
-              fontFamily:"Pacifico"
-            }
-          })}
-        >
-          <Stack.Screen name="Home Planner Tab" component={Tabs}  options={{ headerShown: false }}></Stack.Screen>
-          <Stack.Screen name="Venue Screen" component={Venue}></Stack.Screen>
-          <Stack.Screen
-            name="Invitation Screen"
-            component={Invitations}
-          ></Stack.Screen>
-          <Stack.Screen
-            name="Todo List Screen"
-            component={TodoList}
-          ></Stack.Screen>
-          <Stack.Screen
-            name="Guest List Screen"
-            component={GuestList}
-          ></Stack.Screen>
-          <Stack.Screen
-            name="Seating Screen"
-            component={Seating}
-          ></Stack.Screen>
-          <Stack.Screen
-            name="Playlist Screen"
-            component={Playlist}
-          ></Stack.Screen> 
-          <Stack.Screen
-            name="Invite 1"
-            component={Invite}
-          ></Stack.Screen>
-           <Stack.Screen
-            name="Invite 2"
-            component={Invite2}
-          ></Stack.Screen>
-        </Stack.Navigator>
-      </NavigationContainer>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={({ navigation }) => ({
+              title: "EventBuddy",
+              headerTitleStyle: {
+                color: colors.action200,
+                fontFamily: "Pacifico",
+              },
+            })}
+          >
+            <Stack.Screen
+              name="Home Planner Tab"
+              component={Tabs}
+              options={{ headerShown: false }}
+            ></Stack.Screen>
+            <Stack.Screen name="Venue Screen" component={Venue}></Stack.Screen>
+            <Stack.Screen
+              name="Invitation Screen"
+              component={Invitations}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="Todo List Screen"
+              component={TodoList}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="Guest List Screen"
+              component={GuestList}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="Seating Screen"
+              component={Seating}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="Playlist Screen"
+              component={Playlist}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="Invite 1"
+              component={Invite}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="Invite 2"
+              component={Invite2}
+            ></Stack.Screen>
+          </Stack.Navigator>
+        </NavigationContainer>
       </PlannerProvider>
-    </>
+    </GestureHandlerRootView>
   );
 }
-
