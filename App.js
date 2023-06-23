@@ -133,14 +133,6 @@ export default function App() {
             component={Seating}
           ></Stack.Screen>
           <Stack.Screen
-            name="Todo List Screen"
-            component={TodoList}
-          ></Stack.Screen>
-          <Stack.Screen
-            name="Guest List Screen"
-            component={GuestList}
-          ></Stack.Screen>
-          <Stack.Screen
             name="Playlist Screen"
             component={Playlist}
           ></Stack.Screen> 
