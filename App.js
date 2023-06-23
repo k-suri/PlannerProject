@@ -9,7 +9,6 @@ import Playlist from "./screens/Playlist";
 import PlaylistDetails from "./screens/PlaylistDetails";
 import AppLoading from "expo-app-loading";
 import { useFonts } from "expo-font";
-
 import { colors } from "./utils/Colors";
 import { PlannerProvider } from "./contexts/PlannerContext";
 import Invite from "./components/Invite";
