@@ -1,29 +1,32 @@
 import { StatusBar } from "expo-status-bar";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Home from "./screens/Home";
 import { NavigationContainer } from "@react-navigation/native";
+import AppLoading from "expo-app-loading";
+import { useFonts } from "expo-font";
+import { colors } from "./utils/Colors";
+import { PlannerProvider } from "./contexts/PlannerContext";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Ionicons } from "@expo/vector-icons";
+import Home from "./screens/Home";
 import Invitations from "./screens/Invitations";
 import TodoList from "./screens/TodoList";
 import GuestList from "./screens/GuestList";
 import Playlist from "./screens/Playlist";
 import PlaylistDetails from "./screens/PlaylistDetails";
-import AppLoading from "expo-app-loading";
-import { useFonts } from "expo-font";
-import { colors } from "./utils/Colors";
-import { PlannerProvider } from "./contexts/PlannerContext";
 import Invite from "./components/Invite";
 import Invite2 from "./components/Invite2";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
 import Planner from "./screens/Planner";
 import VenueCurrent from "./components/VenueCurrent";
 import VenueCustom from "./components/VenueCustom";
 import Venue from "./screens/Venue";
-import { LogBox } from 'react-native';
-import Seating from "./screens/Seating"
+import { LogBox } from "react-native";
+import Seating from "./screens/Seating";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
+  const bottomTabs = createBottomTabNavigator();
+
   let [fontsLoaded] = useFonts({
     Pacifico: require("./assets/fonts/Pacifico-Regular.ttf"),
     "Sacramento-Regular": require("./assets/fonts/Sacramento-Regular.ttf"),
@@ -41,9 +44,12 @@ export default function App() {
     Parisienne: require("./assets/fonts/Parisienne-Regular.ttf"),
   });
 
-  const bottomTabs = createBottomTabNavigator();
+  LogBox.ignoreLogs(["Warning: ..."]);
 
-  LogBox.ignoreLogs(['Warning: ...']); 
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
+
   const Tabs = () => {
     return (
       <bottomTabs.Navigator>
@@ -53,11 +59,11 @@ export default function App() {
           options={{
             tabBarLabel: "Home",
             tabBarIcon: () => (
-              <Ionicons name="home" color={colors.action} size={22}></Ionicons>
+              <Ionicons name="home" color={colors.action} size={22} />
             ),
             tabBarActiveTintColor: colors.secondary200,
           }}
-        ></bottomTabs.Screen>
+        />
         <bottomTabs.Screen
           name="Planner Screen"
           component={Planner}
@@ -76,11 +82,9 @@ export default function App() {
       </bottomTabs.Navigator>
     );
   };
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  }
+
   return (
-    <>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <StatusBar style="auto" />
       <PlannerProvider>
       <NavigationContainer>
@@ -135,6 +139,6 @@ export default function App() {
           </Stack.Navigator>
         </NavigationContainer>
       </PlannerProvider>
-    </>
+    </GestureHandlerRootView>
   );
 }
