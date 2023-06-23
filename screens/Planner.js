@@ -1,9 +1,10 @@
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import { StyleSheet, View, Text, Pressable , FlatList} from "react-native";
 import { colors } from "../utils/Colors";
 import { useContext } from "react";
 import { PlannerContext } from "../contexts/PlannerContext";
 import PlannerSection from "../components/PlannerSection";
 import { useNavigation } from "@react-navigation/native";
+
 
 const Planner = () => {
   const plannerContext = useContext(PlannerContext);
@@ -11,30 +12,45 @@ const Planner = () => {
   return (
     <View>
       {plannerContext.venue ||
-      plannerContext.todos.length > 0 ||
-      plannerContext.playlist ? (
+        plannerContext.todos.length > 0 ||
+        plannerContext.playlist ? (
         <>
           {plannerContext.venue && (
             <PlannerSection title={"Venue"}>
               <View style={styles.venueDetails}>
                 <Text style={styles.name}>{plannerContext.venue.name}</Text>
                 <Text style={styles.phone}>{plannerContext.venue.phone}</Text>
-                <Pressable onPress={()=>{
-                   navigation.navigate("Venue Home")
+                <Pressable onPress={() => {
+                  navigation.navigate("Venue Home")
                 }}><Text style={styles.btn}>Choose Another Venue</Text></Pressable>
               </View>
             </PlannerSection>
           )}
           {plannerContext.todos.length > 0 && (
-            <PlannerSection title={"Todo List"}></PlannerSection>
+            <PlannerSection title={"Todo List"}>
+              <FlatList
+                style={styles.list}
+                data={plannerContext.todos}
+                renderItem={({ item }) => (
+                  <View style={styles.todoItem}>
+                    <Text style={styles.todoText}>{item.text}</Text>
+                  </View>
+                )}
+                keyExtractor={(item) => item.id.toString()}
+                ItemSeparatorComponent={() => <View style={styles.separator} />}
+              />
+              <Pressable onPress={() => {
+                navigation.navigate("Todo List Screen")
+              }}><Text style={styles.btn}>Edit Todo List</Text></Pressable>
+            </PlannerSection>
           )}
           {plannerContext.playlist && (
             <PlannerSection title={"PlayList"}>
               <View style={styles.venueDetails}>
                 <Text style={styles.name}>{plannerContext.playlist.name}</Text>
                 <Text style={styles.phone}>{plannerContext.playlist.id}</Text>
-                <Pressable onPress={()=>{
-                   navigation.navigate("Playlist Screen")
+                <Pressable onPress={() => {
+                  navigation.navigate("Playlist Screen")
                 }}><Text style={styles.btn}>Choose Another Playlist</Text></Pressable>
               </View>
             </PlannerSection>
@@ -58,9 +74,9 @@ const styles = StyleSheet.create({
     color: colors.gray,
     margin: 20,
   },
-  venueDetails:{
-    display:"flex",
-    flexDirection:"column",
+  venueDetails: {
+    display: "flex",
+    flexDirection: "column",
   },
   name: {
     fontSize: 20,
@@ -73,12 +89,29 @@ const styles = StyleSheet.create({
     color: colors.gray,
     fontFamily: "Sacramento-Regular",
   },
-  btn:{
-    marginTop:20,
-    backgroundColor:colors.action200,
-    color:"white",
-    fontSize:18,
-    padding:10,
-    borderRadius:5,
-  }
+  btn: {
+    marginTop: 20,
+    backgroundColor: colors.action200,
+    color: "white",
+    fontSize: 18,
+    padding: 10,
+    borderRadius: 5,
+  },
+  list: {
+    flex: 1,
+    marginTop: 10,
+  },
+  todoItem: {
+    backgroundColor: '#f0f0f0',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  todoText: {
+    flex: 1,
+    fontSize: 16,
+  },
 });
