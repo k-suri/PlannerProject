@@ -58,35 +58,30 @@ const GuestList = ({ navigation }) => {
   const splitIntoGroups = (total, family, friends, acquaintances, others, seatsPerTable, numberOfTables) => {
     const groups = [];
   
-    // Split family members into groups
     for (let i = 1; i <= family; i++) {
       const groupName = `F${i}`;
       const person = `${groupName}${i}`;
       groups.push({ person, category: 'Family' });
     }
   
-    // Split friends into groups
     for (let i = 1; i <= friends; i++) {
       const groupName = `FR${i}`;
       const person = `${groupName}${i}`;
       groups.push({ person, category: 'Friends' });
     }
   
-    // Split acquaintances into groups
     for (let i = 1; i <= acquaintances; i++) {
       const groupName = `A${i}`;
       const person = `${groupName}${i}`;
       groups.push({ person, category: 'Acquaintances' });
     }
   
-    // Split others into groups
     for (let i = 1; i <= others; i++) {
       const groupName = `O${i}`;
       const person = `${groupName}${i}`;
       groups.push({ person, category: 'Others' });
     }
   
-    // Shuffle the groups randomly
     const shuffledGroups = shuffleArray(groups);
   
     const tables = [];
