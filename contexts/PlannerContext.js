@@ -9,7 +9,9 @@ export const PlannerContext = createContext({
   playlist:null,
   addPlaylist: () => {},
   todos:[],
-  addTodos:() => {}
+  addTodos:() => {},
+  removeTodo: () => {},
+
 });
 
 const PlannerProvider = ({ children }) => {
@@ -31,6 +33,11 @@ const PlannerProvider = ({ children }) => {
   const addTodos = (todos)=>{
     setTodos(todos)
   }
+  const removeTodo = (id) => {
+    const updatedTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(updatedTodos);
+  };
+
   const value = {
     currentLocation: location,
     setCurrentLocation: setCurrentLocation,
@@ -39,7 +46,8 @@ const PlannerProvider = ({ children }) => {
     playlist: playlistDetails,
     addPlaylist: addPlaylist,
     todos:todos,
-    addTodos:addTodos
+    addTodos:addTodos,
+    removeTodo: removeTodo,
   };
   return (
     <PlannerContext.Provider value={value}>{children}</PlannerContext.Provider>
