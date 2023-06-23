@@ -85,47 +85,52 @@ export default function App() {
       <StatusBar style="auto" />
       <PlannerProvider>
       <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={({ navigation }) => ({
-            title: "EventBuddy",
-            headerTitleStyle:{
-              color:colors.action200,
-              fontFamily:"Pacifico"
-            }
-          })}
-        >
-          <Stack.Screen name="Home Planner Tab" component={Tabs}  options={{ headerShown: false }}></Stack.Screen>
-          <Stack.Screen name="Venue Screen" component={Venue}></Stack.Screen>
-          <Stack.Screen
-            name="Invitation Screen"
-            component={Invitations}
-          ></Stack.Screen>
-          <Stack.Screen
-            name="Todo List Screen"
-            component={TodoList}
-          ></Stack.Screen>
-          <Stack.Screen
-            name="Guest List Screen"
-            component={GuestList}
-          ></Stack.Screen>
-          <Stack.Screen
-            name="Seating Screen"
-            component={Seating}
-          ></Stack.Screen>
-          <Stack.Screen
-            name="Playlist Screen"
-            component={Playlist}
-          ></Stack.Screen> 
-          <Stack.Screen
-            name="Invite 1"
-            component={Invite}
-          ></Stack.Screen>
-           <Stack.Screen
-            name="Invite 2"
-            component={Invite2}
-          ></Stack.Screen>
-        </Stack.Navigator>
-      </NavigationContainer>
+          <Stack.Navigator
+            screenOptions={({ navigation }) => ({
+              title: "EventBuddy",
+              headerTitleStyle: {
+                color: colors.action200,
+                fontFamily: "Pacifico",
+              },
+            })}
+          >
+            <Stack.Screen
+              name="Home Planner Tab"
+              component={Tabs}
+              options={{ headerShown: false }}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="Venue Home"
+              component={Venue}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="Venue Current"
+              component={VenueCurrent}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="Venue Custom"
+              component={VenueCustom}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="Invitation Screen"
+              component={Invitations}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="Todo List Screen"
+              component={TodoList}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="Guest List Screen"
+              component={GuestList}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="Playlist Screen"
+              component={Playlist}
+            ></Stack.Screen>
+            <Stack.Screen name="Invite 1" component={Invite}></Stack.Screen>
+            <Stack.Screen name="Invite 2" component={Invite2}></Stack.Screen>
+          </Stack.Navigator>
+        </NavigationContainer>
       </PlannerProvider>
     </>
   );
