@@ -61,7 +61,6 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Todo List</Text>
-
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
