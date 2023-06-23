@@ -1,11 +1,13 @@
 import * as Location from "expo-location";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { PlannerContext } from "../../contexts/PlannerContext";
 import { getVenues } from "../../utils/Yelp";
 import { StyleSheet, Text } from "react-native";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { colors } from "../../utils/Colors";
-import { useNavigation } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
+import Loader from "../Loader";
+
 const Map = ({setShowModal,setTempLocation}) => {
   const plannerContext = useContext(PlannerContext);
   const [cafes, setCafes] = useState([]);
@@ -16,7 +18,7 @@ const Map = ({setShowModal,setTempLocation}) => {
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   };
-
+  const route = useRoute()
   const selectHandler = (location) =>{
     setTempLocation(location)
     setShowModal(true)
@@ -33,7 +35,11 @@ const Map = ({setShowModal,setTempLocation}) => {
       let location = await Location.getCurrentPositionAsync({});
       plannerContext.setCurrentLocation(location);
     };
-    getLocation();
+    
+    if(route.params.getCurrentLocation===true){
+    plannerContext.setCurrentLocation(null)
+      getLocation();
+    }
   }, [status]);
 
   useEffect(() => {
@@ -118,7 +124,7 @@ const Map = ({setShowModal,setTempLocation}) => {
     ));
   };
 
-  return plannerContext.currentLocation ? (
+  return plannerContext.currentLocation && cafes && restaurants ? (
     <MapView
       style={styles.map}
       initialRegion={{
@@ -131,7 +137,7 @@ const Map = ({setShowModal,setTempLocation}) => {
       {restaurants.length > 0 && renderRestaurants()}
     </MapView>
   ) : (
-    <Text>Loading...</Text>
+    <Loader/>
   );
 };
 
