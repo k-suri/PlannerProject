@@ -115,11 +115,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
-    color: '#9c89b8',
+    fontFamily: "Pacifico",
+    fontSize: 28,
+    textAlign: "center",
+    padding: 5,
+    color: "#A54CAB",
+    marginBottom: 20
   },
   inputContainer: {
     flexDirection: 'row',
