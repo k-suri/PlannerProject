@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
     color: colors.action,
   },
   phone: {
+    marginTop: 20,
     fontSize: 15,
     fontWeight: "600",
     color: colors.gray,

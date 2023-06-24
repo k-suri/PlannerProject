@@ -13,25 +13,25 @@ const GuestList = ({ navigation }) => {
   const [numberOfTables, setNumberOfTables] = useState('');
 
   const handleNextStep = () => {
-    if (step === 1 && (totalGuests === '' || parseInt(totalGuests)<=0 || parseInt(totalGuests)>99999 || totalGuests === '.') ) {
+    if (step === 1 && (totalGuests === '' || isNaN(totalGuests) || parseInt(totalGuests)<=0 || parseInt(totalGuests)>99999 || totalGuests === '.') ) {
       Alert.alert('Please enter valid total number of guests (1-99999).');
       return;
-    } else if (step === 2 && (familyGuests === '' || parseInt(familyGuests)>99999 || familyGuests === '.')) {
+    } else if (step === 2 && (familyGuests === '' || isNaN(familyGuests) || parseInt(familyGuests)>99999 || familyGuests === '.')) {
       Alert.alert('Please enter valid number of family guests (1-99999).');
       return;
-    } else if (step === 3 && (friends === '' ||  parseInt(friends)>99999 || friends === '.')) {
+    } else if (step === 3 && (friends === '' || isNaN(friends) ||  parseInt(friends)>99999 || friends === '.')) {
       Alert.alert('Please enter valid number of friends (1-99999).');
       return;
-    } else if (step === 4 && (acquaintances === '' ||  parseInt(acquaintances)>99999 || acquaintances === '.')) {
+    } else if (step === 4 && (acquaintances === '' || isNaN(acquaintances) ||  parseInt(acquaintances)>99999 || acquaintances === '.')) {
       Alert.alert('Please enter valid number of acquaintances (1-99999).');
       return;
-    } else if (step === 5 && (otherGuests === '' ||  parseInt(otherGuests)>99999 || otherGuests === '.')) {
+    } else if (step === 5 && (otherGuests === '' || isNaN(otherGuests) ||  parseInt(otherGuests)>99999 || otherGuests === '.')) {
       Alert.alert('Please enter valid number of other guests (1-99999).');
       return;
-    } else if (step === 6 && (seatsPerTable === '' || parseInt(seatsPerTable)<=0 || parseInt(seatsPerTable)>999 || seatsPerTable === '.')) {
+    } else if (step === 6 && (seatsPerTable === '' || isNaN(seatsPerTable) || parseInt(seatsPerTable)<=0 || parseInt(seatsPerTable)>999 || seatsPerTable === '.')) {
       Alert.alert('Please enter valid number of seats per table (1-999).');
       return;
-    } else if (step === 7 && (numberOfTables === '' || parseInt(numberOfTables)<=0 || parseInt(numberOfTables)>999 || numberOfTables === '.')) {
+    } else if (step === 7 && (numberOfTables === '' || isNaN(numberOfTables)|| parseInt(numberOfTables)<=0 || parseInt(numberOfTables)>999 || numberOfTables === '.')) {
       Alert.alert('Please enter valid number of tables (1-999).');
       return;
     }
@@ -117,7 +117,7 @@ const GuestList = ({ navigation }) => {
       parseInt(totalGuests) !==
       parseInt(familyGuests) + parseInt(friends) + parseInt(acquaintances) + parseInt(otherGuests)
     ) {
-      Alert.alert('The sum of guests in each category should be equal to the total number of guests.');
+      Alert.alert('The sum of guests in each category should be equal to the total guests.');
       return false;
     }
     else if ( (parseInt(numberOfTables) * parseInt(seatsPerTable)) <= parseInt(totalGuests)){
