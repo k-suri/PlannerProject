@@ -96,6 +96,7 @@ const PlaylistDetails = () => {
     container: {
       flex: 1,
       padding: 20,
+      backgroundColor: '#fff'
     },
     playlistName: {
       fontSize: 20,

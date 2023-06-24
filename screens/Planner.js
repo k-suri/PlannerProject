@@ -48,7 +48,7 @@ const Planner = () => {
             <PlannerSection title={"PlayList"}>
               <View style={styles.venueDetails}>
                 <Text style={styles.name}>{plannerContext.playlist.name}</Text>
-                <Text style={styles.phone}>{plannerContext.playlist.id}</Text>
+                <Text style={styles.playlistId}>{plannerContext.playlist.id}</Text>
                 <Pressable onPress={() => {
                   navigation.navigate("Playlist Screen")
                 }}><Text style={styles.btn}>Choose Another Playlist</Text></Pressable>
@@ -88,6 +88,12 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: colors.gray,
     fontFamily: "Sacramento-Regular",
+  },
+  playlistId: {
+    marginTop:10,
+    fontSize: 15,
+    color: colors.gray,
+    opacity: 0.5
   },
   btn: {
     marginTop: 20,

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, KeyboardAvoidingView } from 'react-native';
 import { colors } from '../utils/Colors';
 
 const GuestList = ({ navigation }) => {
@@ -13,26 +13,26 @@ const GuestList = ({ navigation }) => {
   const [numberOfTables, setNumberOfTables] = useState('');
 
   const handleNextStep = () => {
-    if (step === 1 && totalGuests === '') {
-      Alert.alert('Please enter the total number of guests.');
+    if (step === 1 && (totalGuests === '' || parseInt(totalGuests)<=0 || parseInt(totalGuests)>99999 || totalGuests === '.') ) {
+      Alert.alert('Please enter valid total number of guests (1-99999).');
       return;
-    } else if (step === 2 && familyGuests === '') {
-      Alert.alert('Please enter the number of family guests.');
+    } else if (step === 2 && (familyGuests === '' || parseInt(familyGuests)>99999 || familyGuests === '.')) {
+      Alert.alert('Please enter valid number of family guests (1-99999).');
       return;
-    } else if (step === 3 && friends === '') {
-      Alert.alert('Please enter the number of friends.');
+    } else if (step === 3 && (friends === '' ||  parseInt(friends)>99999 || friends === '.')) {
+      Alert.alert('Please enter valid number of friends (1-99999).');
       return;
-    } else if (step === 4 && acquaintances === '') {
-      Alert.alert('Please enter valid number of acquaintances.');
+    } else if (step === 4 && (acquaintances === '' ||  parseInt(acquaintances)>99999 || acquaintances === '.')) {
+      Alert.alert('Please enter valid number of acquaintances (1-99999).');
       return;
-    } else if (step === 5 && otherGuests === '') {
-      Alert.alert('Please enter the number of other guests.');
+    } else if (step === 5 && (otherGuests === '' ||  parseInt(otherGuests)>99999 || otherGuests === '.')) {
+      Alert.alert('Please enter valid number of other guests (1-99999).');
       return;
-    } else if (step === 6 && seatsPerTable === '') {
-      Alert.alert('Please enter the number of seats per table.');
+    } else if (step === 6 && (seatsPerTable === '' || parseInt(seatsPerTable)<=0 || parseInt(seatsPerTable)>999 || seatsPerTable === '.')) {
+      Alert.alert('Please enter valid number of seats per table (1-999).');
       return;
-    } else if (step === 7 && numberOfTables === '') {
-      Alert.alert('Please enter the number of tables.');
+    } else if (step === 7 && (numberOfTables === '' || parseInt(numberOfTables)<=0 || parseInt(numberOfTables)>999 || numberOfTables === '.')) {
+      Alert.alert('Please enter valid number of tables (1-999).');
       return;
     }
 
@@ -120,6 +120,10 @@ const GuestList = ({ navigation }) => {
       Alert.alert('The sum of guests in each category should be equal to the total number of guests.');
       return false;
     }
+    else if ( (parseInt(numberOfTables) * parseInt(seatsPerTable)) <= parseInt(totalGuests)){
+      Alert.alert('Not enough tables to accomodate the guests.');
+      return false;
+    }
     return true;
   };
 
@@ -128,85 +132,92 @@ const GuestList = ({ navigation }) => {
       case 1:
         return (
           <>
-            <Text>Total Number of Guests:</Text>
+            <Text style={styles.inputTitle}>Total Number of Guests:</Text>
             <TextInput
               style={styles.input}
               keyboardType="numeric"
               onChangeText={setTotalGuests}
               value={totalGuests}
             />
+            <Text style={styles.inputNote}>Note : Total Number of Guests must be equal to the total guest that will be arriving (i.e) Sum of Family , Friends , Acquaintances , Others . The value can be total number of guests attending the events.</Text>
           </>
         );
       case 2:
         return (
           <>
-            <Text>Number of Family Guests:</Text>
+            <Text style={styles.inputTitle}>Number of Family Guests:</Text>
             <TextInput
               style={styles.input}
               keyboardType="numeric"
               onChangeText={setFamilyGuests}
               value={familyGuests}
             />
+            <Text style={styles.inputNote}>Note : Total Number of Family can be 0 . The value can be total number of family guests attending the events.</Text>
           </>
         );
       case 3:
         return (
           <>
-            <Text>Number of Friends:</Text>
+            <Text style={styles.inputTitle}>Number of Friends:</Text>
             <TextInput
               style={styles.input}
               keyboardType="numeric"
               onChangeText={setFriends}
               value={friends}
             />
+            <Text style={styles.inputNote}>Note : Total Number of Friends can be 0 . The value can be total number of friends attending the events.</Text>
           </>
         );
       case 4:
         return (
           <>
-            <Text>Number of Acquaintances:</Text>
+            <Text style={styles.inputTitle}>Number of Acquaintances:</Text>
             <TextInput
               style={styles.input}
               keyboardType="numeric"
               onChangeText={setAcquaintances}
               value={acquaintances}
             />
+             <Text style={styles.inputNote}>Note : Total Number of Acquaintances can be 0 . The value can be total number of acquaintances attending the events.</Text>
           </>
         );
       case 5:
         return (
           <>
-            <Text>Number of Other Guests:</Text>
+            <Text style={styles.inputTitle}>Number of Other Guests:</Text>
             <TextInput
               style={styles.input}
               keyboardType="numeric"
               onChangeText={setOtherGuests}
               value={otherGuests}
             />
+            <Text style={styles.inputNote} >Note : Total Number of Other guests can be 0 . The value can be total number of other guests attending the events. You can assume this value and match it with total number of guests.</Text>
           </>
         );
       case 6:
         return (
           <>
-            <Text>Number of Seats per Table:</Text>
+            <Text style={styles.inputTitle}>Number of Seats per Table:</Text>
             <TextInput
               style={styles.input}
               keyboardType="numeric"
               onChangeText={setSeatsPerTable}
               value={seatsPerTable}
             />
+             <Text style={styles.inputNote}>Note : Seats per each table in the venue.</Text>
           </>
         );
       case 7:
         return (
           <>
-            <Text>Number of Tables:</Text>
+            <Text style={styles.inputTitle}>Number of Tables:</Text>
             <TextInput
               style={styles.input}
               keyboardType="numeric"
               onChangeText={setNumberOfTables}
               value={numberOfTables}
             />
+            <Text style={styles.inputNote}>Note : Total Number of Tables in the venue.</Text>
           </>
         );
       default:
@@ -215,7 +226,8 @@ const GuestList = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, padding: 20 }}>
+    <KeyboardAvoidingView style={{ flex: 1, padding: 20 }}  behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}>
       <View style={styles.stepContainer}>
         <Text style={styles.stepText}>Step {step} of 7</Text>
       </View>
@@ -230,7 +242,7 @@ const GuestList = ({ navigation }) => {
           <Text style={styles.buttonText}>{step === 7 ? 'Start Seating' : 'Next'}</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -240,21 +252,44 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   stepText: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 15,
+    opacity: 0.2
   },
   formContainer: {
     flex: 1,
   },
   input: {
-    height: 40,
+    height: 70,
     borderColor: 'gray',
     borderWidth: 1,
     marginBottom: 20,
+    width: 70,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    borderRadius:25,
+    textAlign: 'center',
+    fontSize: 18
+  },
+  inputTitle: {
+    fontFamily: "Pacifico",
+    fontSize: 28,
+    textAlign: "center",
+    padding: 5,
+    color: "#A54CAB",
+    paddingBottom: 20
+  },
+  inputNote: {
+    fontFamily: "Pacifico",
+    textAlign: "center",
+    padding: 5,
+    color: "#000",
+    paddingBottom: 20,
+    opacity: 0.5
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: 20
   },
   previousButton: {
     backgroundColor: colors.secondary,

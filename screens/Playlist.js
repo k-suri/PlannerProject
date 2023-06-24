@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, TextInput, Image, FlatList, TouchableOpacity} from "react-native";
+import { Keyboard, ScrollView } from 'react-native';
+import { View, StyleSheet, Text, TextInput, TouchableWithoutFeedback, Image, FlatList, TouchableOpacity} from "react-native";
 import axios from 'axios';
 import getSpotifyAccessToken from '../utils/SpotifyAccessToken';
 import { colors } from '../utils/Colors';
@@ -15,6 +16,7 @@ const Playlist = ({ navigation }) => {
     setPlaylists([]);
     onChangeText('')
     setErrorMessage('');
+    Keyboard.dismiss();
 
     if (text.length === 0) {
       setErrorMessage('Please enter playlist name!');
@@ -67,7 +69,7 @@ const Playlist = ({ navigation }) => {
   };
 
   return (
-    <>
+    <View style={styles.wrapper}>
       <View style={styles.itemsWrapper}>
         <TextInput
           style={styles.input}
@@ -78,7 +80,7 @@ const Playlist = ({ navigation }) => {
         <TouchableOpacity onPress={handleSearch}>
           <Image
             source={require('../assets/icons/search.png')}
-            style={{ width: 30, height: 30, tintColor: colors.action }}
+            style={{ width: 32, height: 32, tintColor: colors.action }}
           />
         </TouchableOpacity>
       </View>
@@ -90,35 +92,44 @@ const Playlist = ({ navigation }) => {
         contentContainerStyle={styles.playlistContainer}
       />
       
-    </>
+    </View>
   );
 };
 
 export default Playlist;
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+
   playlistContainer: {
     paddingVertical: 10,
   },
   errorMessage: {
     color: 'red',
     padding: 20,
+    backgroundColor: '#fff',
   },
   itemsWrapper: {
     flexDirection: 'row',
     width: '100%',
-    marginTop: 10,
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 10,
+    backgroundColor: '#fff',
   },
   input: {
+    marginTop: 10,
     backgroundColor: '#fff',
-    borderRadius: 25,
-    width: 350,
+    borderRadius: 10,
+    width: 330,
     height: 50,
     padding: 10,
     fontSize: 16,
+    borderWidth: 1,
+    borderColor: colors.action
   },
   playlistItemContainer: {
     padding: 10,
@@ -127,6 +138,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 10,
     margin: 10,
+    borderWidth: 1,
+    borderColor: colors.action,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,  
   },
   playlistItemImage: {
     width: '20%',
