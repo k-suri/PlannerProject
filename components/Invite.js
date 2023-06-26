@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { View, StyleSheet, TextInput, Text, Image } from "react-native";
+import { View, StyleSheet, TextInput, Text, Image, Keyboard } from "react-native";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 
 import { colors } from "../utils/Colors";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 const Invite = () => {
   const [data, setData] = useState({
@@ -30,7 +31,9 @@ const Invite = () => {
     setData(temp);
   };
 
-  return (
+  return ( 
+    <TouchableWithoutFeedback onPress={()=>
+    Keyboard.dismiss()}>
     <View style={styles.container}>
       <View style={styles.pattern}>
         <View style={styles.bgBar}></View>
@@ -99,6 +102,7 @@ const Invite = () => {
         <Text style={styles.text3}> R.s.v.p to xxx.xxx.xxx</Text>
       </View>
     </View>
+    </TouchableWithoutFeedback>
   );
 };
 

@@ -26,7 +26,9 @@ const Invite4 = () => {
     const temp = { ...data, address: val };
     setData(temp);
   };
-  return (
+  return ( 
+    <TouchableWithoutFeedback onPress={()=>
+      Keyboard.dismiss()}>
     <View style={styles.parent}>
       <View style={styles.box}>
         <View style={styles.border}>
@@ -71,7 +73,8 @@ const Invite4 = () => {
           </View>
         </View>
       </View>
-    </View>
+    </View> 
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -154,7 +157,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     height: 600,
-    bottom: 50,
+    bottom: 30,
   },
   text: {
     width: 300,

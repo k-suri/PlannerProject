@@ -31,7 +31,9 @@ const Invite2 = () => {
     const temp = { ...data, address: val };
     setData(temp);
   };
-  return (
+  return ( 
+    <TouchableWithoutFeedback onPress={()=>
+      Keyboard.dismiss()}>
     <View style={styles.parent}>
       <View style={styles.main}>
         <View style={styles.top}>
@@ -72,7 +74,8 @@ const Invite2 = () => {
           </TextInput>
         </View>
       </View>
-    </View>
+    </View> 
+    </TouchableWithoutFeedback>
   );
 };
 
