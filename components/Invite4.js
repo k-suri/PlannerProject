@@ -1,4 +1,6 @@
-import { View, StyleSheet, TextInput, Text, Image } from "react-native";
+import { View, StyleSheet, TextInput, Text, Image  , 
+Keyboard} from "react-native";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useState } from "react";
 const Invite4 = () => {
   const [data, setData] = useState({
