@@ -16,7 +16,7 @@ import Playlist from "./screens/Playlist";
 import PlaylistDetails from "./screens/PlaylistDetails";
 import Invite from "./components/Invite";
 import Invite2 from "./components/Invite2";
-import Invite3 from "./components/Invite3"; 
+import Invite3 from "./components/Invite3";
 import Invite4 from "./components/Invite4";
 import Planner from "./screens/Planner";
 import VenueCurrent from "./components/VenueCurrent";
@@ -46,7 +46,8 @@ export default function App() {
     Parisienne: require("./assets/fonts/Parisienne-Regular.ttf"),
   });
 
-  LogBox.ignoreLogs(["Warning: ..."]);
+  console.disableYellowBox = true;
+  LogBox.ignoreAllLogs()
 
   if (!fontsLoaded) {
     return <AppLoading />;
@@ -64,6 +65,11 @@ export default function App() {
               <Ionicons name="home" color={colors.action} size={22} />
             ),
             tabBarActiveTintColor: colors.secondary200,
+            headerTitleStyle: {
+              color: colors.action200,
+              fontFamily: "Pacifico",
+            },
+            headerTitle:"Event Buddy"
           }}
         />
         <bottomTabs.Screen
@@ -79,6 +85,11 @@ export default function App() {
               ></Ionicons>
             ),
             tabBarActiveTintColor: colors.secondary200,
+            headerTitleStyle: {
+              color: colors.action200,
+              fontFamily: "Pacifico",
+            },
+            headerTitle: "Digital Planner",
           }}
         ></bottomTabs.Screen>
       </bottomTabs.Navigator>
@@ -89,7 +100,7 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <StatusBar style="auto" />
       <PlannerProvider>
-      <NavigationContainer>
+        <NavigationContainer>
           <Stack.Navigator
             screenOptions={({ navigation }) => ({
               title: "EventBuddy",
@@ -104,10 +115,7 @@ export default function App() {
               component={Tabs}
               options={{ headerShown: false }}
             ></Stack.Screen>
-            <Stack.Screen
-              name="Venue Home"
-              component={Venue}
-            ></Stack.Screen>
+            <Stack.Screen name="Venue Home" component={Venue}></Stack.Screen>
             <Stack.Screen
               name="Venue Current"
               component={VenueCurrent}
@@ -129,37 +137,23 @@ export default function App() {
               component={GuestList}
             ></Stack.Screen>
             <Stack.Screen
-            name="Seating Screen"
-            component={Seating}
-          ></Stack.Screen>
-          <Stack.Screen
-            name="Playlist Screen"
-            component={Playlist}
-          ></Stack.Screen> 
-          <Stack.Screen
+              name="Seating Screen"
+              component={Seating}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="Playlist Screen"
+              component={Playlist}
+            ></Stack.Screen>
+            <Stack.Screen
               name="Playlist Details"
               component={PlaylistDetails}
             ></Stack.Screen>
-          <Stack.Screen
-            name="Invite 1"
-            component={Invite}
-          ></Stack.Screen>
-           <Stack.Screen
-            name="Invite 2"
-            component={Invite2}
-          ></Stack.Screen>
-           <Stack.Screen
-            name="Invite 3"
-            component={Invite3}
-          ></Stack.Screen>
-           <Stack.Screen
-            name="Invite 4"
-            component={Invite4}
-            
-          ></Stack.Screen>
-          
-        </Stack.Navigator>
-      </NavigationContainer>
+            <Stack.Screen name="Invite 1" component={Invite}></Stack.Screen>
+            <Stack.Screen name="Invite 2" component={Invite2}></Stack.Screen>
+            <Stack.Screen name="Invite 3" component={Invite3}></Stack.Screen>
+            <Stack.Screen name="Invite 4" component={Invite4}></Stack.Screen>
+          </Stack.Navigator>
+        </NavigationContainer>
       </PlannerProvider>
     </GestureHandlerRootView>
   );
