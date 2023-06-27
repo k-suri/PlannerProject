@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Pressable , FlatList} from "react-native";
+import { StyleSheet, View, Text, Pressable , FlatList, ScrollView} from "react-native";
 import { colors } from "../utils/Colors";
 import { useContext } from "react";
 import { PlannerContext } from "../contexts/PlannerContext";
@@ -10,7 +10,7 @@ const Planner = () => {
   const plannerContext = useContext(PlannerContext);
   const navigation = useNavigation()
   return (
-    <View>
+    <ScrollView>
       {plannerContext.venue ||
         plannerContext.todos.length > 0 ||
         plannerContext.playlist ? (
@@ -61,7 +61,7 @@ const Planner = () => {
           Your planner is empty add essentials from the main menu
         </Text>
       )}
-    </View>
+    </ScrollView>
   );
 };
 
