@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
     padding:10
   },
   title:{
-    fontFamily:"Pacifico",
+    fontFamily:"Sacramento-Regular",
     color:"white",
-    fontSize:18
+    fontSize:25
   }
 });

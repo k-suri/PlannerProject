@@ -6,23 +6,50 @@ import { Swipeable } from 'react-native-gesture-handler';
 
 export default function App() {
   const [todoItem, setTodoItem] = useState('');
-  const [isInputValid, setIsInputValid] = useState(true); 
+  const [isInputValid, setIsInputValid] = useState(true);
+  const [editedText, setEditedText] = useState('');
+  const [editingItemId, setEditingItemId] = useState(null);
   const plannerContext = useContext(PlannerContext);
 
   const handleAddTodo = () => {
     if (todoItem !== '') {
-      setIsInputValid(true); 
+      setIsInputValid(true);
       const tempTodos = [...plannerContext.todos, { id: Date.now(), text: todoItem }];
       plannerContext.addTodos(tempTodos);
       setTodoItem('');
     } else {
-      setIsInputValid(false); 
+      setIsInputValid(false);
+    }
+  };
+
+  const handleEditTodo = (id) => {
+    const todoItem = plannerContext.todos.find((todo) => todo.id === id);
+    setEditingItemId(id);
+    setEditedText(todoItem.text);
+  };
+
+  const handleSaveTodo = () => {
+    if (editedText !== '') {
+      setIsInputValid(true);
+      const updatedTodos = plannerContext.todos.map((todo) => {
+        if (todo.id === editingItemId) {
+          return { ...todo, text: editedText };
+        }
+        return todo;
+      });
+      plannerContext.addTodos(updatedTodos);
+      setEditingItemId(null);
+      setEditedText('');
+    } else {
+      setIsInputValid(false);
     }
   };
 
   const handleRemoveTodo = (id) => {
     const updatedTodos = plannerContext.todos.filter((todo) => todo.id !== id);
     plannerContext.addTodos(updatedTodos);
+    setEditingItemId(null);
+    setEditedText('');
     console.log('Todo item removed successfully.');
   };
 
@@ -61,18 +88,34 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Todo List</Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          onChangeText={(text) => setTodoItem(text)}
-          value={todoItem}
-          placeholder="Enter a todo item"
-        />
 
-        <TouchableOpacity style={styles.addButton} onPress={handleAddTodo}>
-          <Text style={styles.addButtonText}>Add</Text>
-        </TouchableOpacity>
-      </View>
+      {editingItemId ? (
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            onChangeText={(text) => setEditedText(text)}
+            value={editedText}
+            placeholder="Edit a todo item"
+          />
+
+          <TouchableOpacity style={styles.addButton} onPress={handleSaveTodo}>
+            <Text style={styles.addButtonText}>Save</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            onChangeText={(text) => setTodoItem(text)}
+            value={todoItem}
+            placeholder="Enter a todo item"
+          />
+
+          <TouchableOpacity style={styles.addButton} onPress={handleAddTodo}>
+            <Text style={styles.addButtonText}>Add</Text>
+          </TouchableOpacity>
+        </View>
+      )}
 
       {!isInputValid && (
         <Text style={styles.validationText}>Please enter a todo</Text>
@@ -92,6 +135,14 @@ export default function App() {
                   onPress={() => handleRemoveTodo(item.id)}
                 >
                   <Text style={styles.removeButtonText}>Remove</Text>
+                </TouchableOpacity>
+              )}
+              renderLeftActions={() => (
+                <TouchableOpacity
+                  style={styles.editButton}
+                  onPress={() => handleEditTodo(item.id)}
+                >
+                  <Text style={styles.editButtonText}>Edit</Text>
                 </TouchableOpacity>
               )}
             >
@@ -115,12 +166,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   title: {
-    fontFamily: "Pacifico",
-    fontSize: 28,
-    textAlign: "center",
-    padding: 5,
-    color: "#A54CAB",
-    marginBottom: 20
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+    color: '#9c89b8',
   },
   inputContainer: {
     flexDirection: 'row',
@@ -178,6 +228,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  editButton: {
+    backgroundColor: '#9c89b8',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '20%',
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginRight: 10,
+  },
+  editButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
   emptyText: {
     fontSize: 16,
     textAlign: 'center',
@@ -191,6 +255,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   separator: {
-    height: 10, 
+    height: 10,
   },
 });
