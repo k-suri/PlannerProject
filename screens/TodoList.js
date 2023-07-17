@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PlannerContext } from '../contexts/PlannerContext';
 import { Swipeable } from 'react-native-gesture-handler';
 
@@ -52,38 +51,6 @@ export default function App() {
     setEditedText('');
     console.log('Todo item removed successfully.');
   };
-
-  const saveTodoList = async () => {
-    try {
-      await AsyncStorage.setItem('todos', JSON.stringify(plannerContext.todos));
-      console.log('Todo List saved successfully.');
-    } catch (error) {
-      console.log('Error Saving todo list:', error);
-    }
-  };
-
-  useEffect(() => {
-    const loadTodoList = async () => {
-      try {
-        const savedTodos = await AsyncStorage.getItem('todos');
-        if (savedTodos !== null) {
-          plannerContext.addTodos(JSON.parse(savedTodos));
-        }
-      } catch (error) {
-        console.log('Error Loading todo list:', error);
-      }
-    };
-
-    loadTodoList();
-
-    return () => {
-      saveTodoList();
-    };
-  }, []);
-
-  useEffect(() => {
-    saveTodoList();
-  }, [plannerContext.todos]);
 
   return (
     <View style={styles.container}>
