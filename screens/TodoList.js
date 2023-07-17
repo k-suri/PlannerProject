@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+//import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PlannerContext } from '../contexts/PlannerContext';
 import { Swipeable } from 'react-native-gesture-handler';
 
@@ -26,37 +26,37 @@ export default function App() {
     console.log('Todo item removed successfully.');
   };
 
-  const saveTodoList = async () => {
-    try {
-      await AsyncStorage.setItem('todos', JSON.stringify(plannerContext.todos));
-      console.log('Todo List saved successfully.');
-    } catch (error) {
-      console.log('Error Saving todo list:', error);
-    }
-  };
+  // const saveTodoList = async () => {
+  //   try {
+  //     await AsyncStorage.setItem('todos', JSON.stringify(plannerContext.todos));
+  //     console.log('Todo List saved successfully.');
+  //   } catch (error) {
+  //     console.log('Error Saving todo list:', error);
+  //   }
+  // };
 
-  useEffect(() => {
-    const loadTodoList = async () => {
-      try {
-        const savedTodos = await AsyncStorage.getItem('todos');
-        if (savedTodos !== null) {
-          plannerContext.addTodos(JSON.parse(savedTodos));
-        }
-      } catch (error) {
-        console.log('Error Loading todo list:', error);
-      }
-    };
+  // useEffect(() => {
+  //   const loadTodoList = async () => {
+  //     try {
+  //       const savedTodos = await AsyncStorage.getItem('todos');
+  //       if (savedTodos !== null) {
+  //         plannerContext.addTodos(JSON.parse(savedTodos));
+  //       }
+  //     } catch (error) {
+  //       console.log('Error Loading todo list:', error);
+  //     }
+  //   };
 
-    loadTodoList();
+  //   loadTodoList();
 
-    return () => {
-      saveTodoList();
-    };
-  }, []);
+  //   return () => {
+  //     saveTodoList();
+  //   };
+  // }, []);
 
-  useEffect(() => {
-    saveTodoList();
-  }, [plannerContext.todos]);
+  // useEffect(() => {
+  //   saveTodoList();
+  // }, [plannerContext.todos]);
 
   return (
     <View style={styles.container}>
