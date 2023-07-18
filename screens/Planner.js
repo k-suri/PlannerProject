@@ -9,8 +9,64 @@ import { useNavigation } from "@react-navigation/native";
 const Planner = () => {
   const plannerContext = useContext(PlannerContext);
   const navigation = useNavigation()
+
+  const styles = StyleSheet.create({
+    text: {
+      fontFamily: "Pacifico",
+      fontSize: 18,
+      color: colors.gray,
+      margin: 20,
+    },
+    venueDetails: {
+      display: "flex",
+      flexDirection: "column",
+    },
+    name: {
+      fontSize: 20,
+      fontFamily: "Pacifico",
+      color:  plannerContext.modeLight? colors.action:colors.white,
+    },
+    phone: {
+      marginTop: 20,
+      fontSize: 15,
+      fontWeight: "600",
+      color: plannerContext.modeLight? colors.gray:colors.white,
+      fontFamily: "Sacramento-Regular",
+    },
+    playlistId: {
+      marginTop:10,
+      fontSize: 15,
+      color: plannerContext.modeLight? colors.gray:colors.white,
+      opacity: 0.5
+    },
+    btn: {
+      marginTop: 20,
+      backgroundColor: plannerContext.modeLight? colors.action200:colors.actionDark,
+      color: "white",
+      fontSize: 18,
+      padding: 10,
+      borderRadius: 5,
+    },
+    list: {
+      flex: 1,
+      marginTop: 10,
+    },
+    todoItem: {
+      backgroundColor: '#f0f0f0',
+      padding: 10,
+      borderRadius: 5,
+      marginBottom: 10,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    todoText: {
+      flex: 1,
+      fontSize: 16,
+    },
+  });
   return (
-    <ScrollView>
+    <ScrollView style={{backgroundColor:plannerContext.modeLight?colors.grayLight:colors.primaryDark}}>
       {plannerContext.venue ||
         plannerContext.todos.length > 0 ||
         plannerContext.playlist ? (
@@ -67,58 +123,4 @@ const Planner = () => {
 
 export default Planner;
 
-const styles = StyleSheet.create({
-  text: {
-    fontFamily: "Pacifico",
-    fontSize: 18,
-    color: colors.gray,
-    margin: 20,
-  },
-  venueDetails: {
-    display: "flex",
-    flexDirection: "column",
-  },
-  name: {
-    fontSize: 20,
-    fontFamily: "Pacifico",
-    color: colors.action,
-  },
-  phone: {
-    marginTop: 20,
-    fontSize: 15,
-    fontWeight: "600",
-    color: colors.gray,
-    fontFamily: "Sacramento-Regular",
-  },
-  playlistId: {
-    marginTop:10,
-    fontSize: 15,
-    color: colors.gray,
-    opacity: 0.5
-  },
-  btn: {
-    marginTop: 20,
-    backgroundColor: colors.action200,
-    color: "white",
-    fontSize: 18,
-    padding: 10,
-    borderRadius: 5,
-  },
-  list: {
-    flex: 1,
-    marginTop: 10,
-  },
-  todoItem: {
-    backgroundColor: '#f0f0f0',
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  todoText: {
-    flex: 1,
-    fontSize: 16,
-  },
-});
+

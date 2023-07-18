@@ -1,7 +1,9 @@
 import { View, StyleSheet, TextInput, Text, Image  , 
 Keyboard} from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { PlannerContext } from "../contexts/PlannerContext";
+import { colors } from "../utils/Colors";
 const Invite4 = () => {
   const [data, setData] = useState({
     name: "Mathews",
@@ -9,7 +11,7 @@ const Invite4 = () => {
     address: "123 Anywhere street , Any City ST 1234",
     number: "1234567",
   });
-
+  const plannerContext = useContext(PlannerContext);
   onChangeName = (val) => {
     const temp = { ...data, name: val };
     setData(temp);
@@ -28,9 +30,117 @@ const Invite4 = () => {
     const temp = { ...data, address: val };
     setData(temp);
   };
+
+  const styles = StyleSheet.create({
+    parent: {
+      position: "relative",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      height: "90%",
+      margin: 12,
+      marginTop: 30,
+      backgroundColor:plannerContext.modeLight?colors.grayLight:colors.primaryDark
+    },
+    box: {
+      backgroundColor: "#58493B",
+      borderRadius: 10,
+      height: "70%",
+      width: "100%",
+    },
+    title: {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    border: {
+      width: "90%",
+      height: "90%",
+      backgroundColor: "transparent",
+      borderWidth: 9,
+      borderColor: "#E5B2F8",
+      borderRadius: 10,
+      margin: 20,
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      padding: 20,
+    },
+    hrt: {
+      position: "absolute",
+      height: 50,
+      width: 50,
+      top: 150,
+      left: 60,
+      zIndex: 1,
+    },
+    rec: {
+      width: "30%",
+      backgroundColor: "white",
+      position: "absolute",
+      height: "60%",
+      bottom: 0,
+      left: 50,
+      backgroundColor:plannerContext.modeLight?colors.grayLight:colors.primaryDark
+    },
+    house: {
+      height: 400,
+      width: "90%",
+      position: "relative",
+    },
+    triangle: {
+      width: 80,
+      height: 200,
+      borderLeftWidth: 85,
+      borderLeftColor: "transparent",
+      borderRightWidth: 85,
+      borderRightColor: "transparent",
+      borderBottomWidth: 100,
+      borderBottomColor: "#E5B2F8",
+    },
+    container: {
+      height: 100,
+      width: 120,
+      backgroundColor: "#E5B2F8",
+      position: "relative",
+    },
+    house: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      height: 600,
+      bottom: 30,
+  
+    },
+    text: {
+      width: 300,
+      fontFamily: "pacifico",
+      color: "black",
+      textAlign: "center",
+      fontSize: 30,
+    },
+  
+    txt2: {
+      fontFamily: "Sacramento-Regular",
+      fontSize: 33,
+      color: "#fdfd96",
+      minWidth: 320,
+      height: 50,
+      paddingHorizontal: 10,
+      textAlign:"center"
+    },
+  
+    txt3: {
+      fontFamily: "amatic",
+      fontSize: 20,
+      color: "#ECC6FA",
+      zIndex: 10,
+    },
+  });
   return ( 
     <TouchableWithoutFeedback onPress={()=>
-      Keyboard.dismiss()}>
+      Keyboard.dismiss()}
+      style={{backgroundColor:plannerContext.modeLight?colors.grayLight:colors.primaryDark}}>
     <View style={styles.parent}>
       <View style={styles.box}>
         <View style={styles.border}>
@@ -82,107 +192,4 @@ const Invite4 = () => {
 
 export default Invite4;
 
-const styles = StyleSheet.create({
-  parent: {
-    position: "relative",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    height: "90%",
-    margin: 12,
-    marginTop: 30,
-    backgroundColor: "white",
-  },
-  box: {
-    backgroundColor: "#58493B",
-    borderRadius: 10,
-    height: "70%",
-    width: "100%",
-  },
-  title: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  border: {
-    width: "90%",
-    height: "90%",
-    backgroundColor: "transparent",
-    borderWidth: 9,
-    borderColor: "#E5B2F8",
-    borderRadius: 10,
-    margin: 20,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    padding: 20,
-  },
-  hrt: {
-    position: "absolute",
-    height: 50,
-    width: 50,
-    top: 150,
-    left: 60,
-    zIndex: 1,
-  },
-  rec: {
-    width: "30%",
-    backgroundColor: "white",
-    position: "absolute",
-    height: "60%",
-    bottom: 0,
-    left: 50,
-  },
-  house: {
-    height: 400,
-    width: "90%",
-    position: "relative",
-  },
-  triangle: {
-    width: 80,
-    height: 200,
-    borderLeftWidth: 85,
-    borderLeftColor: "transparent",
-    borderRightWidth: 85,
-    borderRightColor: "transparent",
-    borderBottomWidth: 100,
-    borderBottomColor: "#E5B2F8",
-  },
-  container: {
-    height: 100,
-    width: 120,
-    backgroundColor: "#E5B2F8",
-    position: "relative",
-  },
-  house: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    height: 600,
-    bottom: 30,
-  },
-  text: {
-    width: 300,
-    fontFamily: "pacifico",
-    color: "black",
-    textAlign: "center",
-    fontSize: 30,
-  },
 
-  txt2: {
-    fontFamily: "Sacramento-Regular",
-    fontSize: 33,
-    color: "#fdfd96",
-    minWidth: 320,
-    height: 50,
-    paddingHorizontal: 10,
-    textAlign:"center"
-  },
-
-  txt3: {
-    fontFamily: "amatic",
-    fontSize: 20,
-    color: "#ECC6FA",
-    zIndex: 10,
-  },
-});

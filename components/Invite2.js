@@ -1,6 +1,8 @@
 import { View, StyleSheet, TextInput, Text, Image   ,  Keyboard} from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { PlannerContext } from "../contexts/PlannerContext";
+import { colors } from "../utils/Colors";
 const Invite2 = () => {
   const [data, setData] = useState({
     couple: "ryan and ashley",
@@ -9,7 +11,7 @@ const Invite2 = () => {
     address: "1294wayward lane sand diego",
     year:"twenty'th"
   });
-
+  const plannerContext = useContext(PlannerContext);
   onChangeName = (val) => {
     const temp = { ...data, couple: val };
     setData(temp);
@@ -34,7 +36,8 @@ const Invite2 = () => {
   };
   return ( 
     <TouchableWithoutFeedback onPress={()=>
-      Keyboard.dismiss()}>
+      Keyboard.dismiss()}
+      style={{backgroundColor:plannerContext.modeLight?colors.grayLight:colors.primaryDark}}>
     <View style={styles.parent}>
       <View style={styles.main}>
         <View style={styles.top}>

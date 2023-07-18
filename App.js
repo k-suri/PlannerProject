@@ -24,6 +24,7 @@ import VenueCustom from "./components/VenueCustom";
 import Venue from "./screens/Venue";
 import { LogBox } from "react-native";
 import Seating from "./screens/Seating";
+import ModeSwitch from "./components/ModeSwitch";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -69,7 +70,8 @@ export default function App() {
               color: colors.action200,
               fontFamily: "Pacifico",
             },
-            headerTitle:"Event Buddy"
+            headerTitle:"Event Buddy",
+            headerRight:()=><ModeSwitch></ModeSwitch>
           }}
         />
         <bottomTabs.Screen
@@ -90,6 +92,7 @@ export default function App() {
               fontFamily: "Pacifico",
             },
             headerTitle: "Digital Planner",
+            headerRight:()=><ModeSwitch></ModeSwitch>
           }}
         ></bottomTabs.Screen>
       </bottomTabs.Navigator>
@@ -108,6 +111,7 @@ export default function App() {
                 color: colors.action200,
                 fontFamily: "Pacifico",
               },
+              headerRight:()=><ModeSwitch></ModeSwitch>
             })}
           >
             <Stack.Screen

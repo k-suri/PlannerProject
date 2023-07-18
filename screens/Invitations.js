@@ -4,16 +4,65 @@ import {
   Text,
   Image,
   Button,
-  TouchableOpacity,
 } from "react-native";
-import Invite from "../components/Invite";
-import Invite2 from "../components/Invite2";
 import { useNavigation } from "@react-navigation/native";
+import { useContext } from "react";
+import { PlannerContext } from "../contexts/PlannerContext";
+import { colors } from "../utils/Colors";
 const Invitations = () => {
+  const plannerContext = useContext(PlannerContext)
   const navigation = useNavigation();
 
+  const styles = StyleSheet.create({
+    wrapper: {
+      backgroundColor:plannerContext.modeLight?colors.grayLight:colors.primaryDark
+    },
+    main: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-evenly",
+      alignItems: "center",
+      flexWrap: "wrap",
+    },
+    box: {
+      height: 190,
+      width: 150,
+      border: 5,
+      backgroundColor: plannerContext.modeLight?colors.white:colors.secondary200Dark,
+      borderRadius: 7,
+      marginTop: 50,
+      padding: 11,
+    },
+  
+    text2: {
+      fontFamily: "Pacifico",
+      fontSize: 28,
+      textAlign: "center",
+      padding: 5,
+      color: plannerContext.modeLight?colors.action200:colors.actionDark,
+    },
+  
+    img: {
+      width: "100%",
+      height: "100%",
+    },
+    icon: {
+      height: 15,
+      width: 15,
+    },
+    sec: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "space-evenly",
+      height: 300,
+    },
+    btn: {
+      display: "flex",
+    },
+  });
   return (
-    <View>
+    <View style={styles.wrapper}>
       <Text style={styles.text2}>Templates</Text>
       <View style={styles.main}>
         <View style={styles.sec}>
@@ -38,7 +87,7 @@ const Invitations = () => {
             ></Image>
             <Button
               title="customize"
-              color="#841584"
+              color={plannerContext.modeLight?colors.action200:colors.actionDark}
               onPress={() => {
                 navigation.navigate("Invite 1");
               }}
@@ -54,7 +103,7 @@ const Invitations = () => {
           </View>
           <Button
             title="customize"
-            color="#841584"
+            color={plannerContext.modeLight?colors.action200:colors.actionDark}
             onPress={() => {
               navigation.navigate("Invite 2");
             }}
@@ -69,7 +118,7 @@ const Invitations = () => {
           </View>
           <Button
             title="customize"
-            color="#841584"
+            color={plannerContext.modeLight?colors.action200:colors.actionDark}
             onPress={() => {
               navigation.navigate("Invite 3");
             }}
@@ -84,7 +133,7 @@ const Invitations = () => {
           </View>
           <Button
             title="customize"
-            color="#841584"
+            color={plannerContext.modeLight?colors.action200:colors.actionDark}
             onPress={() => {
               navigation.navigate("Invite 4");
             }}
@@ -97,51 +146,3 @@ const Invitations = () => {
 
 export default Invitations;
 
-const styles = StyleSheet.create({
-  main: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-    flexWrap:"wrap"
-  },
-
-  box: {
-    height: 190,
-    width: 150,
-    border: 5,
-    backgroundColor: "#FCFBFB",
-    borderRadius: 7,
-    marginTop: 50,
-    padding: 11,
-  },
-
-
-
-  text2: {
-    fontFamily: "Pacifico",
-    fontSize: 28,
-    textAlign: "center",
-    padding: 5,
-    color: "#A54CAB",
-  },
-
-  img: {
-    width: "100%",
-    height: "100%",
-  },
-  icon: {
-    height: 15,
-    width: 15,
-  },
-  sec: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "space-evenly",
-    height: 300,
-  },
-  btn: {
-    display: "flex",
-  },
-});

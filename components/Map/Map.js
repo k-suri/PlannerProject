@@ -35,7 +35,7 @@ const Map = ({setShowModal,setTempLocation}) => {
       let location = await Location.getCurrentPositionAsync({});
       plannerContext.setCurrentLocation(location);
     };
-    
+
     if(route.params.getCurrentLocation===true){
     plannerContext.setCurrentLocation(null)
       getLocation();
@@ -127,6 +127,7 @@ const Map = ({setShowModal,setTempLocation}) => {
   return plannerContext.currentLocation && cafes && restaurants ? (
     <MapView
       style={styles.map}
+      userInterfaceStyle={plannerContext.modeLight?"light":"dark"}
       initialRegion={{
         latitude: plannerContext.currentLocation?.coords.latitude,
         longitude: plannerContext.currentLocation?.coords.longitude,
