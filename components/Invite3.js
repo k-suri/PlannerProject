@@ -3,6 +3,9 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import * as MediaLibrary from 'expo-media-library';
 import { captureRef } from 'react-native-view-shot';
 import { useState , useRef } from "react";
+import { useContext, useState } from "react";
+import { PlannerContext } from "../contexts/PlannerContext";
+import { colors } from "../utils/Colors";
 const Invite3 = () => {
   const [data, setData] = useState({
     name1: "pedro",
@@ -11,7 +14,6 @@ const Invite3 = () => {
     address: "123 Anywhere street , Any City, ST 1234",
     time: "2023 | 8:30AM",
   });
-
   const [status, requestPermission] = MediaLibrary.usePermissions();
 
 
@@ -19,6 +21,7 @@ const Invite3 = () => {
     requestPermission();
   }
   const imageRef = useRef();
+  const plannerContext = useContext(PlannerContext);
   onChangeName1 = (val) => {
     const temp = { ...data, name1: val };
     setData(temp);

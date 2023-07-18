@@ -1,4 +1,8 @@
+
 import { useRef, useState } from "react";
+import { useContext, useState } from "react";
+import { View, StyleSheet, TextInput, Text, Image, Keyboard } from "react-native";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 import {
   View,
@@ -14,6 +18,7 @@ import * as MediaLibrary from 'expo-media-library';
 import { captureRef } from 'react-native-view-shot';
 import { colors } from "../utils/Colors";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { PlannerContext } from "../contexts/PlannerContext";
 
 
 const Invite = () => {
@@ -23,7 +28,6 @@ const Invite = () => {
     time: "8:00pm",
     venue: "palsade gardens 245 stoney creek",
   });
-
   const [status, requestPermission] = MediaLibrary.usePermissions();
 
 
@@ -31,6 +35,7 @@ const Invite = () => {
     requestPermission();
   }
   const imageRef = useRef();
+  const plannerContext = useContext(PlannerContext);
   onChangeName = (val) => {
     const temp = { ...data, name: val };
     setData(temp);
@@ -68,7 +73,6 @@ const Invite = () => {
   };
 
   return ( 
-   
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} >
       <View style={styles.container} 
       ref={imageRef}>
@@ -162,7 +166,6 @@ const styles = StyleSheet.create({
     width: "70%",
     height: 50,
     padding: 7,
-
     color: "#FDFED9",
   },
   bow: {

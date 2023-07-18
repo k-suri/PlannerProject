@@ -11,7 +11,8 @@ export const PlannerContext = createContext({
   todos:[],
   addTodos:() => {},
   removeTodo: () => {},
-
+  modeLight:true,
+  setModeValue:()=>{}
 });
 
 const PlannerProvider = ({ children }) => {
@@ -20,12 +21,14 @@ const PlannerProvider = ({ children }) => {
   const [venue, setVenue] = useState(null);
   const [playlistDetails,setPlaylistDetails] = useState(null)
   const [todos, setTodos] = useState([]);
+  const [modeLight,setModeLight] = useState(true)
   const addVenue = (venue) => {
     setVenue(venue);
   };
   const setCurrentLocation = (locationVal) => {
     setLocation(locationVal);
   };
+
   const addPlaylist = (playlist) => {
     console.log(playlist,"ytfgui");
     setPlaylistDetails(playlist)
@@ -48,6 +51,8 @@ const PlannerProvider = ({ children }) => {
     todos:todos,
     addTodos:addTodos,
     removeTodo: removeTodo,
+    modeLight:modeLight,
+    setModeValue:setModeLight
   };
   return (
     <PlannerContext.Provider value={value}>{children}</PlannerContext.Provider>

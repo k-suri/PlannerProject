@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, KeyboardAvoidingView } from 'react-native';
 import { colors } from '../utils/Colors';
+import { PlannerContext } from '../contexts/PlannerContext';
 
 const GuestList = ({ navigation }) => {
   const [step, setStep] = useState(1);
@@ -11,6 +12,7 @@ const GuestList = ({ navigation }) => {
   const [otherGuests, setOtherGuests] = useState('');
   const [seatsPerTable, setSeatsPerTable] = useState('');
   const [numberOfTables, setNumberOfTables] = useState('');
+  const plannerContext = useContext(PlannerContext)
 
   const handleNextStep = () => {
     if (step === 1 && (totalGuests === '' || isNaN(totalGuests) || parseInt(totalGuests)<=0 || parseInt(totalGuests)>99999 || totalGuests === '.') ) {
@@ -225,8 +227,80 @@ const GuestList = ({ navigation }) => {
     }
   };
 
+  const styles = StyleSheet.create({
+    stepContainer: {
+      alignItems: 'center',
+      marginBottom: 20,
+    },
+    stepText: {
+      fontSize: 15,
+      color:plannerContext.modeLight?colors.gray:colors.white,
+      opacity:plannerContext.modeLight?0.2:1
+    },
+    formContainer: {
+      flex: 1,
+    },
+    input: {
+      height: 70,
+      borderColor:plannerContext.modeLight?colors.grayMedium:colors.white,
+      color:plannerContext.modeLight?colors.gray:colors.white,
+      borderWidth: 2,
+      marginBottom: 20,
+      width: 70,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      borderRadius:25,
+      textAlign: 'center',
+      fontSize: 18
+    },
+    inputTitle: {
+      fontFamily: "Pacifico",
+      fontSize: 28,
+      textAlign: "center",
+      padding: 5,
+      color: plannerContext.modeLight?colors.action200:colors.actionDark,
+      paddingBottom: 20
+    },
+    inputNote: {
+      fontFamily: "Pacifico",
+      textAlign: "center",
+      padding: 5,
+      color:plannerContext.modeLight?colors.gray:colors.white,
+      paddingBottom: 20,
+      opacity:plannerContext.modeLight?0.5:1
+    },
+    buttonContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginBottom: 20
+    },
+    previousButton: {
+      backgroundColor: plannerContext.modeLight?colors.secondary:colors.actionDark,
+      borderRadius: 25,
+      height: 60,
+      justifyContent: 'center',
+      alignItems: 'center',
+      flex: 1,
+      marginRight: 10,
+    },
+    nextButton: {
+      backgroundColor: plannerContext.modeLight?colors.secondary:colors.actionDark,
+      borderRadius: 25,
+      height: 60,
+      justifyContent: 'center',
+      alignItems: 'center',
+      flex: 1,
+      marginLeft: 10,
+    },
+    buttonText: {
+      fontSize: 22,
+      fontFamily: 'Sofia-Regular',
+      color: colors.white,
+    },
+  });
+
   return (
-    <KeyboardAvoidingView style={{ flex: 1, padding: 20 }}  behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    <KeyboardAvoidingView style={{ flex: 1, padding: 20,backgroundColor:plannerContext.modeLight?colors.grayLight:colors.primaryDark }}  behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}>
       <View style={styles.stepContainer}>
         <Text style={styles.stepText}>Step {step} of 7</Text>
@@ -245,75 +319,5 @@ const GuestList = ({ navigation }) => {
     </KeyboardAvoidingView>
   );
 };
-
-const styles = StyleSheet.create({
-  stepContainer: {
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  stepText: {
-    fontSize: 15,
-    opacity: 0.2
-  },
-  formContainer: {
-    flex: 1,
-  },
-  input: {
-    height: 70,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 20,
-    width: 70,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    borderRadius:25,
-    textAlign: 'center',
-    fontSize: 18
-  },
-  inputTitle: {
-    fontFamily: "Pacifico",
-    fontSize: 28,
-    textAlign: "center",
-    padding: 5,
-    color: "#A54CAB",
-    paddingBottom: 20
-  },
-  inputNote: {
-    fontFamily: "Pacifico",
-    textAlign: "center",
-    padding: 5,
-    color: "#000",
-    paddingBottom: 20,
-    opacity: 0.5
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 20
-  },
-  previousButton: {
-    backgroundColor: colors.secondary,
-    borderRadius: 25,
-    height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-    marginRight: 10,
-  },
-  nextButton: {
-    backgroundColor: colors.primary,
-    borderRadius: 25,
-    height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-    marginLeft: 10,
-  },
-  buttonText: {
-    fontSize: 22,
-    fontFamily: 'Sofia-Regular',
-    color: colors.action200,
-  },
-});
 
 export default GuestList;
