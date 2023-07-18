@@ -1,63 +1,57 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from 'react-native';
-//import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PlannerContext } from '../contexts/PlannerContext';
 import { Swipeable } from 'react-native-gesture-handler';
 import { colors } from '../utils/Colors';
 
 export default function App() {
   const [todoItem, setTodoItem] = useState('');
-  const [isInputValid, setIsInputValid] = useState(true); 
+  const [isInputValid, setIsInputValid] = useState(true);
+  const [editedText, setEditedText] = useState('');
+  const [editingItemId, setEditingItemId] = useState(null);
   const plannerContext = useContext(PlannerContext);
 
   const handleAddTodo = () => {
     if (todoItem !== '') {
-      setIsInputValid(true); 
+      setIsInputValid(true);
       const tempTodos = [...plannerContext.todos, { id: Date.now(), text: todoItem }];
       plannerContext.addTodos(tempTodos);
       setTodoItem('');
     } else {
-      setIsInputValid(false); 
+      setIsInputValid(false);
+    }
+  };
+
+  const handleEditTodo = (id) => {
+    const todoItem = plannerContext.todos.find((todo) => todo.id === id);
+    setEditingItemId(id);
+    setEditedText(todoItem.text);
+  };
+
+  const handleSaveTodo = () => {
+    if (editedText !== '') {
+      setIsInputValid(true);
+      const updatedTodos = plannerContext.todos.map((todo) => {
+        if (todo.id === editingItemId) {
+          return { ...todo, text: editedText };
+        }
+        return todo;
+      });
+      plannerContext.addTodos(updatedTodos);
+      setEditingItemId(null);
+      setEditedText('');
+    } else {
+      setIsInputValid(false);
     }
   };
 
   const handleRemoveTodo = (id) => {
     const updatedTodos = plannerContext.todos.filter((todo) => todo.id !== id);
     plannerContext.addTodos(updatedTodos);
+    setEditingItemId(null);
+    setEditedText('');
     console.log('Todo item removed successfully.');
   };
-
-  // const saveTodoList = async () => {
-  //   try {
-  //     await AsyncStorage.setItem('todos', JSON.stringify(plannerContext.todos));
-  //     console.log('Todo List saved successfully.');
-  //   } catch (error) {
-  //     console.log('Error Saving todo list:', error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const loadTodoList = async () => {
-  //     try {
-  //       const savedTodos = await AsyncStorage.getItem('todos');
-  //       if (savedTodos !== null) {
-  //         plannerContext.addTodos(JSON.parse(savedTodos));
-  //       }
-  //     } catch (error) {
-  //       console.log('Error Loading todo list:', error);
-  //     }
-  //   };
-
-  //   loadTodoList();
-
-  //   return () => {
-  //     saveTodoList();
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   saveTodoList();
-  // }, [plannerContext.todos]);
 
   const styles = StyleSheet.create({
     container: {
@@ -146,12 +140,13 @@ export default function App() {
       height: 10, 
     },
   });
-
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Todo List</Text>
-      <View style={styles.inputContainer}>
-        <TextInput
+      {editingItemId ? (
+        <View style={styles.inputContainer}>
+          <TextInput
           style={styles.input}
           onChangeText={(text) => setTodoItem(text)}
           value={todoItem}
@@ -159,10 +154,24 @@ export default function App() {
           placeholderTextColor={plannerContext.modeLight?colors.action200:colors.white}
         />
 
-        <TouchableOpacity style={styles.addButton} onPress={handleAddTodo}>
-          <Text style={styles.addButtonText}>Add</Text>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity style={styles.addButton} onPress={handleSaveTodo}>
+            <Text style={styles.addButtonText}>Save</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            onChangeText={(text) => setTodoItem(text)}
+            value={todoItem}
+            placeholder="Enter a todo item"
+          />
+
+          <TouchableOpacity style={styles.addButton} onPress={handleAddTodo}>
+            <Text style={styles.addButtonText}>Add</Text>
+          </TouchableOpacity>
+        </View>
+      )}
 
       {!isInputValid && (
         <Text style={styles.validationText}>Please enter a todo</Text>
@@ -184,6 +193,14 @@ export default function App() {
                   <Text style={styles.removeButtonText}>Remove</Text>
                 </TouchableOpacity>
               )}
+              renderLeftActions={() => (
+                <TouchableOpacity
+                  style={styles.editButton}
+                  onPress={() => handleEditTodo(item.id)}
+                >
+                  <Text style={styles.editButtonText}>Edit</Text>
+                </TouchableOpacity>
+              )}
             >
               <View style={styles.todoItem}>
                 <Text style={styles.todoText}>{item.text}</Text>
@@ -197,5 +214,3 @@ export default function App() {
     </View>
   );
 }
-
-
