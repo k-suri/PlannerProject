@@ -1,7 +1,10 @@
-import { View, StyleSheet, TextInput, Text, Image  , 
+import { View, StyleSheet, TextInput, Text, Image  ,  Button,
 Keyboard} from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { useContext, useState } from "react";
+import { useState , useRef } from "react";
+import * as MediaLibrary from 'expo-media-library';
+import { captureRef } from 'react-native-view-shot';
+import { useContext} from "react";
 import { PlannerContext } from "../contexts/PlannerContext";
 import { colors } from "../utils/Colors";
 const Invite4 = () => {
@@ -11,6 +14,13 @@ const Invite4 = () => {
     address: "123 Anywhere street , Any City ST 1234",
     number: "1234567",
   });
+  const [status, requestPermission] = MediaLibrary.usePermissions();
+
+
+  if (status === null) {
+    requestPermission();
+  }
+  const imageRef = useRef();
   const plannerContext = useContext(PlannerContext);
   onChangeName = (val) => {
     const temp = { ...data, name: val };
@@ -29,6 +39,21 @@ const Invite4 = () => {
   onChangeAddress = (val) => {
     const temp = { ...data, address: val };
     setData(temp);
+  };
+  const onSaveImageAsync = async () => {
+    try {
+      const localUri = await captureRef(imageRef, {
+        height: 440,
+        quality: 1,
+      });
+
+      await MediaLibrary.saveToLibraryAsync(localUri);
+      if (localUri) {
+        alert("your image is Saved!");
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const styles = StyleSheet.create({
@@ -139,9 +164,9 @@ const Invite4 = () => {
   });
   return ( 
     <TouchableWithoutFeedback onPress={()=>
-      Keyboard.dismiss()}
-      style={{backgroundColor:plannerContext.modeLight?colors.grayLight:colors.primaryDark}}>
-    <View style={styles.parent}>
+      Keyboard.dismiss()}>
+    <View style={styles.parent}
+     ref={imageRef}>
       <View style={styles.box}>
         <View style={styles.border}>
           <View style={styles.title}>
@@ -186,10 +211,10 @@ const Invite4 = () => {
         </View>
       </View>
     </View> 
+    <Button title="Download" color="#841584" onPress={onSaveImageAsync}></Button>
     </TouchableWithoutFeedback>
   );
 };
 
 export default Invite4;
-
 

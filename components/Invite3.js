@@ -1,16 +1,26 @@
-import { View, StyleSheet, TextInput, Text, Image , Keyboard } from "react-native";
+import { View, StyleSheet, TextInput, Text, Image ,Button, Keyboard } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { useContext, useState } from "react";
+import * as MediaLibrary from 'expo-media-library';
+import { captureRef } from 'react-native-view-shot';
+import { useState , useRef } from "react";
+import { useContext} from "react";
 import { PlannerContext } from "../contexts/PlannerContext";
 import { colors } from "../utils/Colors";
 const Invite3 = () => {
   const [data, setData] = useState({
     name1: "pedro",
-    name2: "chacha",
+    name2: "sandra",
     date: "SATURDAY , OCTOBER 6th ",
     address: "123 Anywhere street , Any City, ST 1234",
     time: "2023 | 8:30AM",
   });
+  const [status, requestPermission] = MediaLibrary.usePermissions();
+
+
+  if (status === null) {
+    requestPermission();
+  }
+  const imageRef = useRef();
   const plannerContext = useContext(PlannerContext);
   onChangeName1 = (val) => {
     const temp = { ...data, name1: val };
@@ -34,11 +44,26 @@ const Invite3 = () => {
     const temp = { ...data, address: val };
     setData(temp);
   };
+  const onSaveImageAsync = async () => {
+    try {
+      const localUri = await captureRef(imageRef, {
+        height: 440,
+        quality: 1,
+      });
+
+      await MediaLibrary.saveToLibraryAsync(localUri);
+      if (localUri) {
+        alert("your image is Saved to gallery!");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return ( 
     <TouchableWithoutFeedback onPress={()=>
-      Keyboard.dismiss()}
-      style={{backgroundColor:plannerContext.modeLight?colors.grayLight:colors.primaryDark}}>
-    <View style={styles.parent}>
+      Keyboard.dismiss()}>
+    <View style={styles.parent} 
+     ref={imageRef}>
       <Image
         style={styles.img}
         source={require("../assets/icons/bg.png")}
@@ -78,6 +103,7 @@ const Invite3 = () => {
        
       </TextInput>
     </View> 
+    <Button title="Download" color="#841584" onPress={onSaveImageAsync}></Button>
     </TouchableWithoutFeedback>
   );
 };
@@ -90,7 +116,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    height: "90%",
+    height: "85%",
     margin: 30,
   },
   img: {

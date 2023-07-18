@@ -1,10 +1,22 @@
-import { useContext, useState } from "react";
-import { View, StyleSheet, TextInput, Text, Image, Keyboard } from "react-native";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 
+import { useRef, useState } from "react";
+import { useContext} from "react";
+import {
+  View,
+  StyleSheet,
+  TextInput,
+  Text,
+  Image,
+  Keyboard,
+  Button,
+} from "react-native";
+import { Colors } from "react-native/Libraries/NewAppScreen";
+import * as MediaLibrary from 'expo-media-library';
+import { captureRef } from 'react-native-view-shot';
 import { colors } from "../utils/Colors";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { PlannerContext } from "../contexts/PlannerContext";
+
 
 const Invite = () => {
   const [data, setData] = useState({
@@ -13,6 +25,13 @@ const Invite = () => {
     time: "8:00pm",
     venue: "palsade gardens 245 stoney creek",
   });
+  const [status, requestPermission] = MediaLibrary.usePermissions();
+
+
+  if (status === null) {
+    requestPermission();
+  }
+  const imageRef = useRef();
   const plannerContext = useContext(PlannerContext);
   onChangeName = (val) => {
     const temp = { ...data, name: val };
@@ -32,80 +51,100 @@ const Invite = () => {
     setData(temp);
   };
 
+ 
+
+  const onSaveImageAsync = async () => {
+    try {
+      const localUri = await captureRef(imageRef, {
+        height: 440,
+        quality: 1,
+      });
+
+      await MediaLibrary.saveToLibraryAsync(localUri);
+      if (localUri) {
+        alert("your image is Saved!");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return ( 
-    <TouchableWithoutFeedback onPress={()=>
-    Keyboard.dismiss()} style={{backgroundColor:plannerContext.modeLight?colors.grayLight:colors.primaryDark}}>
-    <View style={styles.container}>
-      <View style={styles.pattern}>
-        <View style={styles.bgBar}></View>
-        <View style={styles.bgBar}></View>
-        <View style={styles.bgBar}></View>
-        <View style={styles.bgBar}></View>
-        <View style={styles.bgBar}></View>
-        <View style={styles.bgBar}></View>
-        <View style={styles.bgBar}></View>
-        <View style={styles.bgBar}></View>
-        <View style={styles.bgBar}></View>
-        <View style={styles.bgBar}></View>
-        <View style={styles.bgBar}></View>
-        <View style={styles.bgBar}></View>
-        <View style={styles.bgBar}></View>
-        <View style={styles.bgBar}></View>
-        <View style={styles.bgBar}></View>
-        <View style={styles.bgBar}></View>
-      </View>
-      {/* {<View style={styles.balloon}>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} >
+      <View style={styles.container} 
+      ref={imageRef}>
+        <View style={styles.pattern}>
+          <View style={styles.bgBar}></View>
+          <View style={styles.bgBar}></View>
+          <View style={styles.bgBar}></View>
+          <View style={styles.bgBar}></View>
+          <View style={styles.bgBar}></View>
+          <View style={styles.bgBar}></View>
+          <View style={styles.bgBar}></View>
+          <View style={styles.bgBar}></View>
+          <View style={styles.bgBar}></View>
+          <View style={styles.bgBar}></View>
+          <View style={styles.bgBar}></View>
+          <View style={styles.bgBar}></View>
+          <View style={styles.bgBar}></View>
+          <View style={styles.bgBar}></View>
+          <View style={styles.bgBar}></View>
+          <View style={styles.bgBar}></View>
+        </View>
+        {/* {<View style={styles.balloon}>
         <View style={styles.ball}></View>
         <View style={styles.stick}></View>
       </View>} */}
-      <View style={styles.triangle}></View>
+        <View style={styles.triangle}></View>
 
-      <View style={styles.layerA}>
-        <Text style={styles.text}>a hearty Welcome to </Text>
-      </View>
-      <View style={styles.layerB}>
-        <TextInput
-          style={[styles.Inputs, styles.text2]}
-          class="name"
-          onChangeText={onChangeName}
-          value={data.name}
-        ></TextInput>
-        <Text style={styles.text3}>birthday bash</Text>
-      </View>
-      <Image
-        style={styles.bow}
-        source={require("../assets/icons/bow-tie.png")}
-      />
-      <Image
-        style={styles.bow2}
-        source={require("../assets/icons/bow-tie.png")}
-      />
+        <View style={styles.layerA}>
+          <Text style={styles.text}>a hearty Welcome to </Text>
+        </View>
+        <View style={styles.layerB}>
+          <TextInput
+            style={[styles.Inputs, styles.text2]}
+            class="name"
+            onChangeText={onChangeName}
+            value={data.name}
+          ></TextInput>
+          <Text style={styles.text3}>birthday bash</Text>
+        </View>
+        <Image
+          style={styles.bow}
+          source={require("../assets/icons/bow-tie.png")}
+        />
+        <Image
+          style={styles.bow2}
+          source={require("../assets/icons/bow-tie.png")}
+        />
 
-      <View style={styles.layerC}>
-        <TextInput
-          style={styles.text3}
-          class="date"
-          onChangeText={onChangeDate}
-          value={data.date}
-        ></TextInput>
-        <TextInput
-          style={styles.text}
-          class="time"
-          onChangeText={onChangeTime}
-          value={data.time}
-        ></TextInput>
-        <TextInput
-          class="venue"
-          style={styles.text}
-          onChangeText={onChangeVenue}
-          value={data.venue}
-        ></TextInput>
-        <Text style={styles.text3}> R.s.v.p to xxx.xxx.xxx</Text>
+        <View style={styles.layerC}>
+          <TextInput
+            style={styles.text3}
+            class="date"
+            onChangeText={onChangeDate}
+            value={data.date}
+          ></TextInput>
+          <TextInput
+            style={styles.text}
+            class="time"
+            onChangeText={onChangeTime}
+            value={data.time}
+          ></TextInput>
+          <TextInput
+            class="venue"
+            style={styles.text}
+            onChangeText={onChangeVenue}
+            value={data.venue}
+          ></TextInput>
+          <Text style={styles.text3}> R.s.v.p to xxx.xxx.xxx</Text>
+        </View>
       </View>
-    </View>
+      <Button title="Download" color="#841584" onPress={onSaveImageAsync}></Button>
     </TouchableWithoutFeedback>
   );
 };
+
 
 export default Invite;
 
