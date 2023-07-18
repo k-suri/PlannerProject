@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+
 import {
   View,
   StyleSheet,
@@ -9,11 +10,11 @@ import {
   Button,
 } from "react-native";
 import { Colors } from "react-native/Libraries/NewAppScreen";
-
+import * as MediaLibrary from 'expo-media-library';
+import { captureRef } from 'react-native-view-shot';
 import { colors } from "../utils/Colors";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import * as FileSystem from "expo-file-system";
-import { shareAsync } from "expo-sharing";
+
 
 const Invite = () => {
   const [data, setData] = useState({
@@ -23,7 +24,13 @@ const Invite = () => {
     venue: "palsade gardens 245 stoney creek",
   });
 
-  const imgRef = useRef();
+  const [status, requestPermission] = MediaLibrary.usePermissions();
+
+
+  if (status === null) {
+    requestPermission();
+  }
+  const imageRef = useRef();
   onChangeName = (val) => {
     const temp = { ...data, name: val };
     setData(temp);
@@ -42,24 +49,29 @@ const Invite = () => {
     setData(temp);
   };
 
-  const ImgDownload = async () => {
-    const snapshot = imgRef.current.takeSnapshot({
-      width: 500,
-      height: 300,
-      result: "base64",
-    });
-    console.log(snapshot);
-    const uri = FileSystem.documentDirectory + "snapshot.png";
-    await FileSystem.writeAsStringAsync(uri, snapshot, {
-      encoding: FileSystem.EncodingType.Base64,
-    });
-    await shareAsync(uri);
+ 
+
+  const onSaveImageAsync = async () => {
+    try {
+      const localUri = await captureRef(imageRef, {
+        height: 440,
+        quality: 1,
+      });
+
+      await MediaLibrary.saveToLibraryAsync(localUri);
+      if (localUri) {
+        alert("your image is Saved!");
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
-  return (
+  return ( 
+   
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} >
       <View style={styles.container} 
-      ref={imgRef}>
+      ref={imageRef}>
         <View style={styles.pattern}>
           <View style={styles.bgBar}></View>
           <View style={styles.bgBar}></View>
@@ -127,10 +139,11 @@ const Invite = () => {
           <Text style={styles.text3}> R.s.v.p to xxx.xxx.xxx</Text>
         </View>
       </View>
-      <Button title="Download" color="#841584" onPress={ImgDownload}></Button>
+      <Button title="Download" color="#841584" onPress={onSaveImageAsync}></Button>
     </TouchableWithoutFeedback>
   );
 };
+
 
 export default Invite;
 

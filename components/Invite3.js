@@ -1,6 +1,8 @@
-import { View, StyleSheet, TextInput, Text, Image , Keyboard } from "react-native";
+import { View, StyleSheet, TextInput, Text, Image ,Button, Keyboard } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { useState } from "react";
+import * as MediaLibrary from 'expo-media-library';
+import { captureRef } from 'react-native-view-shot';
+import { useState , useRef } from "react";
 const Invite3 = () => {
   const [data, setData] = useState({
     name1: "pedro",
@@ -10,6 +12,13 @@ const Invite3 = () => {
     time: "2023 | 8:30AM",
   });
 
+  const [status, requestPermission] = MediaLibrary.usePermissions();
+
+
+  if (status === null) {
+    requestPermission();
+  }
+  const imageRef = useRef();
   onChangeName1 = (val) => {
     const temp = { ...data, name1: val };
     setData(temp);
@@ -32,10 +41,26 @@ const Invite3 = () => {
     const temp = { ...data, address: val };
     setData(temp);
   };
+  const onSaveImageAsync = async () => {
+    try {
+      const localUri = await captureRef(imageRef, {
+        height: 440,
+        quality: 1,
+      });
+
+      await MediaLibrary.saveToLibraryAsync(localUri);
+      if (localUri) {
+        alert("your image is Saved to gallery!");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return ( 
     <TouchableWithoutFeedback onPress={()=>
       Keyboard.dismiss()}>
-    <View style={styles.parent}>
+    <View style={styles.parent} 
+     ref={imageRef}>
       <Image
         style={styles.img}
         source={require("../assets/icons/bg.png")}
@@ -75,6 +100,7 @@ const Invite3 = () => {
        
       </TextInput>
     </View> 
+    <Button title="Download" color="#841584" onPress={onSaveImageAsync}></Button>
     </TouchableWithoutFeedback>
   );
 };
@@ -87,7 +113,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    height: "90%",
+    height: "85%",
     margin: 30,
   },
   img: {
