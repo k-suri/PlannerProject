@@ -4,7 +4,7 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useState , useRef } from "react";
 import * as MediaLibrary from 'expo-media-library';
 import { captureRef } from 'react-native-view-shot';
-import { useContext, useState } from "react";
+import { useContext} from "react";
 import { PlannerContext } from "../contexts/PlannerContext";
 import { colors } from "../utils/Colors";
 const Invite4 = () => {

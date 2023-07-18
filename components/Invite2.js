@@ -3,7 +3,7 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import * as MediaLibrary from 'expo-media-library';
 import { captureRef } from 'react-native-view-shot';
 import { useState , useRef } from "react";
-import { useContext, useState } from "react";
+import { useContext} from "react";
 import { PlannerContext } from "../contexts/PlannerContext";
 import { colors } from "../utils/Colors";
 const Invite2 = () => {

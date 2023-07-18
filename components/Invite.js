@@ -1,9 +1,6 @@
 
 import { useRef, useState } from "react";
-import { useContext, useState } from "react";
-import { View, StyleSheet, TextInput, Text, Image, Keyboard } from "react-native";
-import { Colors } from "react-native/Libraries/NewAppScreen";
-
+import { useContext} from "react";
 import {
   View,
   StyleSheet,
