@@ -178,7 +178,6 @@ export default function App() {
         </NavigationContainer>
       </PlannerProvider>
     </GestureHandlerRootView>
-    
     </Animatable.View>
     
     )
