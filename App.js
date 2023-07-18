@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
 import { useFonts } from "expo-font";
 import { colors } from "./utils/Colors";
-import { PlannerProvider } from "./contexts/PlannerContext";
+import { PlannerContext, PlannerProvider } from "./contexts/PlannerContext";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
@@ -24,20 +24,21 @@ import VenueCustom from "./components/VenueCustom";
 import Venue from "./screens/Venue";
 import { LogBox } from "react-native";
 import Seating from "./screens/Seating";
-import React, { useEffect, useState } from 'react';
+import ModeSwitch from "./components/ModeSwitch";
+import React, { useContext, useEffect, useState } from "react";
 import Splash from "./screens/Splash";
-import * as Animatable from 'react-native-animatable';  
+import * as Animatable from "react-native-animatable";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
   const bottomTabs = createBottomTabNavigator();
-   const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 2000); 
-  })
+    }, 2000);
+  });
 
   let [fontsLoaded] = useFonts({
     Pacifico: require("./assets/fonts/Pacifico-Regular.ttf"),
@@ -57,127 +58,173 @@ export default function App() {
   });
 
   console.disableYellowBox = true;
-  LogBox.ignoreAllLogs()
+  LogBox.ignoreAllLogs();
 
   if (!fontsLoaded) {
     return <AppLoading />;
   }
 
   const Tabs = () => {
+    const plannerContext = useContext(PlannerContext);
     return (
-      <bottomTabs.Navigator>
+      <bottomTabs.Navigator screenOptions={{
+        tabBarStyle:{
+          backgroundColor: plannerContext.modeLight
+            ? colors.white
+            : colors.secondary200Dark,
+            elevation: 4,
+              shadowColor: plannerContext.modeLight
+                ? colors.gray
+                : colors.black,
+              shadowOffset: { height: 2, width: 2 },
+              shadowOpacity: 0.5,
+              shadowRadius: 5,
+        },
+      }}>
         <bottomTabs.Screen
           name="Home Screen"
           component={Home}
           options={{
-            tabBarLabel: "Home",
             tabBarIcon: () => (
-              <Ionicons name="home" color={colors.action} size={22} />
+              <Ionicons name="home" color={plannerContext.modeLight? colors.action :colors.white} size={22} />
             ),
-            tabBarActiveTintColor: colors.secondary200,
+            tabBarActiveTintColor: colors.actionDark,
             headerTitleStyle: {
-              color: colors.action200,
+              color: plannerContext.modeLight ? colors.action200 : colors.white,
               fontFamily: "Pacifico",
             },
-            headerTitle:"Event Buddy"
+            headerTitle: "Event Buddy",
+            headerStyle: {
+              backgroundColor: plannerContext.modeLight
+                ? colors.white
+                : colors.secondary200Dark,
+              elevation: 4,
+              shadowColor: plannerContext.modeLight
+                ? colors.gray
+                : colors.black,
+              shadowOffset: { height: 2, width: 2 },
+              shadowOpacity: 0.5,
+              shadowRadius: 5,
+            },
+            headerRight: () => <ModeSwitch></ModeSwitch>,
           }}
         />
         <bottomTabs.Screen
           name="Planner Screen"
           component={Planner}
           options={{
-            tabBarLabel: "Digital Planner",
             tabBarIcon: () => (
               <Ionicons
                 name="library"
-                color={colors.action}
+                color={plannerContext.modeLight? colors.action:colors.white}
                 size={22}
               ></Ionicons>
             ),
-            tabBarActiveTintColor: colors.secondary200,
+            tabBarActiveTintColor: colors.actionDark,
             headerTitleStyle: {
-              color: colors.action200,
+              color: plannerContext.modeLight ? colors.action200 : colors.white,
               fontFamily: "Pacifico",
             },
+            headerStyle: {
+              backgroundColor: plannerContext.modeLight
+                ? colors.white
+                : colors.secondary200Dark,
+              elevation: 4,
+              shadowColor: plannerContext.modeLight
+                ? colors.gray
+                : colors.black,
+              shadowOffset: { height: 2, width: 2 },
+              shadowOpacity: 0.5,
+              shadowRadius: 5,
+            },
             headerTitle: "Digital Planner",
+            headerRight: () => <ModeSwitch></ModeSwitch>,
           }}
         ></bottomTabs.Screen>
       </bottomTabs.Navigator>
     );
   };
 
-  return (
-    isLoading ? (
-      <Splash />
-    ) : (
-      <Animatable.View
-          animation="fadeIn" // Apply the fade-out animation
-          duration={1000} // Set the duration of the fade-out effect
-          style={{width : '100%' , height: '100%'}}
+  const Nav = () => {
+    const plannerContext = useContext(PlannerContext);
+    return (
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={({ navigation }) => ({
+            title: "EventBuddy",
+            headerTitleStyle: {
+              color: plannerContext.modeLight ? colors.action200 : colors.white,
+              fontFamily: "Pacifico",
+            },
+            headerStyle: {
+              backgroundColor: plannerContext.modeLight
+                ? colors.white
+                : colors.secondary200Dark,
+            },
+            headerRight: () => <ModeSwitch></ModeSwitch>,
+          })}
         >
+          <Stack.Screen
+            name="Home Planner Tab"
+            component={Tabs}
+            options={{ headerShown: false }}
+          ></Stack.Screen>
+          <Stack.Screen name="Venue Home" component={Venue}></Stack.Screen>
+          <Stack.Screen
+            name="Venue Current"
+            component={VenueCurrent}
+          ></Stack.Screen>
+          <Stack.Screen
+            name="Venue Custom"
+            component={VenueCustom}
+          ></Stack.Screen>
+          <Stack.Screen
+            name="Invitation Screen"
+            component={Invitations}
+          ></Stack.Screen>
+          <Stack.Screen
+            name="Todo List Screen"
+            component={TodoList}
+          ></Stack.Screen>
+          <Stack.Screen
+            name="Guest List Screen"
+            component={GuestList}
+          ></Stack.Screen>
+          <Stack.Screen
+            name="Seating Screen"
+            component={Seating}
+          ></Stack.Screen>
+          <Stack.Screen
+            name="Playlist Screen"
+            component={Playlist}
+          ></Stack.Screen>
+          <Stack.Screen
+            name="Playlist Details"
+            component={PlaylistDetails}
+          ></Stack.Screen>
+          <Stack.Screen name="Invite 1" component={Invite}></Stack.Screen>
+          <Stack.Screen name="Invite 2" component={Invite2}></Stack.Screen>
+          <Stack.Screen name="Invite 3" component={Invite3}></Stack.Screen>
+          <Stack.Screen name="Invite 4" component={Invite4}></Stack.Screen>
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  };
+
+  return isLoading ? (
+    <Splash />
+  ) : (
+    <Animatable.View
+      animation="fadeIn" // Apply the fade-out animation
+      duration={1000} // Set the duration of the fade-out effect
+      style={{ width: "100%", height: "100%" }}
+    >
       <GestureHandlerRootView style={{ flex: 1 }}>
-      <StatusBar style="auto" />
-      <PlannerProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            screenOptions={({ navigation }) => ({
-              title: "EventBuddy",
-              headerTitleStyle: {
-                color: colors.action200,
-                fontFamily: "Pacifico",
-              },
-            })}
-          >
-            <Stack.Screen
-              name="Home Planner Tab"
-              component={Tabs}
-              options={{ headerShown: false }}
-            ></Stack.Screen>
-            <Stack.Screen name="Venue Home" component={Venue}></Stack.Screen>
-            <Stack.Screen
-              name="Venue Current"
-              component={VenueCurrent}
-            ></Stack.Screen>
-            <Stack.Screen
-              name="Venue Custom"
-              component={VenueCustom}
-            ></Stack.Screen>
-            <Stack.Screen
-              name="Invitation Screen"
-              component={Invitations}
-            ></Stack.Screen>
-            <Stack.Screen
-              name="Todo List Screen"
-              component={TodoList}
-            ></Stack.Screen>
-            <Stack.Screen
-              name="Guest List Screen"
-              component={GuestList}
-            ></Stack.Screen>
-            <Stack.Screen
-              name="Seating Screen"
-              component={Seating}
-            ></Stack.Screen>
-            <Stack.Screen
-              name="Playlist Screen"
-              component={Playlist}
-            ></Stack.Screen>
-            <Stack.Screen
-              name="Playlist Details"
-              component={PlaylistDetails}
-            ></Stack.Screen>
-            <Stack.Screen name="Invite 1" component={Invite}></Stack.Screen>
-            <Stack.Screen name="Invite 2" component={Invite2}></Stack.Screen>
-            <Stack.Screen name="Invite 3" component={Invite3}></Stack.Screen>
-            <Stack.Screen name="Invite 4" component={Invite4}></Stack.Screen>
-          </Stack.Navigator>
-        </NavigationContainer>
-      </PlannerProvider>
-    </GestureHandlerRootView>
-    
+        <StatusBar style="auto" />
+        <PlannerProvider>
+          <Nav></Nav>
+        </PlannerProvider>
+      </GestureHandlerRootView>
     </Animatable.View>
-    
-    )
-     
   );
 }
