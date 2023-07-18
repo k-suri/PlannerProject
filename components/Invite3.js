@@ -4,7 +4,7 @@ import { useState } from "react";
 const Invite3 = () => {
   const [data, setData] = useState({
     name1: "pedro",
-    name2: "chacha",
+    name2: "sandra",
     date: "SATURDAY , OCTOBER 6th ",
     address: "123 Anywhere street , Any City, ST 1234",
     time: "2023 | 8:30AM",
