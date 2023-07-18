@@ -14,7 +14,7 @@ const Planner = () => {
     text: {
       fontFamily: "Pacifico",
       fontSize: 18,
-      color: colors.gray,
+      color: plannerContext.modeLight? colors.gray:colors.white,
       margin: 20,
     },
     venueDetails: {
