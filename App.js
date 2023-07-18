@@ -24,10 +24,20 @@ import VenueCustom from "./components/VenueCustom";
 import Venue from "./screens/Venue";
 import { LogBox } from "react-native";
 import Seating from "./screens/Seating";
+import React, { useEffect, useState } from 'react';
+import Splash from "./screens/Splash";
+import * as Animatable from 'react-native-animatable';  
 
 export default function App() {
   const Stack = createNativeStackNavigator();
   const bottomTabs = createBottomTabNavigator();
+   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000); 
+  })
 
   let [fontsLoaded] = useFonts({
     Pacifico: require("./assets/fonts/Pacifico-Regular.ttf"),
@@ -97,7 +107,15 @@ export default function App() {
   };
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    isLoading ? (
+      <Splash />
+    ) : (
+      <Animatable.View
+          animation="fadeIn" // Apply the fade-out animation
+          duration={1000} // Set the duration of the fade-out effect
+          style={{width : '100%' , height: '100%'}}
+        >
+      <GestureHandlerRootView style={{ flex: 1 }}>
       <StatusBar style="auto" />
       <PlannerProvider>
         <NavigationContainer>
@@ -156,5 +174,10 @@ export default function App() {
         </NavigationContainer>
       </PlannerProvider>
     </GestureHandlerRootView>
+    
+    </Animatable.View>
+    
+    )
+     
   );
 }
