@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useNavigation, useRoute } from "@react-navigation/core";
 import {
   View,
   Text,
@@ -15,6 +16,7 @@ const Seating = ({ route }) => {
   const [selectedTable, setSelectedTable] = useState(null);
   const [zoomAnim] = useState(new Animated.Value(1));
   const plannerContext = useContext(PlannerContext);
+  const navigation = useNavigation();
   const handleTablePress = (tableIndex) => {
     if (selectedTable === tableIndex) {
       setSelectedTable(null);
@@ -32,6 +34,7 @@ const Seating = ({ route }) => {
       }).start();
     }
   };
+ 
 
   const styles = StyleSheet.create({
     container: {
@@ -59,6 +62,20 @@ const Seating = ({ route }) => {
       textAlign: "center",
       color: plannerContext.modeLight ? colors.black : colors.white,
     },
+    addButton: {
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: colors.secondary,
+      borderRadius: 25,
+      height: 60,
+      marginBottom: 20,
+      backgroundColor: plannerContext.modeLight?colors.secondary:colors.actionDark,
+    },
+    addButtonText: {
+      fontSize: 22,
+      fontFamily: "Sofia-Regular",
+      color:plannerContext.modeLight?colors.action:colors.white,
+    },
     guestBox: {
       borderWidth: 1,
       borderColor: plannerContext.modeLight ? colors.black : colors.white,
@@ -75,6 +92,10 @@ const Seating = ({ route }) => {
       color: plannerContext.modeLight ? colors.black : colors.white,
     },
   });
+  const handleAddGuestlist = () => {
+    navigation.navigate("Planner Screen");
+  };
+
 
   return (
     <ScrollView
@@ -117,7 +138,11 @@ const Seating = ({ route }) => {
           </TouchableOpacity>
         ))}
       </View>
+      <TouchableOpacity onPress={handleAddGuestlist} style={styles.addButton}>
+        <Text style={styles.addButtonText}> Add GuestList </Text>
+      </TouchableOpacity>
     </ScrollView>
+    
   );
 };
 

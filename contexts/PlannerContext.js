@@ -7,7 +7,10 @@ export const PlannerContext = createContext({
   venue: null,
   addVenue: () => {},
   playlist:null,
+  eventDate: null,
   addPlaylist: () => {},
+  guestList: null,
+  addGuestlist: () => {},
   todos:[],
   addTodos:() => {},
   removeTodo: () => {},
@@ -20,6 +23,8 @@ const PlannerProvider = ({ children }) => {
   const [location, setLocation] = useState(null);
   const [venue, setVenue] = useState(null);
   const [playlistDetails,setPlaylistDetails] = useState(null)
+  const [eventStartDate, setEventStartDate] = useState(null)
+  const [guestListDetails, setGuestlistDetails] = useState(null)
   const [todos, setTodos] = useState([]);
   const [modeLight,setModeLight] = useState(true)
   const addVenue = (venue) => {
@@ -30,9 +35,14 @@ const PlannerProvider = ({ children }) => {
   };
 
   const addPlaylist = (playlist) => {
-    console.log(playlist,"ytfgui");
     setPlaylistDetails(playlist)
   };
+  const addGuestlist = (guestList) => {
+    setGuestlistDetails(guestList)
+  };
+  const handleEventDate = (eventDate) => {
+    setEventStartDate(eventDate)
+  }
   const addTodos = (todos)=>{
     setTodos(todos)
   }
@@ -47,6 +57,10 @@ const PlannerProvider = ({ children }) => {
     venue: venue,
     addVenue: addVenue,
     playlist: playlistDetails,
+    eventDate: eventStartDate,
+    guestList: guestListDetails,
+    handleEventDate: handleEventDate,
+    addGuestlist : addGuestlist,
     addPlaylist: addPlaylist,
     todos:todos,
     addTodos:addTodos,

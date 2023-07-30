@@ -15,7 +15,8 @@ const Invitations = () => {
 
   const styles = StyleSheet.create({
     wrapper: {
-      backgroundColor:plannerContext.modeLight?colors.grayLight:colors.primaryDark
+      backgroundColor:plannerContext.modeLight?colors.grayLight:colors.primaryDark,
+      height: "100%"
     },
     main: {
       display: "flex",
@@ -23,6 +24,7 @@ const Invitations = () => {
       justifyContent: "space-evenly",
       alignItems: "center",
       flexWrap: "wrap",
+      
     },
     box: {
       height: 190,

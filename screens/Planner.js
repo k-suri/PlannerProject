@@ -69,7 +69,8 @@ const Planner = () => {
     <ScrollView style={{backgroundColor:plannerContext.modeLight?colors.grayLight:colors.primaryDark}}>
       {plannerContext.venue ||
         plannerContext.todos.length > 0 ||
-        plannerContext.playlist ? (
+        plannerContext.playlist || 
+        plannerContext.guestList ? (
         <>
           {plannerContext.venue && (
             <PlannerSection title={"Venue"}>
@@ -111,6 +112,19 @@ const Planner = () => {
               </View>
             </PlannerSection>
           )}
+          {
+          plannerContext.guestList && (
+            <PlannerSection title={"GuestList"}>
+              <View style={styles.venueDetails}>
+                <Text style={styles.name}>Total Number of Guests : {plannerContext.guestList.totalGuests}</Text>
+                <Text style={styles.playlistId}> Number of tables in the venue : {plannerContext.guestList.tableCount}</Text>
+                <Pressable onPress={() => {
+                  navigation.navigate("Guest List Screen")
+                }}><Text style={styles.btn}>Choose Different GuestLsit</Text></Pressable>
+              </View>
+            </PlannerSection>
+          )
+          }
         </>
       ) : (
         <Text style={styles.text}>

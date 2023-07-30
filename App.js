@@ -215,8 +215,8 @@ export default function App() {
     <Splash />
   ) : (
     <Animatable.View
-      animation="fadeIn" // Apply the fade-out animation
-      duration={1000} // Set the duration of the fade-out effect
+      animation="fadeIn" 
+      duration={1000} 
       style={{ width: "100%", height: "100%" }}
     >
       <GestureHandlerRootView style={{ flex: 1 }}>

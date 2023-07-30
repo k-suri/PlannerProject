@@ -18,22 +18,22 @@ const GuestList = ({ navigation }) => {
     if (step === 1 && (totalGuests === '' || isNaN(totalGuests) || parseInt(totalGuests)<=0 || parseInt(totalGuests)>99999 || totalGuests === '.') ) {
       Alert.alert('Please enter valid total number of guests (1-99999).');
       return;
-    } else if (step === 2 && (familyGuests === '' || isNaN(familyGuests) || parseInt(familyGuests)>99999 || familyGuests === '.')) {
+    } else if (step === 2 && (familyGuests === '' || isNaN(familyGuests) || parseInt(familyGuests)<=0 || parseInt(familyGuests)>99999 || familyGuests === '.')) {
       Alert.alert('Please enter valid number of family guests (1-99999).');
       return;
-    } else if (step === 3 && (friends === '' || isNaN(friends) ||  parseInt(friends)>99999 || friends === '.')) {
+    } else if (step === 3 && (friends === '' || isNaN(friends)|| parseInt(friends)<=0 ||  parseInt(friends)>99999 || friends === '.')) {
       Alert.alert('Please enter valid number of friends (1-99999).');
       return;
-    } else if (step === 4 && (acquaintances === '' || isNaN(acquaintances) ||  parseInt(acquaintances)>99999 || acquaintances === '.')) {
+    } else if (step === 4 && (acquaintances === '' || isNaN(acquaintances) || parseInt(acquaintances)<=0 ||  parseInt(acquaintances)>99999 || acquaintances === '.')) {
       Alert.alert('Please enter valid number of acquaintances (1-99999).');
       return;
-    } else if (step === 5 && (otherGuests === '' || isNaN(otherGuests) ||  parseInt(otherGuests)>99999 || otherGuests === '.')) {
+    } else if (step === 5 && (otherGuests === '' || isNaN(otherGuests) || parseInt(otherGuests)<=0 ||  parseInt(otherGuests)>99999 || otherGuests === '.')) {
       Alert.alert('Please enter valid number of other guests (1-99999).');
       return;
-    } else if (step === 6 && (seatsPerTable === '' || isNaN(seatsPerTable) || parseInt(seatsPerTable)<=0 || parseInt(seatsPerTable)>999 || seatsPerTable === '.')) {
+    } else if (step === 6 && (seatsPerTable === '' || isNaN(seatsPerTable) || parseInt(seatsPerTable)<=0 || parseInt(seatsPerTable)<=0 || parseInt(seatsPerTable)>999 || seatsPerTable === '.')) {
       Alert.alert('Please enter valid number of seats per table (1-999).');
       return;
-    } else if (step === 7 && (numberOfTables === '' || isNaN(numberOfTables)|| parseInt(numberOfTables)<=0 || parseInt(numberOfTables)>999 || numberOfTables === '.')) {
+    } else if (step === 7 && (numberOfTables === '' || isNaN(numberOfTables) || parseInt(familyGuests)<=0 || parseInt(numberOfTables)<=0 || parseInt(numberOfTables)>999 || numberOfTables === '.')) {
       Alert.alert('Please enter valid number of tables (1-999).');
       return;
     }
@@ -53,6 +53,7 @@ const GuestList = ({ navigation }) => {
           parseInt(numberOfTables)
         );
         navigation.navigate('Seating Screen', { groups });
+        handleAddGuestlist()
       }
     }
   };
@@ -60,52 +61,55 @@ const GuestList = ({ navigation }) => {
   const splitIntoGroups = (total, family, friends, acquaintances, others, seatsPerTable, numberOfTables) => {
     const groups = [];
   
+    // Creating groups for family guests
     for (let i = 1; i <= family; i++) {
       const groupName = `F${i}`;
       const person = `${groupName}${i}`;
       groups.push({ person, category: 'Family' });
     }
   
+    // Creating groups for friends
     for (let i = 1; i <= friends; i++) {
       const groupName = `FR${i}`;
       const person = `${groupName}${i}`;
       groups.push({ person, category: 'Friends' });
     }
   
+    // Creating groups for acquaintances
     for (let i = 1; i <= acquaintances; i++) {
       const groupName = `A${i}`;
       const person = `${groupName}${i}`;
       groups.push({ person, category: 'Acquaintances' });
     }
   
+    // Creating groups for others
     for (let i = 1; i <= others; i++) {
       const groupName = `O${i}`;
       const person = `${groupName}${i}`;
       groups.push({ person, category: 'Others' });
     }
-  
-    const shuffledGroups = shuffleArray(groups);
-  
+
     const tables = [];
     const guestsPerTable = seatsPerTable;
     let currentIndex = 0;
-  
-    while (currentIndex < shuffledGroups.length) {
-      const tableGroup = shuffledGroups.slice(currentIndex, currentIndex + guestsPerTable);
+
+    // Create seating arrangements by grouping each category together
+    while (currentIndex < groups.length) {
+      const tableGroup = groups.slice(currentIndex, currentIndex + guestsPerTable);
       tables.push(tableGroup);
       currentIndex += guestsPerTable;
     }
-  
+
     return tables;
   };
   
-  const shuffleArray = (array) => {
-    const shuffledArray = [...array];
-    for (let i = shuffledArray.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
-    }
-    return shuffledArray;
+  const handleAddGuestlist = () => {
+    
+    const eventGuestlist = {
+      totalGuests: parseInt(totalGuests),
+      tableCount: parseInt(numberOfTables),
+    };
+    plannerContext.addGuestlist(eventGuestlist);
   };
 
   const handlePreviousStep = () => {
