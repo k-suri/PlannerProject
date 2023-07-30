@@ -14,7 +14,7 @@ import { colors } from "../utils/Colors";
 export default function App() {
   const [todoItem, setTodoItem] = useState("");
   const [isInputValid, setIsInputValid] = useState(true);
-  const [editedText, setEditedText] = useState("");
+  const [editedTodoText, setEditedTodoText] = useState("");
   const [editingItemId, setEditingItemId] = useState(null);
   const plannerContext = useContext(PlannerContext);
 
@@ -35,21 +35,21 @@ export default function App() {
   const handleEditTodo = (id) => {
     const todoItem = plannerContext.todos.find((todo) => todo.id === id);
     setEditingItemId(id);
-    setEditedText(todoItem.text);
+    setEditedTodoText(todoItem.text);
   };
 
   const handleSaveTodo = () => {
-    if (editedText !== "") {
+    if (editedTodoText !== "") {
       setIsInputValid(true);
       const updatedTodos = plannerContext.todos.map((todo) => {
         if (todo.id === editingItemId) {
-          return { ...todo, text: editedText };
+          return { ...todo, text: editedTodoText };
         }
         return todo;
       });
       plannerContext.addTodos(updatedTodos);
       setEditingItemId(null);
-      setEditedText("");
+      setEditedTodoText("");
     } else {
       setIsInputValid(false);
     }
@@ -59,7 +59,7 @@ export default function App() {
     const updatedTodos = plannerContext.todos.filter((todo) => todo.id !== id);
     plannerContext.addTodos(updatedTodos);
     setEditingItemId(null);
-    setEditedText("");
+    setEditedTodoText("");
     console.log("Todo item removed successfully.");
   };
 
@@ -179,8 +179,8 @@ export default function App() {
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
-            onChangeText={(text) => setTodoItem(text)}
-            value={todoItem}
+            onChangeText={(text) => setEditedTodoText(text)}
+            value={editedTodoText}
             placeholder="Enter a todo item"
             placeholderTextColor={
               plannerContext.modeLight ? colors.action200 : colors.white
