@@ -1,6 +1,6 @@
-
-import { useRef } from "react";
-import { useContext} from "react";
+import { useRef, useState } from "react";
+import { useContext } from "react";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import {
   View,
   StyleSheet,
@@ -9,25 +9,35 @@ import {
   Image,
   Keyboard,
   Button,
+  Pressable,
 } from "react-native";
 import { Colors } from "react-native/Libraries/NewAppScreen";
-import * as MediaLibrary from 'expo-media-library';
-import { captureRef } from 'react-native-view-shot';
+import * as MediaLibrary from "expo-media-library";
+import { captureRef } from "react-native-view-shot";
 import { colors } from "../utils/Colors";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { PlannerContext } from "../contexts/PlannerContext";
 import { useNavigation } from "@react-navigation/native";
 
-
 const Invite = () => {
   const [status, requestPermission] = MediaLibrary.usePermissions();
   const navigation = useNavigation()
+  const getDateValue = (date) => {
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const year = date.getFullYear();
+
+    const formattedDate = `${month}-${day}-${year}`;
+    return formattedDate
+  };
+  const [pickDate, setPickDate] = useState(false);
 
   if (status === null) {
     requestPermission();
   }
   const imageRef = useRef();
   const plannerContext = useContext(PlannerContext);
+  
   onChangeName = (val) => {
     const temp = { ...plannerContext.invitation, name: val };
     plannerContext.setInvitation(temp);
@@ -42,11 +52,10 @@ const Invite = () => {
     plannerContext.setInvitation(temp);
   };
   onChangeDate = (val) => {
-    const temp = { ...plannerContext.invitation, Date: val };
+    const date = new Date(val.nativeEvent.timestamp);
+    const temp = { ...data, date: date };
     plannerContext.setInvitation(temp);
   };
-
- 
 
   const onSaveImageAsync = async () => {
     plannerContext.setSelectedInvitation("Invite")
@@ -66,10 +75,9 @@ const Invite = () => {
     }
   };
 
-  return ( 
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} >
-      <View style={styles.container} 
-      ref={imageRef}>
+  return (
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.container} ref={imageRef}>
         <View style={styles.pattern}>
           <View style={styles.bgBar}></View>
           <View style={styles.bgBar}></View>
@@ -116,12 +124,48 @@ const Invite = () => {
         />
 
         <View style={styles.layerC}>
-          <TextInput
-            style={styles.text3}
-            class="date"
-            onChangeText={onChangeDate}
-            value={plannerContext.invitation.date}
-          ></TextInput>
+          <Pressable onPress={() => setPickDate(true)}>
+            <Text style={styles.text}>{getDateValue(data.date)}</Text>
+          </Pressable>
+
+          {pickDate && (
+            <DateTimePicker
+              style={styles.datePickerStyle}
+              value={plannerContext.invitation.date}
+              mode="date"
+              placeholder="select date"
+              format="DD/MM/YYYY"
+              minDate="01-01-1900"
+              maxDate="01-01-2000"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              customStyles={{
+                dateIcon: {
+                  position: "absolute",
+                  right: -5,
+                  top: 4,
+                  marginLeft: 0,
+                },
+                dateInput: {
+                  borderColor: "gray",
+                  alignItems: "flex-start",
+                  borderWidth: 0,
+                  borderBottomWidth: 1,
+                },
+                placeholderText: {
+                  fontSize: 17,
+                  color: "gray",
+                },
+                dateText: {
+                  fontSize: 17,
+                },
+              }}
+              onChange={(date) => {
+                setPickDate(false);
+                onChangeDate(date);
+              }}
+            />
+          )}
           <TextInput
             style={styles.text}
             class="time"
@@ -141,7 +185,6 @@ const Invite = () => {
     </TouchableWithoutFeedback>
   );
 };
-
 
 export default Invite;
 
@@ -192,6 +235,9 @@ const styles = StyleSheet.create({
     padding: 5,
   },
 
+  datePickerStyle: {
+    width: 230,
+  },
   text3: {
     fontFamily: "amatic",
     fontSize: 24,
