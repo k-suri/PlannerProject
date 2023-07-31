@@ -1,20 +1,30 @@
-import { View, StyleSheet, TextInput, Text, Image ,Button, Keyboard } from "react-native";
+import { View, StyleSheet, TextInput, Text, Image ,Button, Keyboard, Pressable } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import * as MediaLibrary from 'expo-media-library';
 import { captureRef } from 'react-native-view-shot';
 import { useState , useRef } from "react";
 import { useContext} from "react";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { PlannerContext } from "../contexts/PlannerContext";
 import { colors } from "../utils/Colors";
 const Invite3 = () => {
+  const getDateValue = (date) => {
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const year = date.getFullYear();
+
+    const formattedDate = `${month}-${day}-${year}`;
+    return formattedDate
+  };
   const [data, setData] = useState({
     name1: "pedro",
     name2: "sandra",
-    date: "SATURDAY , OCTOBER 6th ",
+    date: new Date(),
     address: "123 Anywhere street , Any City, ST 1234",
     time: "2023 | 8:30AM",
   });
   const [status, requestPermission] = MediaLibrary.usePermissions();
+  const [pickDate, setPickDate] = useState(false);
 
 
   if (status === null) {
@@ -32,7 +42,8 @@ const Invite3 = () => {
   };
 
   onChangeDate = (val) => {
-    const temp = { ...data, date: val };
+    const date = new Date(val.nativeEvent.timestamp);
+    const temp = { ...data, date: date };
     setData(temp);
   };
   onChangeTime = (val) => {
@@ -80,9 +91,48 @@ const Invite3 = () => {
         <Text style={styles.text}>&</Text>
         <TextInput onChangeText={onChangeName2} value={data.name2} style={styles.txt2}></TextInput>
         <Text style={styles.text}>SAVE THE DATE</Text>
-        <TextInput  onChangeText={onChangeDate}
-          value={data.date} 
-          ></TextInput>
+        <Pressable onPress={() => setPickDate(true)}>
+            <Text>{getDateValue(data.date)}</Text>
+          </Pressable>
+
+          {pickDate && (
+            <DateTimePicker
+              style={styles.datePickerStyle}
+              value={data.date}
+              mode="date"
+              placeholder="select date"
+              format="DD/MM/YYYY"
+              minDate="01-01-1900"
+              maxDate="01-01-2000"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              customStyles={{
+                dateIcon: {
+                  position: "absolute",
+                  right: -5,
+                  top: 4,
+                  marginLeft: 0,
+                },
+                dateInput: {
+                  borderColor: "gray",
+                  alignItems: "flex-start",
+                  borderWidth: 0,
+                  borderBottomWidth: 1,
+                },
+                placeholderText: {
+                  fontSize: 17,
+                  color: "gray",
+                },
+                dateText: {
+                  fontSize: 17,
+                },
+              }}
+              onChange={(date) => {
+                setPickDate(false);
+                onChangeDate(date);
+              }}
+            />
+          )}
         <TextInput
           onChangeText={onChangeTime}
           value={data.time}
