@@ -28,17 +28,64 @@ import ModeSwitch from "./components/ModeSwitch";
 import React, { useContext, useEffect, useState } from "react";
 import Splash from "./screens/Splash";
 import * as Animatable from "react-native-animatable";
+import * as Notifications from "expo-notifications";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
   const bottomTabs = createBottomTabNavigator();
   const [isLoading, setIsLoading] = useState(true);
 
+   // Function to schedule a local notification
+   const scheduleNotification = (title, body, trigger) => {
+    console.log("Scheduling notification...");
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: title,
+        body: body,
+      },
+      trigger,
+    }).then((notificationId) => {
+      console.log("Notification scheduled successfully. ID:", notificationId);
+    }).catch((error) => {
+      console.log("Error scheduling the notification:", error);
+    });
+  };
+  
+
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
     }, 2000);
+
+     // Request notification permissions on app startup
+     Notifications.requestPermissionsAsync();
+
   });
+
+// Function to calculate the time for the notification 
+const calculateNotificationTime = () => {
+
+
+  const eventDateTime = new Date("2023-07-30T20:20:00"); 
+  const timezoneOffsetInMinutes = -4 * 60; // EDT is UTC-4 during daylight saving time
+
+  // Calculate the notification time based on the eventDateTime and timezone offset
+  const notificationTime = new Date(eventDateTime.getTime() + timezoneOffsetInMinutes * 60 * 1000);
+
+  // Notify 15 minutes before the event
+  const notificationTriggerTime = new Date(notificationTime.getTime() - 15 * 60 * 1000);
+
+  return notificationTriggerTime;
+};
+
+useEffect(() => {
+  // Schedule the notification
+  const notificationTime = calculateNotificationTime();
+  scheduleNotification("Event Reminder", "Your event is approaching!", {
+    seconds: Math.floor(notificationTime.getTime() / 1000),
+  });
+}, []);
+
 
   let [fontsLoaded] = useFonts({
     Pacifico: require("./assets/fonts/Pacifico-Regular.ttf"),
