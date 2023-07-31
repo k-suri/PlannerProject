@@ -1,20 +1,31 @@
 import { View, StyleSheet, TextInput, Text, Image  ,  Button,
-Keyboard} from "react-native";
+Keyboard,
+Pressable} from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useState , useRef } from "react";
 import * as MediaLibrary from 'expo-media-library';
 import { captureRef } from 'react-native-view-shot';
 import { useContext} from "react";
 import { PlannerContext } from "../contexts/PlannerContext";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { colors } from "../utils/Colors";
 const Invite4 = () => {
+  const getDateValue = (date) => {
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const year = date.getFullYear();
+
+    const formattedDate = `${month}-${day}-${year}`;
+    return formattedDate
+  };
   const [data, setData] = useState({
     name: "Mathews",
-    date: "SATURDAY , OCTOBER 6th | 8:00AM",
+    date: new Date(),
     address: "123 Anywhere street , Any City ST 1234",
     number: "1234567",
   });
   const [status, requestPermission] = MediaLibrary.usePermissions();
+  const [pickDate, setPickDate] = useState(false);
 
 
   if (status === null) {
@@ -28,7 +39,8 @@ const Invite4 = () => {
   };
 
   onChangeDate = (val) => {
-    const temp = { ...data, date: val };
+    const date = new Date(val.nativeEvent.timestamp);
+    const temp = { ...data, date: date };
     setData(temp);
   };
   onChangeNumber = (val) => {
@@ -180,11 +192,48 @@ const Invite4 = () => {
           </View>
           <Text style={styles.txt2}>Housewarming celebration</Text>
 
-          <TextInput
-            onChangeText={onChangeDate}
-            value={data.date}
-            style={styles.txt3}
-          ></TextInput>
+          <Pressable onPress={() => setPickDate(true)}>
+            <Text>{getDateValue(data.date)}</Text>
+          </Pressable>
+
+          {pickDate && (
+            <DateTimePicker
+              style={styles.datePickerStyle}
+              value={data.date}
+              mode="date"
+              placeholder="select date"
+              format="DD/MM/YYYY"
+              minDate="01-01-1900"
+              maxDate="01-01-2000"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              customStyles={{
+                dateIcon: {
+                  position: "absolute",
+                  right: -5,
+                  top: 4,
+                  marginLeft: 0,
+                },
+                dateInput: {
+                  borderColor: "gray",
+                  alignItems: "flex-start",
+                  borderWidth: 0,
+                  borderBottomWidth: 1,
+                },
+                placeholderText: {
+                  fontSize: 17,
+                  color: "gray",
+                },
+                dateText: {
+                  fontSize: 17,
+                },
+              }}
+              onChange={(date) => {
+                setPickDate(false);
+                onChangeDate(date);
+              }}
+            />
+          )}
           <TextInput
             onChangeText={onChangeAddress}
             value={data.address}

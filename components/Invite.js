@@ -58,7 +58,6 @@ const Invite = () => {
   onChangeDate = (val) => {
     const date = new Date(val.nativeEvent.timestamp);
     const temp = { ...data, date: date };
-    console.log(temp);
     setData(temp);
   };
 
