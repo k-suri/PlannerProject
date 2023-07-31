@@ -7,14 +7,10 @@ import { captureRef } from 'react-native-view-shot';
 import { useContext} from "react";
 import { PlannerContext } from "../contexts/PlannerContext";
 import { colors } from "../utils/Colors";
+import { useNavigation } from "@react-navigation/native";
 const Invite4 = () => {
-  const [data, setData] = useState({
-    name: "Mathews",
-    date: "SATURDAY , OCTOBER 6th | 8:00AM",
-    address: "123 Anywhere street , Any City ST 1234",
-    number: "1234567",
-  });
   const [status, requestPermission] = MediaLibrary.usePermissions();
+  const navigation = useNavigation()
 
 
   if (status === null) {
@@ -23,24 +19,25 @@ const Invite4 = () => {
   const imageRef = useRef();
   const plannerContext = useContext(PlannerContext);
   onChangeName = (val) => {
-    const temp = { ...data, name: val };
-    setData(temp);
+    const temp = { ...plannerContext.invitation, name: val };
+    plannerContext.setInvitation(temp);
   };
 
   onChangeDate = (val) => {
-    const temp = { ...data, date: val };
-    setData(temp);
+    const temp = { ...plannerContext.invitation, date: val };
+    plannerContext.setInvitation(temp);
   };
   onChangeNumber = (val) => {
-    const temp = { ...data, number: val };
-    setData(temp);
+    const temp = { ...plannerContext.invitation, number: val };
+    plannerContext.setInvitation(temp);
   };
 
   onChangeAddress = (val) => {
-    const temp = { ...data, address: val };
-    setData(temp);
+    const temp = { ...plannerContext.invitation, address: val };
+    plannerContext.setInvitation(temp);
   };
   const onSaveImageAsync = async () => {
+    plannerContext.setSelectedInvitation("Invite4")
     try {
       const localUri = await captureRef(imageRef, {
         height: 440,
@@ -51,6 +48,7 @@ const Invite4 = () => {
       if (localUri) {
         alert("your image is Saved!");
       }
+      navigation.navigate("Planner Screen")
     } catch (e) {
       console.log(e);
     }
@@ -173,7 +171,7 @@ const Invite4 = () => {
             <Text style={styles.txt3}>THE </Text>
             <TextInput
               onChangeText={onChangeName}
-              value={data.name}
+              value={plannerContext.invitation.name}
               style={styles.txt3}
             ></TextInput>
             <Text style={styles.txt3}>ARE SETTLED IN</Text>
@@ -182,19 +180,19 @@ const Invite4 = () => {
 
           <TextInput
             onChangeText={onChangeDate}
-            value={data.date}
+            value={plannerContext.invitation.date}
             style={styles.txt3}
           ></TextInput>
           <TextInput
             onChangeText={onChangeAddress}
-            value={data.address}
+            value={plannerContext.invitation.address}
             style={styles.txt3}
           ></TextInput>
           <View style={styles.title}>
             <Text style={styles.txt3}>RSVP AT </Text>
             <TextInput
               onChangeText={onChangeNumber}
-              value={data.number}
+              value={plannerContext.invitation.number}
               style={styles.txt3}
             ></TextInput>
           </View>
@@ -211,7 +209,7 @@ const Invite4 = () => {
         </View>
       </View>
     </View> 
-    <Button title="Download" color="#841584" onPress={onSaveImageAsync}></Button>
+    <Button title="Select & Download" color="#841584" onPress={onSaveImageAsync}></Button>
     </TouchableWithoutFeedback>
   );
 };

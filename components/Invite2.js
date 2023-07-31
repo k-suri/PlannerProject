@@ -6,15 +6,10 @@ import { useState , useRef } from "react";
 import { useContext} from "react";
 import { PlannerContext } from "../contexts/PlannerContext";
 import { colors } from "../utils/Colors";
+import { useNavigation } from "@react-navigation/native";
 const Invite2 = () => {
-  const [data, setData] = useState({
-    couple: "ryan and ashley",
-    date: "SATURDAY , may 6th 2018, 8:30",
-    venue: "up and down bistro",
-    address: "1294wayward lane sand diego",
-    year:"twenty'th"
-  });
   const [status, requestPermission] = MediaLibrary.usePermissions();
+  const navigation = useNavigation()
 
 
   if (status === null) {
@@ -23,30 +18,31 @@ const Invite2 = () => {
   const imageRef = useRef();
   const plannerContext = useContext(PlannerContext);
   onChangeName = (val) => {
-    const temp = { ...data, couple: val };
-    setData(temp);
+    const temp = { ...plannerContext.invitation, couple: val };
+    plannerContext.setInvitation(temp);
   };
   onChangeYear = (val) => {
-    const temp = { ...data, year: val };
-    setData(temp);
+    const temp = { ...plannerContext.invitation, year: val };
+    plannerContext.setInvitation(temp);
   };
 
   onChangeDate = (val) => {
-    const temp = { ...data, date: val };
-    setData(temp);
+    const temp = { ...plannerContext.invitation, date: val };
+    plannerContext.setInvitation(temp);
   };
   onChangeVenue = (val) => {
-    const temp = { ...data, venue: val };
-    setData(temp);
+    const temp = { ...plannerContext.invitation, venue: val };
+    plannerContext.setInvitation(temp);
   };
 
   onChangeAddress = (val) => {
-    const temp = { ...data, address: val };
-    setData(temp);
+    const temp = { ...plannerContext.invitation, address: val };
+    plannerContext.setInvitation(temp);
   };
 
 
   const onSaveImageAsync = async () => {
+    plannerContext.setSelectedInvitation("Invite2")
     try {
       const localUri = await captureRef(imageRef, {
         height: 440,
@@ -57,6 +53,7 @@ const Invite2 = () => {
       if (localUri) {
         alert("your image is Saved!");
       }
+      navigation.navigate("Planner Screen")
     } catch (e) {
       console.log(e);
     }
@@ -71,7 +68,7 @@ const Invite2 = () => {
         <View style={styles.top}>
         <TextInput
             onChangeText={onChangeYear}
-            value={data.year}
+            value={plannerContext.invitation.year}
             style={styles.text}
           ></TextInput>
           <Image
@@ -83,22 +80,22 @@ const Invite2 = () => {
           <TextInput style={styles.text3}>JOIN US IN CELEBRATING</TextInput>
           <TextInput
             onChangeText={onChangeName}
-            value={data.couple}
+            value={plannerContext.invitation.couple}
             style={styles.text3}
           ></TextInput>
           <TextInput
             onChangeText={onChangeDate}
-            value={data.date}
+            value={plannerContext.invitation.date}
             style={styles.text3}
           ></TextInput>
           <TextInput
             onChangeText={onChangeVenue}
-            value={data.venue}
+            value={plannerContext.invitation.venue}
             style={styles.text3}
           ></TextInput>
           <TextInput
             onChangeText={onChangeAddress}
-            value={data.address}
+            value={plannerContext.invitation.address}
             style={styles.text3}
           ></TextInput>
           <TextInput style={styles.text3}>
@@ -107,7 +104,7 @@ const Invite2 = () => {
         </View>
       </View>
     </View> 
-    <Button title="Download" color="#841584" onPress={onSaveImageAsync}></Button>
+    <Button title="Select & Download" color="#841584" onPress={onSaveImageAsync}></Button>
     </TouchableWithoutFeedback>
   );
 };
