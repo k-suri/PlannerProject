@@ -127,7 +127,7 @@ const Invite = () => {
 
         <View style={styles.layerC}>
           <Pressable onPress={() => setPickDate(true)}>
-            <Text>{getDateValue(data.date)}</Text>
+            <Text style={styles.text}>{getDateValue(data.date)}</Text>
           </Pressable>
 
           {pickDate && (

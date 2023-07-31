@@ -196,7 +196,7 @@ const Invite4 = () => {
           <Text style={styles.txt2}>Housewarming celebration</Text>
 
           <Pressable onPress={() => setPickDate(true)}>
-            <Text>{getDateValue(data.date)}</Text>
+            <Text style={styles.txt3}>{getDateValue(data.date)}</Text>
           </Pressable>
 
           {pickDate && (
