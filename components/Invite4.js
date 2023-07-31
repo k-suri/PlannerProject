@@ -148,6 +148,9 @@ const Invite4 = () => {
       height: 600,
       bottom: 30,
   
+    }, 
+    datePickerStyle: {
+      width: 230,
     },
     text: {
       width: 300,
@@ -222,10 +225,13 @@ const Invite4 = () => {
                 },
                 placeholderText: {
                   fontSize: 17,
-                  color: "gray",
+                  color: "pink",
                 },
                 dateText: {
-                  fontSize: 17,
+                  fontSize: 40, 
+                  color:"pink", 
+                  fontFamily: "pacifico"
+                  
                 },
               }}
               onChange={(date) => {
@@ -266,4 +272,5 @@ const Invite4 = () => {
 };
 
 export default Invite4;
+
 
