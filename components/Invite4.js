@@ -9,7 +9,10 @@ import { useContext} from "react";
 import { PlannerContext } from "../contexts/PlannerContext";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { colors } from "../utils/Colors";
+import { useNavigation } from "@react-navigation/native";
 const Invite4 = () => {
+  const [status, requestPermission] = MediaLibrary.usePermissions();
+  const navigation = useNavigation()
   const getDateValue = (date) => {
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
@@ -18,13 +21,6 @@ const Invite4 = () => {
     const formattedDate = `${month}-${day}-${year}`;
     return formattedDate
   };
-  const [data, setData] = useState({
-    name: "Mathews",
-    date: new Date(),
-    address: "123 Anywhere street , Any City ST 1234",
-    number: "1234567",
-  });
-  const [status, requestPermission] = MediaLibrary.usePermissions();
   const [pickDate, setPickDate] = useState(false);
 
 
@@ -34,25 +30,26 @@ const Invite4 = () => {
   const imageRef = useRef();
   const plannerContext = useContext(PlannerContext);
   onChangeName = (val) => {
-    const temp = { ...data, name: val };
-    setData(temp);
+    const temp = { ...plannerContext.invitation, name: val };
+    plannerContext.setInvitation(temp);
   };
 
   onChangeDate = (val) => {
     const date = new Date(val.nativeEvent.timestamp);
-    const temp = { ...data, date: date };
-    setData(temp);
+    const temp = { ...plannerContext.invitation, date: date };
+    plannerContext.setInvitation(temp);
   };
   onChangeNumber = (val) => {
-    const temp = { ...data, number: val };
-    setData(temp);
+    const temp = { ...plannerContext.invitation, number: val };
+    plannerContext.setInvitation(temp);
   };
 
   onChangeAddress = (val) => {
-    const temp = { ...data, address: val };
-    setData(temp);
+    const temp = { ...plannerContext.invitation, address: val };
+    plannerContext.setInvitation(temp);
   };
   const onSaveImageAsync = async () => {
+    plannerContext.setSelectedInvitation("Invite4")
     try {
       const localUri = await captureRef(imageRef, {
         height: 440,
@@ -63,6 +60,7 @@ const Invite4 = () => {
       if (localUri) {
         alert("your image is Saved!");
       }
+      navigation.navigate("Planner Screen")
     } catch (e) {
       console.log(e);
     }
@@ -188,7 +186,7 @@ const Invite4 = () => {
             <Text style={styles.txt3}>THE </Text>
             <TextInput
               onChangeText={onChangeName}
-              value={data.name}
+              value={plannerContext.invitation.name}
               style={styles.txt3}
             ></TextInput>
             <Text style={styles.txt3}>ARE SETTLED IN</Text>
@@ -196,13 +194,13 @@ const Invite4 = () => {
           <Text style={styles.txt2}>Housewarming celebration</Text>
 
           <Pressable onPress={() => setPickDate(true)}>
-            <Text style={styles.txt3}>{getDateValue(data.date)}</Text>
+            <Text style={styles.txt3}>{getDateValue(plannerContext.invitation.date)}</Text>
           </Pressable>
 
           {pickDate && (
             <DateTimePicker
               style={styles.datePickerStyle}
-              value={data.date}
+              value={plannerContext.invitation.date}
               mode="date"
               placeholder="select date"
               format="DD/MM/YYYY"
@@ -242,14 +240,14 @@ const Invite4 = () => {
           )}
           <TextInput
             onChangeText={onChangeAddress}
-            value={data.address}
+            value={plannerContext.invitation.address}
             style={styles.txt3}
           ></TextInput>
           <View style={styles.title}>
             <Text style={styles.txt3}>RSVP AT </Text>
             <TextInput
               onChangeText={onChangeNumber}
-              value={data.number}
+              value={plannerContext.invitation.number}
               style={styles.txt3}
             ></TextInput>
           </View>
@@ -266,7 +264,7 @@ const Invite4 = () => {
         </View>
       </View>
     </View> 
-    <Button title="Download" color="#841584" onPress={onSaveImageAsync}></Button>
+    <Button title="Select & Download" color="#841584" onPress={onSaveImageAsync}></Button>
     </TouchableWithoutFeedback>
   );
 };
