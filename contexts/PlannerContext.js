@@ -19,7 +19,7 @@ export const PlannerContext = createContext({
     name: "ashley's",
     name1: "pedro",
     name2: "sandra",
-    date: "10/03/2022",
+    date: new Date(),
     time: "8:00pm",
     venue: "palsade gardens 245 stoney creek",
     couple: "ryan and ashley",
@@ -40,7 +40,7 @@ const PlannerProvider = ({ children }) => {
     name: "ashley's",
     name1: "pedro",
     name2: "sandra",
-    date: "10/03/2022",
+    date: new Date(),
     time: "8:00pm",
     venue: "palsade gardens 245 stoney creek",
     couple: "ryan and ashley",
@@ -82,7 +82,7 @@ const PlannerProvider = ({ children }) => {
     setInvitationData(data);
   };
 
-  setSelectedInvitation = (string) =>{
+  const setSelectedInvitation = (string) =>{
     setInvitationString(string)
   }
 
@@ -104,8 +104,8 @@ const PlannerProvider = ({ children }) => {
     setModeValue: setModeLight,
     invitation: invitationData,
     setInvitation: setInvitation,
-    selectedInvitation:invitationString,
-    setSelectedInvitation:setSelectedInvitation
+    selectedInvitation: invitationString,
+    setSelectedInvitation: setSelectedInvitation
   };
   return (
     <PlannerContext.Provider value={value}>{children}</PlannerContext.Provider>

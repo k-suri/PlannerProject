@@ -53,8 +53,9 @@ const Invite = () => {
   };
   onChangeDate = (val) => {
     const date = new Date(val.nativeEvent.timestamp);
-    const temp = { ...data, date: date };
+    const temp = { ...plannerContext.invitation, date: date };
     plannerContext.setInvitation(temp);
+    console.log(temp);
   };
 
   const onSaveImageAsync = async () => {
@@ -125,7 +126,7 @@ const Invite = () => {
 
         <View style={styles.layerC}>
           <Pressable onPress={() => setPickDate(true)}>
-            <Text style={styles.text}>{getDateValue(data.date)}</Text>
+            <Text style={styles.text}>{getDateValue(plannerContext.invitation.date)}</Text>
           </Pressable>
 
           {pickDate && (

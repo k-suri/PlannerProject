@@ -95,7 +95,7 @@ const Invite2 = () => {
             style={styles.text3}
           ></TextInput>
           <Pressable onPress={() => setPickDate(true)}>
-            <Text style={styles.text3}>{getDateValue(data.date)}</Text>
+            <Text style={styles.text3}>{getDateValue(plannerContext.invitation.date)}</Text>
           </Pressable>
 
           {pickDate && (

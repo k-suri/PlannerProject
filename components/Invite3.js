@@ -89,7 +89,7 @@ const Invite3 = () => {
         <TextInput onChangeText={onChangeName2} value={plannerContext.invitationD.name2} style={styles.txt2}></TextInput>
         <Text style={styles.text}>SAVE THE DATE</Text>
         <Pressable onPress={() => setPickDate(true)}>
-            <Text>{getDateValue(data.date)}</Text>
+            <Text>{getDateValue(plannerContext.invitation.date)}</Text>
           </Pressable>
 
           {pickDate && (
