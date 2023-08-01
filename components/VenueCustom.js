@@ -7,8 +7,21 @@ import { useNavigation } from "@react-navigation/native";
 const VenueCustom = () => {
     const plannerContext = useContext(PlannerContext)
     const navigation = useNavigation()
+
+    const style =  StyleSheet.create({
+      text:{
+          fontFamily:"Pacifico",
+          fontSize:18,
+          color:plannerContext.modeLight? colors.secondary:colors.white,
+          margin:10,
+          borderBottomColor: colors.action200,
+          borderBottomWidth: 3,
+          paddingBottom:10,
+          marginTop:20
+      }
+  })
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1 ,backgroundColor:plannerContext.modeLight?colors.grayLight:colors.primaryDark}}>
     <Text style={style.text}>Search the location of your choice and explore nearby venue locations.</Text>
       <PlacesInput
         googleApiKey={"AIzaSyC4UGIElsOse6tRysE-ee39Y6oC3Urc53Q"}
@@ -30,15 +43,3 @@ const VenueCustom = () => {
 
 export default VenueCustom;
 
-const style =  StyleSheet.create({
-    text:{
-        fontFamily:"Pacifico",
-        fontSize:18,
-        color:colors.secondary,
-        margin:10,
-        borderBottomColor: colors.action200,
-        borderBottomWidth: 3,
-        paddingBottom:10,
-        marginTop:20
-    }
-})

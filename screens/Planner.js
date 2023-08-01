@@ -238,7 +238,7 @@ const Planner = () => {
                       navigation.navigate("Guest List Screen");
                     }}
                   >
-                    <Text style={styles.btn}>Choose Different GuestLsit</Text>
+                    <Text style={styles.btn}>Choose Another GuestList</Text>
                   </Pressable>
                 </View>
               </PlannerSection>
