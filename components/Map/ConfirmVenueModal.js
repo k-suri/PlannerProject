@@ -1,7 +1,47 @@
 import { Modal, Pressable, View, Text, StyleSheet } from "react-native";
 import { colors } from "../../utils/Colors";
+import { useContext } from "react";
+import { PlannerContext } from "../../contexts/PlannerContext";
 
 const ConfirmVenueModal = ({ showModal, tempLocation ,confirmHandler, cancelHandler }) => {
+  const plannerContext = useContext(PlannerContext)
+  const styles = StyleSheet.create({
+    backdrop: {
+      height: "100%",
+      width: "100%",
+      backgroundColor: plannerContext.modeLight?colors.secondary:colors.primaryDark,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    text: {
+      fontSize: 25,
+      fontFamily: "Pacifico",
+      color: "white",
+      marginBottom: 10,
+    },
+    buttons: {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-evenly",
+    },
+    button: {
+      backgroundColor: plannerContext.modeLight?colors.action200:colors.actionDark,
+      padding: 10,
+      margin: 5,
+      borderRadius: 5,
+    },
+    content:{
+      borderColor: "white",
+      borderWidth: 5,
+      borderRadius:5,
+      padding:10,
+      width:"90%"
+    }
+  });
+
+
   return (
     <Modal visible={showModal} animationType="slide">
       {tempLocation ? (
@@ -35,38 +75,4 @@ const ConfirmVenueModal = ({ showModal, tempLocation ,confirmHandler, cancelHand
 
 export default ConfirmVenueModal;
 
-const styles = StyleSheet.create({
-  backdrop: {
-    height: "100%",
-    width: "100%",
-    backgroundColor: colors.secondary,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  text: {
-    fontSize: 25,
-    fontFamily: "Pacifico",
-    color: "white",
-    marginBottom: 10,
-  },
-  buttons: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-evenly",
-  },
-  button: {
-    backgroundColor: colors.action200,
-    padding: 10,
-    margin: 5,
-    borderRadius: 5,
-  },
-  content:{
-    borderColor: "white",
-    borderWidth: 5,
-    borderRadius:5,
-    padding:10,
-    width:"90%"
-  }
-});
+

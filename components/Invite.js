@@ -55,7 +55,6 @@ const Invite = () => {
     const date = new Date(val.nativeEvent.timestamp);
     const temp = { ...plannerContext.invitation, date: date };
     plannerContext.setInvitation(temp);
-    console.log(temp);
   };
 
   const onSaveImageAsync = async () => {

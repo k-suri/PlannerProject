@@ -86,7 +86,7 @@ const Map = ({setShowModal,setTempLocation}) => {
   const renderCafes = () => {
     return cafes.map((location) => (
       <Marker
-        pinColor="#9c89b8"
+        pinColor="#BB86FC"
         key={location.id}
         coordinate={location.coordinates}
         style={{ width: 200 }}
@@ -107,7 +107,7 @@ const Map = ({setShowModal,setTempLocation}) => {
   const renderRestaurants = () => {
     return restaurants.map((location) => (
       <Marker
-        pinColor="pink"
+        pinColor="crimson"
         key={location.id}
         coordinate={location.coordinates}
       >
