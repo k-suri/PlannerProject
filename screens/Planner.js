@@ -34,7 +34,7 @@ const Planner = () => {
   const onSaveImageAsync = async () => {
     try {
       const localUri = await captureRef(imageRef, {
-        height: 1000,
+        height: 440,
         quality: 1,
       });
       await MediaLibrary.saveToLibraryAsync(localUri);
@@ -133,13 +133,12 @@ const Planner = () => {
       plannerContext.selectedInvitation ? (
         <>
           <ScrollView
-            ref={imageRef}
             style={{
               marginBottom: 40,
             }}
           >
             {plannerContext.venue && (
-              <PlannerSection title={"Venue"}>
+              <PlannerSection title={"Venue"} ref={imageRef}>
                 <View style={styles.venueDetails}>
                   <Text style={styles.name}>{plannerContext.venue.name}</Text>
                   <Text style={styles.phone}>{plannerContext.venue.phone}</Text>
@@ -245,9 +244,9 @@ const Planner = () => {
             )}
           </ScrollView>
 
-          <Pressable onPress={onSaveImageAsync}>
+          {/* <Pressable onPress={onSaveImageAsync}>
             <Text style={styles.btnPlanner}>Download Planner</Text>
-          </Pressable>
+          </Pressable> */}
         </>
       ) : (
         <Text style={styles.text}>
