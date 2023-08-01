@@ -74,7 +74,7 @@ const Invite3 = () => {
      ref={imageRef}>
       <Image
         style={styles.img}
-        source={require("../assets/icons/bg.png")}
+        source={require("../assets/icons/bg.jpg")}
       ></Image>
       <View style={styles.container}>
         <Text style={styles.text}>
@@ -86,7 +86,7 @@ const Invite3 = () => {
           style={styles.txt2}
         ></TextInput>
         <Text style={styles.text}>&</Text>
-        <TextInput onChangeText={onChangeName2} value={plannerContext.invitationD.name2} style={styles.txt2}></TextInput>
+        <TextInput onChangeText={onChangeName2} value={plannerContext.invitation.name2} style={styles.txt2}></TextInput>
         <Text style={styles.text}>SAVE THE DATE</Text>
         <Pressable onPress={() => setPickDate(true)}>
             <Text>{getDateValue(plannerContext.invitation.date)}</Text>

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { colors } from '../utils/Colors';
 
 const Splash = ({ navigation }) => {
-  const appName = "Event Buddy"; // Replace with your app name
+  const appName = "Event Buddy"; 
 
 
   return (

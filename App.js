@@ -38,7 +38,7 @@ export default function App() {
     setTimeout(() => {
       setIsLoading(false);
     }, 2000);
-  });
+  },[]);
 
   let [fontsLoaded] = useFonts({
     Pacifico: require("./assets/fonts/Pacifico-Regular.ttf"),

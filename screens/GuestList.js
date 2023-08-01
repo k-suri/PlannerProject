@@ -61,28 +61,24 @@ const GuestList = ({ navigation }) => {
   const splitIntoGroups = (total, family, friends, acquaintances, others, seatsPerTable, numberOfTables) => {
     const groups = [];
   
-    // Creating groups for family guests
     for (let i = 1; i <= family; i++) {
       const groupName = `F${i}`;
       const person = `${groupName}${i}`;
       groups.push({ person, category: 'Family' });
     }
   
-    // Creating groups for friends
     for (let i = 1; i <= friends; i++) {
       const groupName = `FR${i}`;
       const person = `${groupName}${i}`;
       groups.push({ person, category: 'Friends' });
     }
   
-    // Creating groups for acquaintances
     for (let i = 1; i <= acquaintances; i++) {
       const groupName = `A${i}`;
       const person = `${groupName}${i}`;
       groups.push({ person, category: 'Acquaintances' });
     }
   
-    // Creating groups for others
     for (let i = 1; i <= others; i++) {
       const groupName = `O${i}`;
       const person = `${groupName}${i}`;
@@ -93,7 +89,6 @@ const GuestList = ({ navigation }) => {
     const guestsPerTable = seatsPerTable;
     let currentIndex = 0;
 
-    // Create seating arrangements by grouping each category together
     while (currentIndex < groups.length) {
       const tableGroup = groups.slice(currentIndex, currentIndex + guestsPerTable);
       tables.push(tableGroup);
