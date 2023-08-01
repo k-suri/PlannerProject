@@ -88,7 +88,7 @@ export default function App() {
             tabBarIcon: () => (
               <Ionicons name="home" color={plannerContext.modeLight? colors.action :colors.white} size={22} />
             ),
-            tabBarActiveTintColor: colors.white,
+            tabBarActiveTintColor: plannerContext.modeLight?colors.actionDark: colors.white,
             headerTitleStyle: {
               color: plannerContext.modeLight ? colors.action200 : colors.white,
               fontFamily: "Pacifico",
@@ -120,7 +120,7 @@ export default function App() {
                 size={22}
               ></Ionicons>
             ),
-            tabBarActiveTintColor: colors.white,
+            tabBarActiveTintColor:plannerContext.modeLight?colors.actionDark:colors.white,
             headerTitleStyle: {
               color: plannerContext.modeLight ? colors.action200 : colors.white,
               fontFamily: "Pacifico",

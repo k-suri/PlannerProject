@@ -24,7 +24,7 @@ const VenueCustom = () => {
     <View style={{ flex: 1 ,backgroundColor:plannerContext.modeLight?colors.grayLight:colors.primaryDark}}>
     <Text style={style.text}>Search the location of your choice and explore nearby venue locations.</Text>
       <PlacesInput
-        googleApiKey={"AIzaSyC4UGIElsOse6tRysE-ee39Y6oC3Urc53Q"}
+        googleApiKey={"AIzaSyCsIz-qQ2MAhFufx1ddtRYSCgEwQFJWwa8"}
         onSelect={(place) =>{ 
             const obj = {
                 coords:{
